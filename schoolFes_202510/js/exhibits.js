@@ -1471,11 +1471,13 @@ function pushLabel (targetName) {
             updateLabelOpacity();
         }
         const img = generateEls.filter(item => item?.className.includes("image"))[0]?.querySelector("img");
-        if (img) {
-            img.onload = onload;
-        } else {
-            onload();
-        }
+        setTimeout(() => {
+            if (img) {
+                img.onload = onload;
+            } else {
+                onload();
+            }
+        }, 50);
     })();
 
 }
