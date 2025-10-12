@@ -1,0 +1,96 @@
+.top{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background-color: white;
+}
+.topTextsBlock{
+    top: 0;
+    position: absolute;
+    height: 100vh;
+}
+.top h1, .top p{
+    position: absolute;
+    width: 100vw;
+    opacity: 0;
+    text-align: center;
+}
+.topText1{
+    top: clamp(3vh, 20vh, 18vh);
+    transform: translateY(0);
+    animation: topText_TopToBottom 2s ease-in-out forwards;
+}
+@keyframes topText_TopToBottom {
+    0%{
+        transform: translateY(200px);
+        opacity: 0;
+    }
+    50%{
+        transform: translateY(0);
+    }
+    75%{
+        z-index: 100;
+    }
+    100%{
+        opacity: 1;
+        z-index: 100;
+    }   
+}
+.topText2{
+    bottom: clamp(3vh, 20vh, 18vh);
+    transform: translateY(0);
+    animation: topText_BottomToTop 2s ease-in-out forwards;
+    animation-delay: 1s;
+}
+.topText2 p{
+    font-size: .8em;
+    text-align: center;
+    animation: topText_TopToBottom 2s ease-in-out forwards;
+    animation-delay: 2s;
+    width: 100vw;
+}
+@media (min-width: 750px){
+    .top h1, .top p{
+        width: 30vw;
+    }
+    .topTextsBlock .topText1{
+        top: calc(50vh - 1.5em);
+        left: 0;
+        text-align: right;
+        transform-origin: right;
+    }
+    .topTextsBlock .topText2{
+        top: calc(50vh - 1.5em);
+        right: -100vw;
+        text-align: left;
+        transform-origin: left;
+        animation: topText_TopToBottom 2s ease-in-out forwards;
+        animation-delay: 1s;
+    }
+    .topText2 p{
+        text-align: left;
+    }
+}
+@keyframes topText_BottomToTop {
+    0%{
+        transform: translateY(-200px);
+        opacity: 0;
+    }
+    50%{
+        transform: translateY(0);
+    }
+    75%{
+        z-index: 100;
+    }
+    100%{
+        opacity: 1;
+        z-index: 100;
+    }
+}
+/* .topTextsBlock h1 p{
+    animation: topText_TopToBottom 2s ease-in-out forwards;
+    animation-delay: 2s;
+    font-size: .75em;
+    text-align: left;
+} */

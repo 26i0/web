@@ -1,0 +1,369 @@
+.contents div div{
+    margin: 10px;
+    height: 100vh;
+}
+.contents div div p{
+    position: sticky;
+    top: calc(25px + 50px);
+    text-shadow: 
+    0 0 4px rgb(250, 250, 250),
+    0 0 4px rgb(250, 250, 250),
+    0 0 4px rgb(250, 250, 250);
+
+}
+.contents div h1{
+    position: sticky;
+    top: 25px;
+    margin: 10px;
+    height: calc(1em + 20px + 50px);
+}
+.contents div div span{
+    width: 100vw;
+    left: 0;
+}
+.contents .margin{
+    height: 50vh;
+}
+@keyframes tripodAdd {
+    0%{
+        transform: translateY(50vh);
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.tripodAddAnimetion{
+    animation: tripodAdd 1s ease-in-out both;
+}
+@keyframes tripodRemove {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(50vh);
+        opacity: 0;
+    }
+}
+.tripodRemoveAnimetion{
+    animation: tripodRemove 1s ease-in-out both;
+}
+@keyframes fireAdd {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.fireAddAnimetion{
+    animation: fireAdd 1s ease-in-out both;
+}
+@keyframes fireRemove {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.fireRemoveAnimetion{
+    animation: fireRemove 1s ease-in-out both;
+}
+@keyframes bucketWaterAdd {
+    0%{
+        opacity: 0;
+        transform: translateY(50vh);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(-2vh);
+    }
+}
+.bucketWaterAddAnimetion{
+    animation: bucketWaterAdd 1s ease-in-out both;
+}
+@keyframes bucketWaterRemove {
+    0%{
+        opacity: 1;
+        transform: translateY(-2vh);
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(50vh);
+    }
+}
+.bucketWaterRemoveAnimetion{
+    animation: bucketWaterRemove 1s ease-in-out both;
+}
+@keyframes bucketWater2Add {
+    0%{
+        opacity: 0;
+        transform: translateY(50vh);
+    }
+    75%{
+        opacity: 0;
+    }
+    100%{
+        opacity: .5;
+        transform: translateY(-2vh);
+    }
+}
+.bucketWater2AddAnimetion{
+    animation: bucketWater2Add 1s ease-in-out both;
+}
+@keyframes bucketWater2Remove {
+    0%{
+        opacity: .5;
+        transform: translateY(-2vh);
+    }
+    25%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(50vh);
+    }
+}
+.bucketWater2RemoveAnimetion{
+    animation: bucketWater2Remove 1s ease-in-out both;
+}
+@keyframes OpacityDefault {
+    0%{
+        
+    }
+    100%{
+        opacity: .5;
+    }
+}
+.opacityDefaultAnimetion{
+    animation: OpacityDefalut .5s ease-in-out both;
+}
+@keyframes OpacityHalf {
+    0%{
+        
+    }
+    100%{
+        opacity: .5;
+    }
+}
+.opacityHalfAnimetion{
+    animation: OpacityHalf .5s ease-in-out both;
+}
+@keyframes OpacityMax {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.opacityMaxAnimetion{
+    animation: OpacityMax 1s ease-in-out both;
+}
+.opacityMinAnimetion{
+    animation: OpacityMax 1s ease-in-out both reverse;
+}
+.opacityMax{
+    opacity: 1;
+}
+.opacityMin{
+    opacity: 0;
+}
+@keyframes lidOpen {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(-50vh);
+        opacity: 0;
+    }
+}
+.lidOpenAnimetion{
+    animation: lidOpen 1s ease-in-out both;
+}
+@keyframes lidClose {
+    0%{
+        transform: translateY(-50vh);
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.lidCloseAnimetion{
+    animation: lidClose 1s ease-in-out both;
+}
+@keyframes WaterAdd {
+    0%{
+        opacity: 0;
+    }
+    50%{
+        /* transform: translateY(0); */
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.waterAddAnimetion{
+    animation: WaterAdd 1s ease-in-out both;
+}
+.waterRemoveAnimetion{
+    animation: WaterAdd 1s ease-in-out both reverse;
+}
+@keyframes canXVibration {
+    0%{
+        transform: translateX(0);
+    }
+    10%{
+        transform: translateX(1px);
+    }
+    20%{
+        transform: translateX(-1px);
+    }
+    30%{
+        transform: translateX(1px);
+    }
+    40%{
+        transform: translateX(-1px);
+    }
+    50%{
+        transform: translateX(1px);
+    }
+    60%{
+        transform: translateX(-1px);
+    }
+    70%{
+        transform: translateX(1px);
+    }
+    80%{
+        transform: translateX(-1px);
+    }
+    90%{
+        transform: translateX(-1px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+.canVibration{
+    animation: canXVibration 1s ease-in-out both;
+    opacity: .5;
+}
+.grain{
+    animation-delay: 0s,.1s;
+    opacity: 0;
+    transform: translateX(10vw);
+}
+@keyframes Grain_1Vibration {
+    0%{
+        transform: translate(5vw,9vw);
+    }
+    20%{
+        transform: translate(-5vw,6vw);
+    }
+    40%{
+        transform: translate(5vw,3vw);
+    }
+    60%{
+        transform: translate(-5vw,-3vw);
+    }
+    80%{
+        transform: translate(5vw,-6vw);
+    }
+    100%{
+        transform: translate(-5vw,-9vw);
+    }
+}
+.grain_1Animetion{
+    animation: OpacityMax 1s ease-in-out both,Grain_1Vibration .8s ease-in-out both infinite alternate;
+    /* animation-delay: 0s,.5s; */
+}
+.grain_1SlowAnimetion{
+    animation: OpacityMax 1s ease-in-out both,Grain_1Vibration 1.6s ease-in-out both infinite alternate;
+    /* animation-delay: 0s,.5s; */
+}
+@keyframes addCompressAir {
+    0%{
+        opacity: 0;
+        transform: scale(1);
+    }
+    25%{
+        opacity: 1;
+    }
+    75%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        transform: scale(.2);
+    }
+}
+.compressAirAnimetion{
+    animation: WaterAdd 1s ease-in-out both, addCompressAir 1s ease-in-out both infinite;
+    animation-delay: 0s, .2s;
+}
+@keyframes arrowCompress {
+    0%{
+        opacity: 0;
+    }
+    25%{
+        opacity: 1;
+    }
+    75%{
+        opacity: 1;
+    }
+    100%{
+        scale: .8;
+        opacity: 0;
+    }
+}
+.rightArrowCompressAnimetion{
+    animation: WaterAdd 1s ease-in-out both, arrowCompress 1s ease-in-out both infinite;
+    animation-delay: 0s, .2s;
+    transform: translate(-3vw,0);
+}
+.leftArrowCompressAnimetion{
+    animation: WaterAdd 1s ease-in-out both, arrowCompress 1s ease-in-out both infinite;
+    animation-delay: 0s, .2s;
+    transform: translate(-3vw,0);
+    rotate: 180deg;
+}
+@keyframes arrowSpread {
+    0%{
+        opacity: 0;
+        transform: translate(20vw,0);
+    }
+    25%{
+        opacity: 1;
+    }
+    75%{
+        opacity: 1;
+    }
+    100%{
+        scale: 1.2;
+        opacity: 0;
+        transform: translate(15vw,0);
+    }
+}
+.rightArrowSpreadAnimetion{
+    animation: WaterAdd 1s ease-in-out both, arrowSpread 1s ease-in-out both infinite;
+    animation-delay: 0s, .2s;
+    rotate: 180deg;
+}
+.leftArrowSpreadAnimetion{
+    animation: WaterAdd 1s ease-in-out both, arrowSpread 1s ease-in-out both infinite;
+    animation-delay: 0s, .2s;
+}
+.mymail{
+    color: black;
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+}
+.mymail img{
+    height: 1em;
+}
+.qrcode{
+    width: clamp(20vw, 30vw,60vw);
+}
