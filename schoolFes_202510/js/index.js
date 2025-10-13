@@ -11,6 +11,9 @@ function dateUpdate () {
         topContentButton.style.display = "none";
     }
 }
+// topContentButton.addEventListener("click", () => {
+//     window.location = "https://www.jiyunomori.ac.jp/zaikou/calender.php?month=2025-10";
+// });
 dateUpdate();
 setInterval(dateUpdate, 10000);
 

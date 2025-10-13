@@ -328,7 +328,7 @@ function setPathViewBox() {
     };
 });
 
-const isLocalFile = window.location.protocol !== "https:";
+const isLocalFile = (window.location.protocol !== "https:") || (window.location.host.includes("5500"));
 
 const getHref = (item) => `${isLocalFile ? `${item}.html` : `${item === "index" ? "./" : item}`}`;
 
@@ -364,6 +364,8 @@ topBar.innerHTML = `
 topBar.querySelector(".menuOpen_button").addEventListener("click", () => {
     topBars.classList.toggle("opened");
 });
+
+const getSpanSplitedHTML = (text) => text.split("").map((item, i) => `<span style="transition-delay: ${i * 20}ms">${item}</span>`).join("");
 
 [
     ["", "パンフレット", "index"],
@@ -415,15 +417,30 @@ function showTopBarAnim(show) {
     void topBar.offsetWidth; // 再描画強制（リセットを反映させるトリック） */
     
     if (show) {
-        topBar.style.animation = "topBarShow 1s ease-out both";
-        topBar.classList.remove("hidden");
+        setTimeout(() => {
+            topBar.style.animation = "topBarShow .5s ease-out both";
+            topBar.classList.remove("hidden");
+        }, 300);
     } else {
         /* topBar.style.animation = "topBarHidden 1s ease-out reverse both";
         topBars.classList.remove("opened");
         topBar.classList.add("hidden"); */
     }
 }
-
+window.addEventListener("load", () => {
+    function setTopBarWidth () {
+        requestAnimationFrame(() => {
+            const topBarWidth = topBar.clientWidth;
+            if (topBarWidth !== 0) {
+                topBar.style.setProperty("--topBarWidthPx", topBarWidth + "px");
+            } else {
+                setTopBarWidth();
+            }
+        });
+    }
+    setTopBarWidth();
+});
+            
 // footers
 const footers = d.createElement("div");
 const footer = d.createElement("div");

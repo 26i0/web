@@ -2753,7 +2753,7 @@ function removeAllLabel () {
 
         function windowResize() {
             barTopMargin = (
-                parseFloat(getComputedStyle(mapsView).getPropertyValue("--topBarHeight")) +
+                parseFloat(getComputedStyle(mapsView).getPropertyValue("--topBarsHeight")) +
                 parseFloat(getComputedStyle(mapsView).getPropertyValue("--tabsHeight"))
             );
 

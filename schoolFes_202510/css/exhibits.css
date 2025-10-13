@@ -1,3 +1,6 @@
+:root {
+    --baseSearchIconScale: 3em;
+}
 .content.main {
     min-height: 100vh;
 }
@@ -125,6 +128,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    backdrop-filter: none;
+    --webkit-backdrop-filter: none;
     height: 1.25em;
     transition: height .5s ease-in-out;
 }
@@ -187,9 +192,9 @@
     touch-action: pan-x;
 }
 .content.main .exhibits .tile.sortList {
-    --topBarHeight: 40px;
+    --topBarsHeight: 40px;
     --tabsHeight: 50px;
-    --topMargin: calc(var(--topBarHeight) + var(--tabsHeight));
+    --topMargin: calc(var(--topBarsHeight) + var(--tabsHeight));
     margin-top: var(--topMargin);
     touch-action: none;
     position: fixed;
@@ -221,7 +226,7 @@
     position: relative;
     top: 0;
     width: 100%;
-    height: var(--topBarHeight);
+    height: var(--topBarsHeight);
     display: flex;
     justify-content: center;
     background-color: transparent;
@@ -451,11 +456,11 @@
 .content.main .searchBars {
     position: relative;
     top: 0;
-    width : var(--baseIconScale);
-    height: var(--baseIconScale);
+    width : var(--baseSearchIconScale);
+    height: var(--baseSearchIconScale);
     margin-bottom: 20px;
     left: 0;
-    margin-right: 10px;
+    margin-right: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -464,7 +469,7 @@
     box-shadow: 0 0 10px gray;
     backdrop-filter: blur(5px);
     --webkit-backdrop-filter: blur(5px);
-    background-color: rgba(255, 255, 255, .1);
+    background-color: rgba(255, 255, 255, .3);
     overflow-x: auto;
     transition:
     width .5s ease-in-out,
@@ -479,8 +484,8 @@
     justify-content: center;
     align-items: center;
     z-index: 10001;
-    height: var(--baseIconScale);
-    width: var(--baseIconScale);
+    height: var(--baseSearchIconScale);
+    width: var(--baseSearchIconScale);
     cursor: pointer;
     border-radius: 3em;
 }
@@ -488,7 +493,7 @@
 .content.main .searchBars .searchBarDisplay {
     position: absolute;
     height: calc(100% - 1px);
-    width: calc(100% - var(--baseIconScale) - 10px);
+    width: calc(100% - var(--baseSearchIconScale) - 10px);
     font-size: 1.25em;
     top: 0;
     display: flex;
@@ -500,7 +505,7 @@
     padding-top: 0;
     padding-left: 0;
     left: 0;
-    right: var(--baseIconScale);
+    right: var(--baseSearchIconScale);
     white-space: nowrap;
 }
 .content.main .searchArea {
@@ -508,18 +513,30 @@
     width: 100%;
     z-index: 10;
     overflow: visible;
-    --baseIconScale: 3em;
     --searchBarsWidth: min(
-        calc(100% - var(--exhibitsTileMargin) * 2),
+        /* calc(100% - var(--exhibitsTileMargin) * 2), */
+        100%,
         700px
     );
-    top: var(--topBarHeight);
     right: 0;
+    /* top: var(--topBarsHeight); */
+    top: calc(
+        var(--topBarMargin) + 11px
+    );
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
+    transition: top .5s ease-in-out;
+}
+.topBars .topBar {
+    max-width: calc(100vw - var(--topBarMargin) * 2 - var(--baseSearchIconScale) - 10px);
+}
+.content.main .searchArea.opened {
+    top: calc(
+        var(--topBarsHeight) - 15px
+    );
 }
 .content.main .searchArea.opened .searchBars {
     color: black;
@@ -536,14 +553,14 @@
     display: flex;
     flex-direction: column;
     opacity: 0;
-    top: var(--baseIconScale);
+    top: var(--baseSearchIconScale);
     position: absolute;
     /* right: 30px; */
     right: 0;
     padding-right: 10px;
     /* left: 0; */
     width: calc(var(--searchBarsWidth) + 20px);
-    max-height: calc(100vh - var(--topBarHeight) - 400px);
+    max-height: calc(100vh - var(--topBarsHeight) - 400px);
     overflow-y: auto;
     pointer-events: none;
 }
@@ -644,7 +661,7 @@
     opacity: 0;
     overflow: auto;
     width: calc(
-        var(--searchBarsWidth) + var(--baseIconScale)
+        var(--searchBarsWidth) + var(--baseSearchIconScale)
     );
     left: 0;
     padding-left: calc(
@@ -654,8 +671,8 @@
 .content.main .searchBars .searchInputs {
     position: relative;
     height: 100%;
-    width: calc(100% - var(--baseIconScale) - 10px);
-    right: var(--baseIconScale);
+    width: calc(100% - var(--baseSearchIconScale) - 10px);
+    right: var(--baseSearchIconScale);
     overflow: hidden;
     display: flex;
     justify-content: flex-start;

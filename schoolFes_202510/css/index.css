@@ -68,7 +68,7 @@ body {
     --pageWidth : calc(100vw - var(--pagesPadding) * 2);
     --pageSetWidth: calc(var(--pageWidth) + var(--pagesPadding) * 2);
     /* --pageHeight: calc(var(--pageWidth) * 1.4075829384); */
-    --pageHeight: calc((100vh - 150px) - var(--topBarHeight) - var(--pagesPadding));
+    --pageHeight: calc((100vh - 150px) - var(--topBarsHeight) - var(--pagesPadding));
 
     /* height: calc(100vw * var(--numOfPageContents)); */
     /* (var(--pageWidth) + var(--pagesPadding)) * var(--numOfPageContents) */
@@ -135,14 +135,14 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     position: sticky;
-    top: calc(var(--topBarHeight) - var(--pagesPadding) * 2);
-    /* padding-top: var(--topBarHeight); */
+    top: calc(var(--topBarsHeight) - var(--pagesPadding) * 2);
+    /* padding-top: var(--topBarsHeight); */
     /* padding: var(--pagesPadding); */
     left: 0;
     /* gap: var(--pagesPadding); */
     width : 100vw;
-    height: calc(100vh - var(--topBarHeight) + var(--pagesPadding) * 2);
-    /* --pageSlideThreshold: calc(100vh + var(--topBarHeight) * .5); */
+    height: calc(100vh - var(--topBarsHeight) + var(--pagesPadding) * 2);
+    /* --pageSlideThreshold: calc(100vh + var(--topBarsHeight) * .5); */
     /* transform: translateX(calc(
         (max(var(--scrollPx), var(--pageSlideThreshold)) - var(--pageSlideThreshold)) * -1 * var(--pageSlideRatio)
     )); */
