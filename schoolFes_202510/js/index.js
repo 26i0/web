@@ -244,9 +244,8 @@ setInterval(dateUpdate, 10000);
             ) {
                 const leftRatio = pagesArea.scrollLeft / (pagesArea.scrollWidth - getPageWidth());
                 if (leftRatio >= 0) {
-                    const topPx = getScrollYFromRatio(
-                        leftRatio,
-                    );
+                    const topPx = getScrollYFromRatio(leftRatio);
+                    console.log(topPx);
                     window.scrollTo({
                         top: topPx
                     });
@@ -367,7 +366,8 @@ setInterval(dateUpdate, 10000);
             }
 
             isPageShowNow = (
-                scrollY >= (window.innerHeight * .75) - 20
+                // scrollY >= (window.innerHeight * .75) - 20
+                scrollY >= (window.innerHeight - 10)
             ) && (
                 currentIndex < pageContents.length
             );
