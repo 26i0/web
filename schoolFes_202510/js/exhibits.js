@@ -6,10 +6,6 @@ exhibitsBottomBar.addEventListener("wheel", e => {
     e.stopPropagation();
 }, { passive: false });
 
-const getClassName = (school, input_grade, input_class) => (
-    `${school == "H" || input_class > 3 ? "高校" : "中学"} ${input_grade}年${input_class}組`
-);
-
 const maps_words = {
     Subjects: {
         Japanese: "日本語",
@@ -24,6 +20,10 @@ const maps_words = {
         Information: "情報",
         Woodworking: "木工",
     },
+    Grades: {
+        J: "中学",
+        H: "高校",
+    },
     Subject: "科",
     Room: "室",
     Laboratory: "研究",
@@ -33,17 +33,32 @@ const maps_words = {
         Inside: "の中",
         Infront: "の前",
         Behind: "の裏",
+        Near: "の近く",
+    },
+    Directions: {
+        N: "北",
+        S: "南",
+        E: "東",
+        W: "西",
     },
 };
 
+const getClassName = (school, input_grade, input_class) => (
+    `${school == "H" || input_class > 3 ? maps_words.Grades.H : maps_words.Grades.J} ${input_grade}年${input_class}組`
+);
+
 const maps_names = {
     Bus: "バス",
-    Entrance: "入口",
+    Entrance: "玄関",
+    FrontEntrance: "昇降口",
     Woodworking: `${maps_words.Subjects.Woodworking}${maps_words.Room}`,
     Dining: "食堂",
+    Dormitory: "寮",
     Secretariat: "事務局",
     Gym: `${maps_words.Subjects.PhysicalEdu}館`,
     Art: `${maps_words.Subjects.Art}棟`,
+    Corridor: "廊下",
+    Stairs: "階段",
     Multipurpose: "多目的ホール",
     Science_A: `${maps_words.Subjects.Science}${maps_words.Room}A`,
     Science_B: `${maps_words.Subjects.Science}${maps_words.Room}B`,
@@ -55,13 +70,14 @@ const maps_names = {
     English_Laboratory: `${maps_words.Subjects.English}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Music_Small: `小${maps_words.Subjects.Music}${maps_words.Room}`,
     Music_Large: `大${maps_words.Subjects.Music}${maps_words.Room}`,
-    Life_Laboratory: `${maps_words.Subjects.Life}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
-    Cooking: `調理${maps_words.Room}`,
+    Music_Laboratory: `${maps_words.Subjects.Music}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Music_2: `第2${maps_words.Subjects.Music}${maps_words.Room}`,
     Music_3: `第3${maps_words.Subjects.Music}${maps_words.Room}`,
+    Cooking: `調理${maps_words.Room}`,
     Computers: `${maps_words.Subjects.Information}教${maps_words.Room}`,
     Math_Laboratory: `${maps_words.Subjects.Math}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
-    Music_Laboratory: `${maps_words.Subjects.Music}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    Life_Laboratory: `${maps_words.Subjects.Life}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    Warehouse: "倉庫",
 };
 
 const exhibits = {
@@ -136,155 +152,157 @@ const exhibits = {
     },
 
     F1_H1_1: {
-        name: "高校1年1組",
+        name: `${maps_words.Grades.H}1年1組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F1_H1_2: {
-        name: "高校1年2組",
+        name: `${maps_words.Grades.H}1年2組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F1_H1_3: {
-        name: "高校1年3組",
+        name: `${maps_words.Grades.H}1年3組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F1_H1_4: {
-        name: "高校1年4組",
+        name: `${maps_words.Grades.H}1年4組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F1_H1_5: {
-        name: "高校1年5組",
+        name: `${maps_words.Grades.H}1年5組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F1_H1_6: {
-        name: "高校1年6組",
+        name: `${maps_words.Grades.H}1年6組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F1_H1_7: {
-        name: "高校1年7組",
+        name: `${maps_words.Grades.H}1年7組`,
         tag: [
             "byClass",
             "H1",
         ],
     },
     F2_H2_1: {
-        name: "高校2年1組",
+        name: `${maps_words.Grades.H}2年1組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F2_H2_2: {
-        name: "高校2年2組",
+        name: `${maps_words.Grades.H}2年2組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F2_H2_3: {
-        name: "高校2年3組",
+        name: `${maps_words.Grades.H}2年3組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F2_H2_4: {
-        name: "高校2年4組",
+        name: `${maps_words.Grades.H}2年4組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F2_H2_5: {
-        name: "高校2年5組",
+        name: `${maps_words.Grades.H}2年5組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F2_H2_6: {
-        name: "高校2年6組",
+        name: `${maps_words.Grades.H}2年6組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F2_H2_7: {
-        name: "高校2年7組",
+        name: `${maps_words.Grades.H}2年7組`,
         tag: [
             "byClass",
             "H2",
         ],
     },
     F3_H3_1: {
-        name: "高校3年1組",
+        name: `${maps_words.Grades.H}3年1組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_2: {
-        name: "高校3年2組",
+        name: `${maps_words.Grades.H}3年2組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_3: {
-        name: "高校3年3組",
+        name: `${maps_words.Grades.H}3年3組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_4: {
-        name: "高校3年4組",
+        name: `${maps_words.Grades.H}3年4組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_5: {
-        name: "高校3年5組",
+        name: `${maps_words.Grades.H}3年5組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_6: {
-        name: "高校3年6組",
+        name: `${maps_words.Grades.H}3年6組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_7: {
-        name: "高校3年7組",
+        name: `${maps_words.Grades.H}3年7組`,
         tag: [
             "byClass",
             "H3",
         ],
     },
 
+    // ↓有志
     MCBATTLE: {
         name: "MC BATTLE",
+        location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
         ],
@@ -297,6 +315,7 @@ const exhibits = {
     },
     F1_Warasibe: {
         name: "わらしべ長者",
+        location: `${maps_names.Multipurpose}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
         ],
@@ -326,7 +345,8 @@ const exhibits = {
         ],
     },
     F1_Moon_Dormitory: {
-        name: "ちゅきちゅき月寮",
+        name: `ちゅきちゅき月${maps_names.Dormitory}`,
+        location: `${maps_names.Secretariat}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
         ],
@@ -343,20 +363,22 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    PrivateSchool: {
+    F1_PrivateSchool: {
         name: "私学助成",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
         tag: [
             "byVolunteers",
         ],
     },
     North_Dormitory: {
-        name: "北寮 Movie",
+        name: `${maps_words.Directions.N}${maps_names.Dormitory} Movie`,
         tag: [
             "byVolunteers",
         ],
     },
     PlaneWorkshop: {
         name: "飛行機ワクショップ",
+        location: `${maps_names.Science_D}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
         ],
@@ -370,12 +392,13 @@ const exhibits = {
     },
     F1_Paparazzi: {
         name: "paparazzi",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
         ],
     },
     Star_Dormitory: {
-        name: "星寮有志",
+        name: `星${maps_names.Dormitory}有志`,
         location: `${maps_names.Science_A}${maps_words.Conjs.Inside}`,
         tag: [
             "byVolunteers",
@@ -389,19 +412,20 @@ const exhibits = {
     },
     Tokusatsu: {
         name: "特撮映画上映",
-        location: `${maps_names.Multipurpose}${maps_words.Conjs.Inside}`,
         tag: [
             "byVolunteers",
         ],
     },
-    YouMayHena: {
+    F1_YouMayHena: {
         name: "you may hena",
+        location: `${getClassName("J", 1, 1)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
     },
     F1_Sustainable: {
         name: "サステナ委員会",
+        location: `${maps_names.Entrance}${maps_words.Conjs.Inside}`,
         tag: [
             "byVolunteers",
         ],
@@ -418,13 +442,14 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Sawatonagi: {
+    F1_Sawatonagi: {
         name: "さわとなぎの雑貨",
+        location: `${maps_names.Art}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
         ],
     },
-    Glass: {
+    F1_Glass: {
         name: "ガラス細工部",
         tag: [
             "byVolunteers",
@@ -439,6 +464,7 @@ const exhibits = {
     },
     F1_Cat: {
         name: "猫部のお店",
+        location: `${maps_names.Multipurpose}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
         ],
@@ -457,31 +483,35 @@ const exhibits = {
     },
     F1_SnapNow: {
         name: "#snap now",
-        location: `${maps_names.Gym}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.Gym}${maps_words.Conjs.Behind}､${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
     },
-    Nepal: {
+    F1_Nepal: {
         name: "ネパール募金",
+        location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
     },
-    _115: {
+    F3_115: {
         name: "115",
+        location: `${maps_names.Music_Laboratory}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
         ],
     },
     Aruaru: {
         name: "自森のあるある展",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}`,
         tag: [
             "byVolunteers",
         ],
     },
-    Yutosara: {
+    F3_Yutosara: {
         name: "ゆうとさらの占い",
+        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -492,7 +522,7 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Button: {
+    F3_Button: {
         name: "Button",
         tag: [
             "byVolunteers",
@@ -504,8 +534,9 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Coffee: {
+    F1_Coffee: {
         name: "コーヒーカルチャ",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
         ],
@@ -530,18 +561,21 @@ const exhibits = {
     },
     F1_Nazotoki: {
         name: "自森謎解き",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
         ],
     },
-    Botanya: {
+    F1_Botanya: {
         name: "ぼたんやさん",
+        location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
     },
     F1_Okigae: {
         name: "お着替え 4コマ",
+        location: `${getClassName("H", 1, 6)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -553,7 +587,7 @@ const exhibits = {
         ],
     },
     East_Dormitory: {
-        name: "東寮有志",
+        name: `${maps_words.Directions.E}${maps_names.Dormitory}有志`,
         tag: [
             "byVolunteers",
         ],
@@ -564,8 +598,9 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    GanGanHao: {
+    F1_GanGanHao: {
         name: "ガンガンハオ",
+        location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
@@ -577,21 +612,23 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Wakuwaku: {
+    F3_Wakuwaku: {
         name: "WAKUWAKU",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}`,
         tag: [
             "byVolunteers",
         ],
     },
-    Malasada: {
+    F1_Malasada: {
         name: "Malasada",
+        location: `${getClassName("J", 1, 1)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
     },
     F1_FlyYum: {
         name: "Fly yum",
-        location: `${maps_names.Gym}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.Gym}${maps_words.Conjs.Behind}､${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
@@ -602,7 +639,7 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    LittleTaroBar: {
+    F3_LittleTaroBar: {
         name: "リトルタローバー",
         tag: [
             "byVolunteers",
@@ -610,6 +647,7 @@ const exhibits = {
     },
     F1_Rukissa: {
         name: "るきっさ",
+        location: `${getClassName("H", 1, 6)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -620,8 +658,9 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    WitchYakisoba: {
+    F3_WitchYakisoba: {
         name: "魔女のなぞやきそば",
+        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -656,11 +695,8 @@ const maps_locations = {
     },
 
     F1_Entrance_Arch: {
-        name: maps_names.Entrance,
+        name: maps_names.FrontEntrance,
         emphasis: true,
-        location: {
-            name: "正面玄関"
-        },
         isAlwaysShow: true,
         isEdgeShow: true,
     },
@@ -761,6 +797,7 @@ const maps_locations = {
             y: .1,
         },
     },
+    F2_Art: exhibits.Smash,
 
     // ↓他部屋
     F1_Multipurpose: exhibits.Tokusatsu,
@@ -769,22 +806,12 @@ const maps_locations = {
             name: maps_names.Woodworking,
         },
     },
+    F1_F2_F3_OutdoorStairs004: exhibits.Aruaru,
+    F1_Airplane: exhibits.PlaneWorkshop,
     F1_Science_A: exhibits.Star_Dormitory,
-    F1_Science_B: {
-        location: {
-            name: maps_names.Science_B,
-        },
-    },
-    F1_Science_C: {
-        location: {
-            name: maps_names.Science_C,
-        },
-    },
-    F1_Science_D: {
-        location: {
-            name: maps_names.Science_D,
-        },
-    },
+    F1_Science_B: exhibits.PROBUX,
+    F1_Science_C: exhibits.North_Dormitory,
+    F1_Science_D: exhibits.BLUEPEYOUNG,
     F1_Science_Preparation: {
         location: {
             name: maps_names.Science_Preparation,
@@ -832,9 +859,8 @@ const maps_locations = {
         },
     },
     F3_Music_3: {
-        location: {
-            name: maps_names.Music_3,
-        },
+        ...exhibits.F1_Tekken_1,
+        description: "プラレール展示",
     },
     F3_Computers: {
         location: {
@@ -851,6 +877,7 @@ const maps_locations = {
             name: maps_names.Music_Laboratory,
         },
     },
+    F3_Warehouse: exhibits.Shoten,
     // ↑他部屋
 
     BusStation_Base: {
@@ -867,11 +894,13 @@ const maps_locations = {
         isEdgeShow: true,
     },
 
-    F1_Rukissa001: exhibits.F1_Rukissa,
+    F1_Rukissa001: {
+        ...exhibits.F1_Rukissa,
+        location: `${getClassName("H", 1, 4)}${maps_words.Conjs.NextTo}`,
+    },
 };
 
 const getExhibits = (n) => ([ Object.keys(exhibits)[n], Object.values(exhibits)[n] ])
-const exhibitsLength = Object.keys(exhibits).length;
 const tagGroups = {
     project: {
         isMultSel: false
@@ -925,32 +954,32 @@ const tagOrder = {
         group: tagGroups.genre
     },
     J1: {
-        displayName: "中学1年",
+        displayName: `${maps_words.Grades.J}1年`,
         themeColor: "gray",
         group: tagGroups.grade
     },
     J2: {
-        displayName: "中学2年",
+        displayName: `${maps_words.Grades.J}2年`,
         themeColor: "gray",
         group: tagGroups.grade
     },
     J3: {
-        displayName: "中学3年",
+        displayName: `${maps_words.Grades.J}3年`,
         themeColor: "gray",
         group: tagGroups.grade
     },
     H1: {
-        displayName: "高校1年",
+        displayName: `${maps_words.Grades.H}1年`,
         themeColor: "slategray",
         group: tagGroups.grade
     },
     H2: {
-        displayName: "高校2年",
+        displayName: `${maps_words.Grades.H}2年`,
         themeColor: "slategray",
         group: tagGroups.grade
     },
     H3: {
-        displayName: "高校3年",
+        displayName: `${maps_words.Grades.H}3年`,
         themeColor: "slategray",
         group: tagGroups.grade
     },
@@ -1016,15 +1045,36 @@ function tabClassUpdate (tabIndex) {
     contents[tabIndex].classList.add("nowShow");
 }
 
+// Scroll運用を停止､確実にボタンによるスライドが生じるようにする
 function barTabClick (tabIndex) {
+    const leftPx = tabIndex * bottomBar_contents.scrollWidth;
     bottomBar_contents.scrollTo({
         top: 0,
-        left: tabIndex * bottomBar_contents.scrollWidth,
+        left: leftPx,
         behavior: "smooth"
     });
+    setTimeout(() => {
+        bottomBar_contents.scrollLeft = leftPx;
+    }, 650);
     tabClassUpdate(tabIndex);
     barHeightUpdate(true);
 }
+
+
+Object.values(maps_locations).forEach((locationItem, i) => {
+    const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
+    if (!locationItem?.location?.name && locationName) {
+        locationItem.location = {
+            name: `${locationName}${maps_words.Conjs.Inside}`
+        };
+    }
+    if (typeof locationItem.location === "string") {
+        locationItem.location = {
+            name: locationItem.location
+        };
+    }
+});
+
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -1237,7 +1287,7 @@ function startObserve({ target, callback, once = true, threshold = 0 }) {
   elements.forEach(el => observer.observe(el));
 }
 
-for (let i = 0; i < exhibitsLength; i += 1) {
+for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
     const tile = d.createElement("div");
     const names = d.createElement("div");
     const location = d.createElement("div");
@@ -1248,6 +1298,7 @@ for (let i = 0; i < exhibitsLength; i += 1) {
 
     tile.setAttribute("exhibits", getExhibits(i)[0]);
     tile.className = "tile inVisible";
+    getExhibits(i)[1].tileEl = tile;
 
     startObserve({
         target: tile,
@@ -1266,19 +1317,23 @@ for (let i = 0; i < exhibitsLength; i += 1) {
 
     if (!getExhibits(i)[1].location) {
         getExhibits(i)[1].location = {};
-    } else if (typeof getExhibits(i)[1].location === "string") {
-        getExhibits(i)[1].location = {name: getExhibits(i)[1].location};
+    } else if (typeof getExhibits(i)[1].location === "string") { // nameキーではなく文字があるなら
+        getExhibits(i)[1].location = {
+            name: getExhibits(i)[1].location
+        };
     }
-    const match = getExhibits(i)[0].match(/(J)(\d+)_(\d+)/);
+    const match = getExhibits(i)[0].match(/([JH])(\d+)_(\d+)/);
     if (
-        !getExhibits(i)[1].location.name &&
+        !getExhibits(i)[1]?.location?.name &&
         getExhibits(i)[1].tag.includes("byClass") &&
         match
     ) {
-        getExhibits(i)[1].location.name = getClassName(
-            match[1],
-            match[2],
-            match[3],
+        getExhibits(i)[1].location.name = (
+            `${getClassName(
+                match[1],
+                match[2],
+                match[3],
+            )}${maps_words.Conjs.Inside}`
         );
     }
 
@@ -1346,7 +1401,8 @@ for (let i = 0; i < exhibitsLength; i += 1) {
     displayTagNames.forEach(item => {
         const tag = d.createElement("span");
         tag.innerHTML = item[1];
-        tag.style.backgroundColor = item[2];
+        // tag.style.backgroundColor = item[2];
+        tag.style.setProperty("--themeColor", item[2]);
         tag.className = "tag";
         tag.setAttribute("tag", item);
         tagsContent.appendChild(tag);
@@ -1582,10 +1638,43 @@ function updateSort (searchWord = getSearchValue()) {
     exhibitsArea.style.setProperty("--numOfTile", allTiles.length);
     exhibitsArea.style.setProperty("--numOfVisibleTile", activeAllTiles.length);
 
-    conditions.forEach(condition => {
-        exhibitsArea.querySelectorAll(`.tags [tag_${condition}]`).forEach(element => {
-            element.style.opacity = 1;
-        });
+    // conditions.forEach(condition => {
+    //     // Object.values(exhibits).forEach(exhibit => {
+    //     //     getTargetTag(exhibit).classList.remove("visible");
+    //     // });
+    //     // Object.values(exhibits).filter(item => item?.tag.includes(condition)).forEach(exhibit => {
+    //     //     getTargetTag(exhibit).classList.add("visible");
+    //     // });
+
+    //     console.log(
+    //         Object.values(exhibits).filter(item => item?.tag.includes(condition)),
+    //         exhibitsArea.querySelectorAll(`.tags [tag_${condition}]`),
+    //     );
+
+    //     exhibitsArea.querySelectorAll(".tags .tag").forEach(tagItem => {
+    //         tagItem.classList.remove("inValid");
+    //         const isConforming = tagItem.getAttribute("tag").split(",")[0] === condition
+    //         if (isConforming) {
+    //             tagItem.classList.add("inValid");
+    //         }
+    //     });
+        
+    //     // exhibitsArea.querySelectorAll(`.tags [tag_${condition}]`).forEach(element => {
+    //     //     element.style.opacity = 1;
+    //     // });
+    // });
+
+    exhibitsArea.querySelectorAll(".tags .tag").forEach(tagItem => {
+        if (conditions.length === 0) {
+            tagItem.classList.remove("inValid");
+        } else {
+            tagItem.classList.add("inValid");
+            const tagId = tagItem.getAttribute("tag").split(",")[0];
+            conditions.forEach(condition => {
+                const isConforming = tagId === condition;
+                if (isConforming) tagItem.classList.remove("inValid");
+            });
+        }
     });
 
     // 角丸系
@@ -1615,7 +1704,8 @@ function updateSort (searchWord = getSearchValue()) {
                     return "";
                 }
             })();
-            newDisplayEl.style.backgroundColor = tagOrder[condition]?.themeColor;
+            // newDisplayEl.style.backgroundColor = tagOrder[condition]?.themeColor;
+            newDisplayEl.style.setProperty("--themeColor", tagOrder[condition]?.themeColor);
             conditionsArea.appendChild(newDisplayEl);
             
             const newAndEl = d.createElement("div");
@@ -1678,21 +1768,26 @@ let loadModel;
         });
     });
 
-    let isBarTouchNow = false
+    let isBarTouchNow = false;
 
     function scroll () {
         const getScrollRatio = () => {
             const scrollRatio = bottomBar_contents.scrollLeft / sortList_tabs.scrollWidth;
             return Number.isNaN(scrollRatio) ? 0 : scrollRatio;
         }
-        const tabIndex = Math.round(getScrollRatio());
-        if (!isBarTouchNow && getScrollRatio() % 1 === 0) {
+        const scrollRatio = getScrollRatio();
+        const tabIndex = Math.round(scrollRatio);
+        if (
+            !isBarTouchNow &&
+            scrollRatio % 1 === 0
+        ) {
             barTabClick(tabIndex);
         }
         barHeightUpdate();
     }
 
-    bottomBar_contents.addEventListener("scroll", scroll);
+    // bottomBar_contents.addEventListener("scroll", scroll);
+    // scroll();
 
     bottomBar_contents.addEventListener("touchstart", () => {
         isBarTouchNow = true;
@@ -1712,7 +1807,7 @@ function scrollToTile(value, offsetY = 0) {
     const targetTile = value instanceof Element ? (
         value
     ) : (
-        exhibitsArea.querySelector(`.tile[exhibits="${value}"]`)
+        exhibits[value]?.tileEl || maps_locations[value]?.tileEl
     );
 
     function scrollToAndThen(targetY, callback) {
@@ -1766,6 +1861,8 @@ function scrollToTile(value, offsetY = 0) {
             openTile(targetTile, true);
         });
     });
+
+    return targetTile || null;
 }
 const truncateText = ({
     text: text,
@@ -1849,10 +1946,16 @@ function pushLabel (targetName) {
         location.description? getNewElItem(location.description, "detail", () => {
             const objName = getFmtedObjName(targetName);
             barHeightUpdate(false);
-            if (maps_locations[objName]?.onClick) {
+            if (maps_locations[targetName]?.onClick) {
+                maps_locations[targetName].onClick();
+            } else if (maps_locations[objName]?.onClick) {
                 maps_locations[objName].onClick();
             } else {
-                scrollToTile(objName);
+                console.log(
+                    maps_locations[targetName],
+                    objName,
+                    scrollToTile(targetName) || scrollToTile(objName)
+                );
             }
         }) : null,
         getNewElItem(location?.image, "image"),
@@ -2124,7 +2227,8 @@ function removeAllLabel () {
             }).includes(tag) ? " checkedBox" : ""
         }`;
         // newTag.className = "tag checkedBox";
-        newTag.style.backgroundColor = tagOrder[tag].themeColor;
+        // newTag.style.backgroundColor = tagOrder[tag].themeColor;
+        newTag.style.setProperty("--themeColor", tagOrder[tag].themeColor);
         newTag.textContent = tagOrder[tag].displayName;
         newTag.setAttribute("tag", tag);
         if (tagOrder[tag].group) {
@@ -2559,6 +2663,20 @@ function removeAllLabel () {
                                 description: `トイレ ${maps_getFloor(partName)[0]}階`,
                             };
                         }
+                        if (
+                            maps_locations[partName]?.location?.name &&
+                            maps_locations[partName]?.tag &&
+                            !maps_locations[partName].location.name.match(/\(\d+階\)/g)
+                        ) {
+                            maps_locations[partName].location.name += ` (${maps_getFloor(partName).join(",")}階)`;
+                        }
+                        // if (maps_locations[partName] && !maps_locations[partName]?.description) {
+                        //     maps_locations[partName].description = `${
+                        //         maps_locations[partName].tag ? (
+                        //             maps_locations[partName].tag.includes("byClass") ? tagOrder.byClass.displayName : tagOrder.byVolunteers.displayName
+                        //         ) : ""
+                        //     } ${maps_getFloor(partName)[0]}階`;
+                        // }
 
                         if (!maps_locations[partName]) return;
 
@@ -2753,7 +2871,10 @@ function removeAllLabel () {
                             textWidth = ctx.measureText(text).width;
 
                             add({
-                                width: (textWidth / textHeight) * .6,
+                                width: Math.max(
+                                    (textWidth / textHeight) * .6,
+                                    2
+                                ),
                                 height: 1,
                             });
                         }
@@ -3870,3 +3991,6 @@ window.addEventListener("scroll", () => { // sortListAreaHeight
     }
     element.addEventListener("click", process);
 })();
+
+console.log("exhibits : ", exhibits);
+console.log("maps_locations : ", maps_locations);
