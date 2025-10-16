@@ -27,7 +27,9 @@
     }
     50% {
         transform: translateX(-2px);
-        opacity: .9;
+        opacity: calc(
+            var(--tileOpacity) * .9
+        );
     }
     to {
         transform: translateX(0);
@@ -36,7 +38,7 @@
 }
 .content.main .exhibits .tile {
     --baseOpacity: .2;
-    --baseHeight: 100px;
+    --baseHeight: 110px;
     --baseBackgorundRGB: 211, 211, 211;
     --padding: 8px;
     margin: var(--exhibitsTileMargin);
@@ -123,8 +125,13 @@
 }
 .content.main .exhibits .tile > .location {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 5px;
+    top: 5px;
+    padding: 5px;
+    /* padding: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px; */
+    max-width: 35%;
     border-radius: calc(.5em + 5px);
     font-size: .8em;
     display: flex;
@@ -132,7 +139,9 @@
     align-items: center;
     backdrop-filter: none;
     --webkit-backdrop-filter: none;
-    height: 1.25em;
+    min-height: 1em;
+    height: min-content;
+    background-color: white;
     transition: height .5s ease-in-out;
     z-index: 9;
 }
@@ -188,6 +197,7 @@
 .content.main .exhibits .tile .location span.text {
     position: absolute;
     opacity: 0;
+    white-space: nowrap;
     transition: opacity .5s ease-in-out;
 }
 
@@ -329,7 +339,7 @@
     justify-content: center;
     align-items: center;
 }
-.content.main .exhibits .list .tile > div:not(.tags) {
+.content.main .exhibits .list .tile > div:not(.tags, .location) {
     /* padding: var(--padding); */
     padding-top: var(--padding);
     padding-left: var(--padding);
@@ -341,7 +351,7 @@
     height: 1em;
     position: relative;
     width: calc(100% - var(--padding) * 2);
-    max-width: 50%;
+    max-width: 60%;
 }
 .content.main .exhibits .tile .names .subText {
     position: absolute;
@@ -441,7 +451,7 @@
 .content.main .sortDisplay .numOfHits > span:not(.subText) {
     position: relative;
     display: inline-block;
-    min-width: 1em;
+    min-width: 1rem;
     text-align: right;
 }
 .content.main .sortDisplay .conditions > div.display {
@@ -1255,10 +1265,15 @@
     left: 5px;
     justify-content: flex-start;
 }
+.content.main .exhibits .tile .content .buttons.left .button {
+    padding-left: 6px;
+    padding-right: 6px;
+}
 .content.main .exhibits .tile .content .buttons.left span {
-    font-size: .5em;
+    font-size: 1rem !important;
     margin-bottom: .1em;
     margin-right: .1em;
+    margin-left: 1px;
 }
 .content.main .exhibits .tile .content .buttons.top {
     display: flex;
@@ -1290,6 +1305,8 @@
 }
 .content.main .exhibits .tile .content .buttons .button {
     padding: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
     margin: 2.5px;
     border-radius: .5em;
     min-width: 1.25em;

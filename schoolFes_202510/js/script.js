@@ -124,9 +124,10 @@ function addGoogleTag () { // Google tag
     d.head.appendChild(script2);
 };
 
+let isDevMode = false;
 (async () => { // isDevMode?
     try {
-        const isDevMode = await getHashSHA256(localStorage.getItem("devMode") || null) === "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde";
+        isDevMode = await getHashSHA256(localStorage.getItem("devMode") || null) === "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde";
         if (isDevMode) {
             console.log("isDevMode");
             // titleMap.devMode = "(HelloWorld!)";

@@ -59,6 +59,7 @@ const maps_names = {
     Art: `${maps_words.Subjects.Art}棟`,
     Corridor: "廊下",
     Stairs: "階段",
+    Skateboard: "スケボー場",
     Multipurpose: "多目的ホール",
     Science_A: `${maps_words.Subjects.Science}${maps_words.Room}A`,
     Science_B: `${maps_words.Subjects.Science}${maps_words.Room}B`,
@@ -488,7 +489,7 @@ const exhibits = {
     },
     F1_PrivateSchool: {
         name: "私学助成",
-        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
+        location: `${maps_names.FrontEntrance}`,
         tag: [
             "byVolunteers",
         ],
@@ -550,14 +551,14 @@ const exhibits = {
     },
     Star_Dormitory: {
         name: `星${maps_names.Dormitory}有志`,
-        location: `${maps_names.Science_A}${maps_words.Conjs.Inside}`,
+        location: `${maps_names.Science_A}`,
         tag: [
             "byVolunteers",
         ],
     },
     F1_Sustainable: {
         name: "サステナ委員会",
-        location: `${maps_names.Entrance}${maps_words.Conjs.Inside}`,
+        location: `${maps_names.Entrance}`,
         tag: [
             "byVolunteers",
         ],
@@ -691,8 +692,9 @@ const exhibits = {
             "day1",
         ],
     },
-    Kebab: {
+    F1_Kebab: {
         name: "ケバ部",
+        location: `${maps_names.Gym}${maps_words.Conjs.Infront}､${maps_names.Skateboard}`,
         tag: [
             "byVolunteers",
         ],
@@ -1114,7 +1116,7 @@ Object.values(maps_locations).forEach((locationItem, i) => {
     const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
     if (!locationItem?.location?.name && locationName) {
         locationItem.location = {
-            name: `${locationName}${maps_words.Conjs.Inside}`
+            name: `${locationName}`
         };
     }
     if (typeof locationItem.location === "string") {
@@ -1154,6 +1156,20 @@ const maps_camera = new THREE.OrthographicCamera(
     1,
     200
 );
+
+window.addEventListener("keydown", e => {
+    // 強制的にコンテキスト破棄
+    if (isDevMode && e.code === "KeyP" && maps_renderer && maps_renderer.getContext) {
+        const gl = maps_renderer.getContext();
+        const ext = gl.getExtension('WEBGL_lose_context');
+        if (ext) {
+            ext.loseContext();
+            setTimeout(() => {
+                ext.restoreContext();
+            }, 2000);
+        }
+    }
+});
 
 const maps_labelRenderer = new CSS2DRenderer();
 const maps_labelsArea = maps_labelRenderer.domElement;
@@ -1384,7 +1400,7 @@ for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
                 match[1],
                 match[2],
                 match[3],
-            )}${maps_words.Conjs.Inside}`
+            )}`
         );
     }
 
@@ -1946,7 +1962,7 @@ let maps_model; // モデルを外で保持
 let isShow2DMap = false;
 
 const getFmtedObjName = (name) => name.replace("F" + maps_getFloor(name) + "_", "");
-const getIsImageUrl = (text) => text.includes("/") && (text.includes(".svg") || text.includes(".png"));
+const getIsImageUrl = (text) => text?.includes("/") && (text?.includes(".svg") || text?.includes(".png"));
 
 function updateLabelOpacity() {
     Object.values(maps_labels).forEach(({ object, part }, index) => {
@@ -2951,6 +2967,26 @@ function removeAllLabel () {
                     });
 
                     maps_renderer.domElement.addEventListener("webglcontextrestored", () => {
+                        console.warn("WebGL context restored — rebuilding text labels.");
+
+                        Object.keys(maps_labels).forEach((partName) => {
+                            const { object, part } = maps_labels[partName];
+                            const location = maps_locations[partName];
+
+                            // CanvasTextureを使うテキストラベルのみ再描画
+                            if (object.material.map instanceof THREE.CanvasTexture && !getIsImageUrl(location?.name)) {
+                                const canvas = object.material.map.image;
+                                if (canvas && canvas.getContext) {
+                                    const ctx = canvas.getContext("2d");
+                                    if (ctx && typeof drawLabelText === "function") {
+                                        drawLabelText.call({ ctx, canvas, partName }); // 再描画
+                                        object.material.map.needsUpdate = true;
+                                    }
+                                }
+                            }
+                        });
+                        maps_renderer.compile(scene, maps_camera);
+
                         Object.values(maps_labels).forEach(({ object }) => {
                             if (object.material.map instanceof THREE.CanvasTexture) {
                                 object.material.map.needsUpdate = true;
@@ -2958,6 +2994,7 @@ function removeAllLabel () {
                         });
                         maps_renderer.compile(scene, maps_camera);
                     });
+
 
                     const raycaster = new THREE.Raycaster();
                     const mouse = new THREE.Vector2();
@@ -3552,7 +3589,7 @@ function removeAllLabel () {
         Object.values(floors).slice().reverse().forEach((floor, index) => {
             const button = d.createElement("div");
             
-            button.innerHTML = `<span>F</span>${floor.name}`;
+            button.innerHTML = `${floor.name}<span>階</span>`;
             button.setAttribute("floor", Object.keys(floors)[Object.keys(floors).length - index - 1]);
             button.className = "button";
 
@@ -3949,17 +3986,6 @@ function removeAllLabel () {
         mapsView.appendChild(maps_buttons_right);
         mapsView.appendChild(maps_buttons_top);
     })();
-
-    maps_renderer.domElement.addEventListener('webglcontextlost', e => {
-        console.warn('Context Lost');
-        e.preventDefault();
-    });
-
-    maps_renderer.domElement.addEventListener('webglcontextrestored', () => {
-        console.info('Context Restored');
-        initScene(); // シーンを再構築
-    });
-
 })();
 
 (() => {
