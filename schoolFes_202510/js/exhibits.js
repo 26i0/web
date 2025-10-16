@@ -616,6 +616,7 @@ const exhibits = {
     },
     F1_StarRabbit: {
         name: "星うさぎの贈り物",
+        location: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
             "day1",
@@ -718,224 +719,6 @@ const exhibits = {
     //         "byVolunteers",
     //     ],
     // },
-}
-
-const maps_pointIcon = "medias/images/mapPoint.svg";
-
-const maps_locations = {
-    currentLocationPoint: {
-        name: "現在地",
-        description: "おおよその現在地",
-        isEdgeShow: true,
-    },
-
-    F1_Entrance_Arch: {
-        name: maps_names.FrontEntrance,
-        emphasis: true,
-        isAlwaysShow: true,
-        isEdgeShow: true,
-    },
-    Dining_Roof: {
-        name: maps_names.Dining,
-        offset: {
-            y: .05,
-        },
-        description: `${maps_names.Dining}のメニュー`,
-        onClick: () => {
-            window.location.href = "./?page=5";
-        },
-        image: "./medias/pages/0.png",
-        isAlwaysShow: true,
-        isEdgeShow: true,
-    },
-
-    F1_Art_WC: {
-        location: {
-            name: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F1_Dining_WC: {
-        location: {
-            name: `${maps_names.Dining}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F1_J_WC: {
-        location: {
-            name: `${getClassName("J", 1, 3)}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F1_CurveRoom_WC: {
-        location: {
-            name: `${maps_names.Secretariat}${maps_words.Conjs.Infront}`,
-        }
-    },
-    F2_J_WC: {
-        location: {
-            name: `${getClassName("J", 2, 3)}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F3_J_WC: {
-        location: {
-            name: `${getClassName("J", 3, 3)}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F1_H_WC: {
-        location: {
-            name: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
-        }
-    },
-    F2_H_WC: {
-        location: {
-            name: `${getClassName("H", 2, 4)}${maps_words.Conjs.Infront}`,
-        }
-    },
-    F3_H_WC: {
-        location: {
-            name: `${getClassName("H", 3, 4)}${maps_words.Conjs.Infront}`,
-        }
-    },
-    F1_WC: {
-        location: {
-            name: `${maps_names.Science_Preparation}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F2_WC: {
-        location: {
-            name: `${maps_names.Cooking}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F3_WC: {
-        location: {
-            name: `${maps_names.Computers}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F1_Gym_WC: {
-        location: {
-            name: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
-        }
-    },
-    F1_Gym_WC001: {
-        location: {
-            name: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
-        }
-    },
-
-    F1_Information_Center: {
-        name: "インフォメーションセンター",
-    },
-    F1_Certificate: {
-        name: "金券",
-    },
-    F1_Gym_Entrance: {
-        name: maps_names.Gym,
-    },
-    F1_F2_Art: {
-        name: maps_names.Art,
-        offset: {
-            y: .1,
-        },
-    },
-    F2_Art: exhibits.Smash,
-
-    // ↓他部屋
-    F1_Multipurpose: exhibits.Tokusatsu,
-    F1_Woodworking: {
-        location: {
-            name: maps_names.Woodworking,
-        },
-    },
-    F1_F2_F3_OutdoorStairs004: exhibits.Aruaru,
-    F1_Airplane: exhibits.PlaneWorkshop,
-    F1_Science_A: exhibits.Star_Dormitory,
-    F1_Science_B: exhibits.PROBUX,
-    F1_Science_C: exhibits.North_Dormitory,
-    F1_Science_D: exhibits.BLUEPEYOUNG,
-    F1_Science_Preparation: {
-        location: {
-            name: maps_names.Science_Preparation,
-        },
-    },
-    F1_Science_Laboratory: {
-        location: {
-            name: maps_names.Science_Laboratory,
-        },
-    },
-    F2_SocialStudies_Laboratory: {
-        location: {
-            name: maps_names.SocialStudies_Laboratory,
-        },
-    },
-    F2_English_Laboratory: {
-        location: {
-            name: maps_names.English_Laboratory,
-        },
-    },
-    F2_Music_Small: {
-        location: {
-            name: maps_names.Music_Small,
-        },
-    },
-    F2_Music_Large: {
-        location: {
-            name: maps_names.Music_Large,
-        },
-    },
-    F2_Life_Laboratory: {
-        location: {
-            name: maps_names.Life_Laboratory,
-        },
-    },
-    F2_Cooking: {
-        location: {
-            name: maps_names.Cooking,
-        },
-    },
-
-    F3_Music_2: {
-        location: {
-            name: maps_names.Music_2,
-        },
-    },
-    F3_Music_3: {
-        ...exhibits.F1_Tekken_1,
-        description: "プラレール展示",
-    },
-    F3_Computers: {
-        location: {
-            name: maps_names.Computers,
-        },
-    },
-    F3_Math_Laboratory: {
-        location: {
-            name: maps_names.Math_Laboratory,
-        },
-    },
-    F3_Music_Laboratory: {
-        location: {
-            name: maps_names.Music_Laboratory,
-        },
-    },
-    F3_Warehouse: exhibits.Shoten,
-    // ↑他部屋
-
-    BusStation_Base: {
-        name: `${maps_names.Bus}停`,
-        description: `${maps_names.Bus}ダイヤを見る`,
-        image: "./medias/pages/0.png",
-        onClick: () => {
-            window.location.href = "./?page=5";
-        },
-        offset: {
-            y: .1,
-        },
-        isAlwaysShow: true,
-        isEdgeShow: true,
-    },
-
-    F1_Rukissa001: {
-        ...exhibits.F1_Rukissa,
-        location: `${getClassName("H", 1, 4)}${maps_words.Conjs.NextTo}`,
-    },
 };
 
 const getExhibits = (n) => ([ Object.keys(exhibits)[n], Object.values(exhibits)[n] ])
@@ -1110,22 +893,6 @@ function barTabClick (tabIndex) {
     tabClassUpdate(tabIndex);
     barHeightUpdate(true);
 }
-
-
-Object.values(maps_locations).forEach((locationItem, i) => {
-    const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
-    if (!locationItem?.location?.name && locationName) {
-        locationItem.location = {
-            name: `${locationName}`
-        };
-    }
-    if (typeof locationItem.location === "string") {
-        locationItem.location = {
-            name: locationItem.location
-        };
-    }
-});
-
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -1365,6 +1132,7 @@ for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
 
     tileEl.setAttribute("exhibits", getExhibits(i)[0]);
     tileEl.className = "tile inVisible";
+
     getExhibits(i)[1].tileEl = tileEl;
 
     startObserve({
@@ -1414,45 +1182,42 @@ for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
         image.src = getExhibits(i)[1].image;
         imagesEl.appendChild(image);
     }
+    const locationTextContent = getExhibits(i)[1].location.name || "";
+    const locationText = d.createElement("span");
+    locationText.className = "locationText";
+    locationText.textContent = locationTextContent;
+    locationEl.className = "location button";
+    locationEl.appendChild(locationText);
+    (() => {
+        const arrow = d.createElementNS("http://www.w3.org/2000/svg", "svg");
+        arrow.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 
-    {
-        const locationTextContent = getExhibits(i)[1].location.name || "";
-        const locationText = d.createElement("span");
-        locationText.className = "locationText";
-        locationText.textContent = locationTextContent;
-        locationEl.className = "location button";
-        locationEl.appendChild(locationText);
-        (() => {
-            const arrow = d.createElementNS("http://www.w3.org/2000/svg", "svg");
-            arrow.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        const path = d.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M228.451,230.092L228.451,850.906L849.265,850.906");
 
-            const path = d.createElementNS("http://www.w3.org/2000/svg", "path");
-            path.setAttribute("d", "M228.451,230.092L228.451,850.906L849.265,850.906");
+        const text = d.createElement("span");
+        text.className = "text";
+        text.textContent = "地図で見る";
 
-            const text = d.createElement("span");
-            text.className = "text";
-            text.textContent = "地図で見る";
-
-            arrow.appendChild(path);
-            locationEl.appendChild(arrow);
-            locationEl.appendChild(text);
-        })();
-        locationEl.addEventListener("click", e => {
-            e.stopPropagation();
-            barTabClick(1);
-            Object.values(maps_locations).forEach((item, index) => {
-                if (getExhibits(i)[1] === item) {
-                    const targetName = Object.keys(maps_locations)[index];
-                    removeAllLabel();
-                    pushLabel(targetName);
-                    // const targetLabel = maps_labelsArea.querySelector(`.mapsLabel[exhibits="${Object.keys(maps_locations)[index]}"]`);
-                    // targetLabel.classList.add("opened");
-                    // maps_addLabelTransition(targetLabel);
-                    // if (!get_isEveryFloorValid()) maps_changeFloor(maps_getFloor(targetObj.name));
-                }
-            });
+        arrow.appendChild(path);
+        locationEl.appendChild(arrow);
+        locationEl.appendChild(text);
+    })();
+    locationEl.addEventListener("click", e => {
+        e.stopPropagation();
+        barTabClick(1);
+        Object.values(maps_locations).forEach((item, index) => {
+            if (getExhibits(i)[1] === item) {
+                const targetName = Object.keys(maps_locations)[index];
+                removeAllLabel();
+                pushLabel(targetName);
+                // const targetLabel = maps_labelsArea.querySelector(`.mapsLabel[exhibits="${Object.keys(maps_locations)[index]}"]`);
+                // targetLabel.classList.add("opened");
+                // maps_addLabelTransition(targetLabel);
+                // if (!get_isEveryFloorValid()) maps_changeFloor(maps_getFloor(targetObj.name));
+            }
         });
-    }
+    });
     if (getExhibits(i)[1] && (
         ["day1", "day2"].every(item => !getExhibits(i)[1].tag.includes(item))
     )) { // 日数tag自動生成
@@ -1514,6 +1279,170 @@ for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
     scroll();
     tagsContentEl.addEventListener("scroll", scroll);
 }
+
+const maps_pointIcon = "medias/images/mapPoint.svg";
+const maps_locations = {
+    currentLocationPoint: {
+        name: "現在地",
+        description: "おおよその現在地",
+        isEdgeShow: true,
+    },
+
+    F1_Entrance_Arch: {
+        name: maps_names.FrontEntrance,
+        emphasis: true,
+        isAlwaysShow: true,
+        isEdgeShow: true,
+    },
+    Dining_Roof: {
+        name: maps_names.Dining,
+        offset: {
+            y: .05,
+        },
+        description: `${maps_names.Dining}のメニュー`,
+        onClick: () => {
+            window.location.href = "./?page=5";
+        },
+        image: "./medias/pages/0.png",
+        isAlwaysShow: true,
+        isEdgeShow: true,
+    },
+
+    F1_Art_WC: {
+        location: {
+            name: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_Dining_WC: {
+        location: {
+            name: `${maps_names.Dining}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_J_WC: {
+        location: {
+            name: `${getClassName("J", 1, 3)}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_CurveRoom_WC: {
+        location: {
+            name: `${maps_names.Secretariat}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F2_J_WC: {
+        location: {
+            name: `${getClassName("J", 2, 3)}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F3_J_WC: {
+        location: {
+            name: `${getClassName("J", 3, 3)}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_H_WC: {
+        location: {
+            name: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F2_H_WC: {
+        location: {
+            name: `${getClassName("H", 2, 4)}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F3_H_WC: {
+        location: {
+            name: `${getClassName("H", 3, 4)}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F1_WC: {
+        location: {
+            name: `${maps_names.Science_Preparation}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F2_WC: {
+        location: {
+            name: `${maps_names.Cooking}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F3_WC: {
+        location: {
+            name: `${maps_names.Computers}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_Gym_WC: {
+        location: {
+            name: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_Gym_WC001: {
+        location: {
+            name: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
+        }
+    },
+
+    F1_Information_Center: {
+        // name: "インフォメーションセンター",
+        name: "medias/images/mapInformation.svg",
+        description: "インフォメーションセンター",
+    },
+    F1_Certificate: {
+        name: "金券",
+    },
+    F1_Gym_Entrance: {
+        name: maps_names.Gym,
+    },
+    F1_F2_Art: {
+        name: maps_names.Art,
+        offset: {
+            y: .1,
+        },
+    },
+    F2_Art: exhibits.Smash,
+
+    F1_Multipurpose: exhibits.Tokusatsu,
+    F1_F2_F3_OutdoorStairs004: exhibits.Aruaru,
+    F1_Airplane: exhibits.PlaneWorkshop,
+    F1_Science_A: exhibits.Star_Dormitory,
+    F1_Science_B: exhibits.PROBUX,
+    F1_Science_C: exhibits.North_Dormitory,
+    F1_Science_D: exhibits.BLUEPEYOUNG,
+    F3_Music_3: {
+        ...exhibits.F1_Tekken_1,
+        description: "プラレール展示",
+    },
+    F3_Warehouse: exhibits.Shoten,
+
+    BusStation_Base: {
+        name: `${maps_names.Bus}停`,
+        description: `${maps_names.Bus}ダイヤを見る`,
+        image: "./medias/pages/0.png",
+        onClick: () => {
+            window.location.href = "./?page=5";
+        },
+        offset: {
+            y: .1,
+        },
+        isAlwaysShow: true,
+        isEdgeShow: true,
+    },
+
+    F1_Rukissa001: {
+        ...exhibits.F1_Rukissa,
+        location: `${getClassName("H", 1, 4)}${maps_words.Conjs.NextTo}`,
+    },
+};
+Object.values(maps_locations).forEach((locationItem, i) => {
+    const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
+    if (!locationItem?.location?.name && locationName) {
+        locationItem.location = {
+            name: `${locationName}`
+        };
+    }
+    if (typeof locationItem.location === "string") {
+        locationItem.location = {
+            name: locationItem.location
+        };
+    }
+});
 
 const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
 
@@ -1961,7 +1890,7 @@ const getSearchValue = () => searchAreaEl.classList.contains("opened") ? newSear
 let maps_model; // モデルを外で保持
 let isShow2DMap = false;
 
-const getFmtedObjName = (name) => name.replace("F" + maps_getFloor(name) + "_", "");
+const getFmtedObjName = (name) => name.replace("F" + maps_getFloor(name) + "_", "").replace(name.match(/\d{3}$/), "");
 const getIsImageUrl = (text) => text?.includes("/") && (text?.includes(".svg") || text?.includes(".png"));
 
 function updateLabelOpacity() {
@@ -2024,7 +1953,6 @@ function pushLabel (targetName) {
     informations.className = "informations";
 
     function pushedLabel () {
-        console.log("push");
         const objName = getFmtedObjName(targetName);
         barHeightUpdate(false);
         if (maps_locations[targetName]?.onClick) {
@@ -2034,6 +1962,7 @@ function pushLabel (targetName) {
         } else {
             console.log(
                 maps_locations[targetName],
+                targetName,
                 objName,
                 scrollToTile(targetName) || scrollToTile(objName)
             );
@@ -2993,6 +2922,8 @@ function removeAllLabel () {
                             }
                         });
                         maps_renderer.compile(scene, maps_camera);
+
+                        // location.reload();
                     });
 
 
