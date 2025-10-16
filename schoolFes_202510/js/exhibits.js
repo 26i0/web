@@ -315,9 +315,6 @@ const exhibits = {
     MCBATTLE: {
         name: "MC BATTLE",
         location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
-        activity: {
-            days: [2],
-        },
         tag: [
             "byVolunteers",
             "day2",
@@ -325,16 +322,15 @@ const exhibits = {
     },
     Keion: {
         name: "軽音ライブ",
-        activity: {
-            days: [1],
-        },
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
             "day1",
         ],
     },
-    Shooting: {
+    F1_Shooting: {
         name: "射的",
+        location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
@@ -348,16 +344,14 @@ const exhibits = {
     },
     Shoten: {
         name: "昇天商店",
-        activity: {
-            days: [2],
-        },
         tag: [
             "byVolunteers",
             "day2",
         ],
     },
-    Handmade: {
+    F2_Handmade: {
         name: "はじめ手作り shop",
+        location: `${getClassName("H", 2, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
@@ -392,9 +386,7 @@ const exhibits = {
     },
     DoyouDance: {
         name: "土曜ダンス",
-        activity: {
-            days: [1],
-        },
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
             "day1",
@@ -402,9 +394,7 @@ const exhibits = {
     },
     AMAZE: {
         name: "ダンズ部 AMAZE",
-        activity: {
-            days: [1],
-        },
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
             "day1",
@@ -438,6 +428,7 @@ const exhibits = {
     },
     Miyata: {
         name: "宮田の即売会",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -462,8 +453,9 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Cardboard: {
+    F1_Cardboard: {
         name: "ダンボール武器庫",
+        location: `${getClassName("H", 1, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
@@ -488,9 +480,7 @@ const exhibits = {
     },
     ChuMinKyo: {
         name: "中民鄉学園祭公演",
-        activity: {
-            days: [2],
-        },
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
             "day2",
@@ -526,6 +516,7 @@ const exhibits = {
     },
     F1_Mononoke: {
         name: "もののけ",
+        location: `${getClassName("H", 1, 1)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -539,9 +530,6 @@ const exhibits = {
     },
     Samba: {
         name: "サンバ",
-        activity: {
-            days: [2],
-        },
         tag: [
             "byVolunteers",
             "day2",
@@ -576,6 +564,7 @@ const exhibits = {
     },
     F1_Glass: {
         name: "ガラス細工部",
+        location: `${getClassName("H", 1, 7)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
         ],
@@ -626,9 +615,6 @@ const exhibits = {
     },
     F1_StarRabbit: {
         name: "星うさぎの贈り物",
-        activity: {
-            days: [1],
-        },
         tag: [
             "byVolunteers",
             "day1",
@@ -649,9 +635,6 @@ const exhibits = {
     },
     F1_Tacos: {
         name: "タコス",
-        activity: {
-            days: [2],
-        },
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
@@ -673,9 +656,6 @@ const exhibits = {
     },
     F1_FlyYum: {
         name: "Fly yum",
-        activity: {
-            days: [1],
-        },
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}､${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
@@ -684,9 +664,6 @@ const exhibits = {
     },
     BloomSweets: {
         name: "Bloom sweets",
-        activity: {
-            days: [2],
-        },
         tag: [
             "byVolunteers",
             "day2",
@@ -700,9 +677,6 @@ const exhibits = {
     },
     F3_WitchYakisoba: {
         name: "魔女のなぞやきそば",
-        activity: {
-            days: [2],
-        },
         location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
@@ -711,9 +685,6 @@ const exhibits = {
     },
     F1_GanGanHao: {
         name: "ガンガンハオ",
-        activity: {
-            days: [1],
-        },
         location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
@@ -734,9 +705,6 @@ const exhibits = {
     },
     ChaiWari: {
         name: "Chai wari",
-        activity: {
-            days: [2],
-        },
         tag: [
             "byVolunteers",
             "day2",
@@ -1157,16 +1125,11 @@ Object.values(maps_locations).forEach((locationItem, i) => {
 });
 
 
-// import * as THREE from "three";
-// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
-// import { CSS2DRenderer, CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js";
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js";
-import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/controls/OrbitControls.js";
-import * as BufferGeometryUtils from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/utils/BufferGeometryUtils.js";
-import { CSS2DRenderer, CSS2DObject } from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/renderers/CSS2DRenderer.js";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { CSS2DRenderer, CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js";
 /**
