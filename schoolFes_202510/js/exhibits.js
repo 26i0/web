@@ -1157,12 +1157,18 @@ Object.values(maps_locations).forEach((locationItem, i) => {
 });
 
 
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
+// import * as THREE from "three";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
+// import { CSS2DRenderer, CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js";
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/controls/OrbitControls.js";
+import * as BufferGeometryUtils from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/utils/BufferGeometryUtils.js";
+import { CSS2DRenderer } from "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/renderers/CSS2DRenderer.js";
+
 import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js";
-import { CSS2DRenderer, CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 /**
 * @param {THREE.Object3D} target
 * @param {THREE.OrthographicCamera} camera
