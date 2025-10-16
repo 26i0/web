@@ -508,15 +508,16 @@ function scrollProcess() {
 
     d.documentElement.style.setProperty("--scrollPx", `${window.scrollY}px`);
 
-    const get_isShowTopBar = () => HTMLFileName === "index" ? window.scrollY !== 0 : true;
-    if (last_isShowTopBar !== get_isShowTopBar()) {
-        if (HTMLFileName === "index") {
-            showTopBarAnim(get_isShowTopBar());
-        } else {
-            topBar.style.opacity = 1;
-        }
-    }
-    last_isShowTopBar = get_isShowTopBar();
+    // const get_isShowTopBar = () => HTMLFileName === "index" ? window.scrollY !== 0 : true;
+    // if (last_isShowTopBar !== get_isShowTopBar()) {
+        // if (HTMLFileName === "index") {
+        //     showTopBarAnim(get_isShowTopBar());
+        // } else {
+        //     topBar.style.opacity = 1;
+        // }
+    // }
+    // last_isShowTopBar = get_isShowTopBar();
+    topBar.style.opacity = 1;
 }
 scrollProcess();
 window.addEventListener("scroll", scrollProcess);

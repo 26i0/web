@@ -96,17 +96,17 @@
 .content.main .exhibits .tile.hidden {
     opacity: var(--baseOpacity);
     pointer-events: none;
-    --whenHiddenHeight: 2.5em;
-    height: var(--whenHiddenHeight);
+    /* --whenHiddenHeight: 2.5em;
+    height: var(--whenHiddenHeight); */
 }
-.content.main .exhibits .tile.hidden:last-child {
+/* .content.main .exhibits .tile.hidden:last-child {
     margin-bottom: calc(
         (var(--baseHeight) - var(--whenHiddenHeight)) * (var(--numOfTile) - var(--numOfVisibleTile))
     );
 }
 .content.main .exhibits .tile.hidden .tags {
     opacity: 0;
-}
+} */
 .content.main .exhibits .tile.opened {
     /* height: min(60vh, 600px); */
     height: max(
@@ -211,6 +211,7 @@
     bottom: 10px;
     z-index: 10;
     overflow: hidden;
+    background-color: rgba(255, 255, 255, .5);
     backdrop-filter: blur(10px);
     --webkit-backdrop-filter: blur(10px);
 }
@@ -328,11 +329,19 @@
     justify-content: center;
     align-items: center;
 }
+.content.main .exhibits .list .tile > div:not(.tags) {
+    /* padding: var(--padding); */
+    padding-top: var(--padding);
+    padding-left: var(--padding);
+}
+.content.main .exhibits .tile .activity {
+    font-size: .8rem;
+}
 .content.main .exhibits .tile .names {
     height: 1em;
     position: relative;
     width: calc(100% - var(--padding) * 2);
-    padding: var(--padding);
+    max-width: 50%;
 }
 .content.main .exhibits .tile .names .subText {
     position: absolute;
@@ -848,6 +857,8 @@
     background-color var(--transitionDuration) ease-out;
 }
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations {
+    pointer-events: auto;
+    cursor: pointer;
     position: relative;
     height: min-content;
     margin: 0;

@@ -1,45 +1,45 @@
-function dateUpdate () {
-    const nowDate = new Date();
-    if (nowDate <= new Date("2025-10-26")) {
-        const daysLeft = Math.ceil((new Date("2025-10-25") - nowDate) / (1000 * 60 * 60 * 24));
-        let HTML = "あと&nbsp;" + "<span class='emphasisText'>" + daysLeft + "</span>" + "&nbsp;日";
-        if (daysLeft < 1) {
-            HTML = "開催中";
-        }
-        topContentButton.innerHTML = HTML;
-    } else {
-        topContentButton.style.display = "none";
-    }
-}
-// topContentButton.addEventListener("click", () => {
-//     window.location = "https://www.jiyunomori.ac.jp/zaikou/calender.php?month=2025-10";
-// });
-dateUpdate();
-setInterval(dateUpdate, 10000);
+// function dateUpdate () {
+//     const nowDate = new Date();
+//     if (nowDate <= new Date("2025-10-26")) {
+//         const daysLeft = Math.ceil((new Date("2025-10-25") - nowDate) / (1000 * 60 * 60 * 24));
+//         let HTML = "あと&nbsp;" + "<span class='emphasisText'>" + daysLeft + "</span>" + "&nbsp;日";
+//         if (daysLeft < 1) {
+//             HTML = "開催中";
+//         }
+//         topContentButton.innerHTML = HTML;
+//     } else {
+//         topContentButton.style.display = "none";
+//     }
+// }
+// // topContentButton.addEventListener("click", () => {
+// //     window.location = "https://www.jiyunomori.ac.jp/zaikou/calender.php?month=2025-10";
+// // });
+// dateUpdate();
+// setInterval(dateUpdate, 10000);
 
-(() => {
-    const arrow = d.querySelector(".top.content .bottomBar svg");
-    arrow.addEventListener("click", () => {
-        window.scrollTo({
-            top: window.innerHeight - 50,
-            behavior: "smooth",
-        });
-    });
-})();
+// (() => {
+//     const arrow = d.querySelector(".top.content .bottomBar svg");
+//     arrow.addEventListener("click", () => {
+//         window.scrollTo({
+//             top: window.innerHeight - 50,
+//             behavior: "smooth",
+//         });
+//     });
+// })();
 
-(() => {
-    const entries = performance.getEntriesByType("resource");
-    const currentScript = entries.find(entry => entry.name.includes("script.js"));
+// (() => {
+//     const entries = performance.getEntriesByType("resource");
+//     const currentScript = entries.find(entry => entry.name.includes("script.js"));
 
-    function loadVideo () {topTitleContent.querySelector("video").src = "./medias/videos/IMG_1478.mp4"}
+//     function loadVideo () {topTitleContent.querySelector("video").src = "./medias/videos/IMG_1478.mp4"}
 
-    if (currentScript) {
-        console.log("load : ", currentScript.duration, "ms")
-        if (currentScript.duration < 500) loadVideo();
-    } else {
-        loadVideo();
-    }
-})();
+//     if (currentScript) {
+//         console.log("load : ", currentScript.duration, "ms")
+//         if (currentScript.duration < 500) loadVideo();
+//     } else {
+//         loadVideo();
+//     }
+// })();
 
 (() => {
     const pagesArea = mainContent.querySelector("div.pages");
@@ -81,7 +81,8 @@ setInterval(dateUpdate, 10000);
         const getPagesAreaWidth = () => pagesArea.scrollWidth - pagesArea.clientWidth;
         let windowHeight;
         const getWindowHeight = () => windowHeight;
-        const getPageSlideThreshold = () => getWindowHeight() - (topBarHeight || 100) * .1;
+        // const getPageSlideThreshold = () => getWindowHeight() - (topBarHeight || 100) * .1;
+        const getPageSlideThreshold = () => 0;
         const pageSlideRatio = 1;
 
         let scrollLeftPx;
@@ -181,7 +182,7 @@ setInterval(dateUpdate, 10000);
             });
         });
 
-        const getScrollLeftPx     = (scrollY = window.scrollY) => (Math.max(scrollY, getPageSlideThreshold()) - getPageSlideThreshold()) * pageSlideRatio;
+        const getScrollLeftPx = (scrollY = window.scrollY) => (Math.max(scrollY, getPageSlideThreshold()) - getPageSlideThreshold()) * pageSlideRatio;
         // const getScrollYFromRatio = (ratio) => (ratio * (pagesArea.scrollWidth - pagesArea.clientWidth) / pageSlideRatio) + getPageSlideThreshold();
         const getPageWidth = () => (pagesArea.querySelector(".pageSet").clientWidth || window.innerWidth - 20);
         const getScrollYFromRatio = (ratio) => (ratio * (pagesArea.scrollWidth - getPageWidth()) / pageSlideRatio) + getPageSlideThreshold();
@@ -366,9 +367,6 @@ setInterval(dateUpdate, 10000);
             }
 
             isPageShowNow = (
-                // scrollY >= (window.innerHeight * .75) - 20
-                scrollY >= (window.innerHeight - 10)
-            ) && (
                 currentIndex < pageContents.length
             );
 
