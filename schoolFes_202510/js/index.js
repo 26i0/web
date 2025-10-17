@@ -70,7 +70,7 @@
             newPageSet.appendChild(newNoble);
 
             const newNobleText = d.createElement("span");
-            newNobleText.textContent = `P${i + 1}`;
+            newNobleText.textContent = i === 0 ? "" : `P${i}`;
             newNoble.appendChild(newNobleText);
 
             pageEls.push(newPageSet);
@@ -237,16 +237,17 @@
         }, 100);
 
         let isPageShowNow = false;
-
         let scrollEnded = false;
+
         function scrollEnd () {
             if (
                 isPageShowNow && !scrollEnded
             ) {
                 const leftRatio = pagesArea.scrollLeft / (pagesArea.scrollWidth - getPageWidth());
-                if (leftRatio >= 0) {
+                if (leftRatio >= 0 && (
+                    window.scrollY <= getScrollYFromRatio((pageContents.length - 1) / pageContents.length)
+                )) {
                     const topPx = getScrollYFromRatio(leftRatio);
-                    console.log(topPx);
                     window.scrollTo({
                         top: topPx
                     });
@@ -367,7 +368,7 @@
             }
 
             isPageShowNow = (
-                currentIndex < pageContents.length
+                currentIndex - 1 < pageContents.length
             );
 
             pagesArea.style.pointerEvents = isPageShowNow ? "auto" : "none";

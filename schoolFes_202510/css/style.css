@@ -131,13 +131,18 @@ svg.anim path, svg.anim rect {
     bottom: 0;
 }
 .button {
-    backdrop-filter: blur(5px);
-    --webkit-backdrop-filter: blur(5px);
-    background-color: rgba(211, 211, 211, .25);
+    background-color: rgba(211, 211, 211, .9);
     box-shadow: 0 0 10px gray;
     border-radius: 40px;
     padding: 10px;
     cursor: pointer;
+}
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+    .button {
+        backdrop-filter: blur(5px);
+        --webkit-backdrop-filter: blur(5px);
+        background-color: rgba(211, 211, 211, .75);
+    }
 }
 .topBars {
     width: 100vw;

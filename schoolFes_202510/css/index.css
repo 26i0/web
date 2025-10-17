@@ -67,8 +67,10 @@ body {
     --pagesPadding: 20px;
     --pageWidth : calc(100vw - var(--pagesPadding) * 2);
     --pageSetWidth: calc(var(--pageWidth) + var(--pagesPadding) * 2);
-    /* --pageHeight: calc(var(--pageWidth) * 1.4075829384); */
-    --pageHeight: calc((100vh - 150px) - var(--topBarsHeight) - var(--pagesPadding));
+    --pageHeight: min(calc(var(--pageWidth) * 1.4075829384), calc(
+        (100vh - 50px) - var(--topBarsHeight) - var(--pagesPadding)
+    ));
+    /* --pageHeight: calc((100vh - 50px) - var(--topBarsHeight) - var(--pagesPadding)); */
 
     /* height: calc(100vw * var(--numOfPageContents)); */
     /* (var(--pageWidth) + var(--pagesPadding)) * var(--numOfPageContents) */
@@ -94,7 +96,7 @@ body {
     pointer-events: none;
     position: fixed;
     width: 100%;
-    top: calc(var(--pageHeight) + 100px);
+    top: calc(var(--pageHeight) + 95px);
     display: flex;
     justify-content: space-between;
     flex-direction: row;
