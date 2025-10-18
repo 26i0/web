@@ -3,7 +3,7 @@
 import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js";
 let THREE, GLTFLoader, OrbitControls, BufferGeometryUtils, CSS2DRenderer, CSS2DObject;
 
-const getIsThreePerfection = () => !!(THREE && GLTFLoader && OrbitControls && BufferGeometryUtils && CSS2DRenderer && CSS2DObject);
+const getIsThreePerfection = () => (THREE && GLTFLoader && OrbitControls && BufferGeometryUtils && CSS2DRenderer && CSS2DObject) ? true : false;
 
 const exhibitsBottomBar = d.querySelector(".exhibits .sortList");
 const exhibitsArea = d.querySelector(".exhibits .list");
@@ -1133,20 +1133,22 @@ function cdnCompleted () {
         200
     ) : null;
 
-    window.addEventListener("keydown", e => {
-        // 強制的にコンテキスト破棄
-        if (isDevMode && e.code === "KeyP" && maps_renderer && maps_renderer.getContext) {
-            const gl = maps_renderer.getContext();
-            const ext = gl.getExtension('WEBGL_lose_context');
-            if (ext) {
-                ext.loseContext();
-                setTimeout(() => {
-                    ext.restoreContext();
-                }, 2000);
+    (() => {
+        window.addEventListener("keydown", e => {
+            // 強制的にコンテキスト破棄
+            if (isDevMode && e.code === "KeyP" && maps_renderer && maps_renderer.getContext) {
+                const gl = maps_renderer.getContext();
+                const ext = gl.getExtension('WEBGL_lose_context');
+                if (ext) {
+                    ext.loseContext();
+                    setTimeout(() => {
+                        ext.restoreContext();
+                    }, 2000);
+                }
             }
-        }
-    });
-
+        });
+    })();
+    
     const maps_labelRenderer = CSS2DRenderer ? new CSS2DRenderer() : null;
     const maps_labelsArea = maps_labelRenderer?.domElement || null;
     if (maps_labelsArea) {
@@ -3222,34 +3224,32 @@ function cdnCompleted () {
                         });
 
                         maps_renderer.domElement.addEventListener("webglcontextrestored", () => {
-                            console.warn("WebGL context restored — rebuilding text labels.");
+                            location.reload();
 
-                            Object.keys(maps_labels).forEach((partName) => {
-                                const { object, part } = maps_labels[partName];
-                                const location = maps_locations[partName];
+                            // Object.keys(maps_labels).forEach((partName) => {
+                            //     const { object, part } = maps_labels[partName];
+                            //     const location = maps_locations[partName];
 
-                                // CanvasTextureを使うテキストラベルのみ再描画
-                                if (object.material.map instanceof THREE.CanvasTexture && !getIsImageUrl(location?.name)) {
-                                    const canvas = object.material.map.image;
-                                    if (canvas && canvas.getContext) {
-                                        const ctx = canvas.getContext("2d");
-                                        if (ctx && typeof drawLabelText === "function") {
-                                            drawLabelText.call({ ctx, canvas, partName }); // 再描画
-                                            object.material.map.needsUpdate = true;
-                                        }
-                                    }
-                                }
-                            });
-                            maps_renderer.compile(scene, maps_camera);
+                            //     // CanvasTextureを使うテキストラベルのみ再描画
+                            //     if (object.material.map instanceof THREE.CanvasTexture && !getIsImageUrl(location?.name)) {
+                            //         const canvas = object.material.map.image;
+                            //         if (canvas && canvas.getContext) {
+                            //             const ctx = canvas.getContext("2d");
+                            //             if (ctx && typeof drawLabelText === "function") {
+                            //                 drawLabelText.call({ ctx, canvas, partName }); // 再描画
+                            //                 object.material.map.needsUpdate = true;
+                            //             }
+                            //         }
+                            //     }
+                            // });
+                            // maps_renderer.compile(scene, maps_camera);
 
-                            Object.values(maps_labels).forEach(({ object }) => {
-                                if (object.material.map instanceof THREE.CanvasTexture) {
-                                    object.material.map.needsUpdate = true;
-                                }
-                            });
-                            maps_renderer.compile(scene, maps_camera);
-
-                            // location.reload();
+                            // Object.values(maps_labels).forEach(({ object }) => {
+                            //     if (object.material.map instanceof THREE.CanvasTexture) {
+                            //         object.material.map.needsUpdate = true;
+                            //     }
+                            // });
+                            // maps_renderer.compile(scene, maps_camera);
                         });
 
 
