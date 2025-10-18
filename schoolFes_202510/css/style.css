@@ -130,7 +130,7 @@ svg.anim path, svg.anim rect {
     bottom: 0;
 }
 .button {
-    background-color: rgba(211, 211, 211, .9);
+    background-color: rgba(231, 231, 231, .9);
     box-shadow: 0 0 10px gray;
     border-radius: 40px;
     padding: 10px;
@@ -140,7 +140,7 @@ svg.anim path, svg.anim rect {
     .button {
         backdrop-filter: blur(5px);
         --webkit-backdrop-filter: blur(5px);
-        background-color: rgba(211, 211, 211, .75);
+        background-color: rgba(231, 231, 231, .75);
     }
 }
 .topBars {

@@ -330,6 +330,16 @@
             }
         });
 
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top < window.innerHeight &&
+                rect.bottom > 0 &&
+                rect.left < window.innerWidth &&
+                rect.right > 0
+            );
+        }
+
         function windowScroll () {
             const scrollY = window.scrollY;
             scrollLeftPx = getScrollLeftPx(scrollY);
@@ -373,9 +383,9 @@
             }
 
             isPageShowNow = (
-                (currentIndex < pageContents.length)
-                // &&
-                // (window.scrollY - 3) <= getScrollYFromRatio(1)
+                // (currentIndex < pageContents.length)
+                // scrollY < getScrollYFromRatio(1)
+                !isInViewport(d.querySelector("body > div.footers"))
             );
 
             pagesArea.style.pointerEvents = isPageShowNow ? "auto" : "none";
