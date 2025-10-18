@@ -1267,33 +1267,22 @@ function cdnCompleted () {
 
     const mapsView = d.createElement("div");
 
-    function maps_addLabelTransition (label, transitionDuration = .5) {
-        label.style.setProperty("--duration", `${transitionDuration}s`);
-        label.classList.add("addTransition");
-        const onTransitionEnd = (e) => {
-            if (e.target === label) { // この要素自身のトランジションのみ対象
-                setTimeout(() => {
-                    label.classList.remove("addTransition");
-                }, transitionDuration * 1000 + 500);
-            }
-        };
-        label.addEventListener("transitionend", onTransitionEnd, { once: true });
-    }
-
     const maps_buttons_right = d.createElement("div");
     const maps_buttons_left = d.createElement("div");
 
-
-    function get_isEveryFloorValid () {
-        const floorButtons = maps_buttons_left.querySelectorAll("div.button");
-        return Array.from(floorButtons)
-            .every(btn => !btn.classList.contains("invalid"));
-    };
-
     function maps_getFloor (name) {
-        const regex = /F(\d+)_/g; // gフラグで全マッチ取得
-        const matches = [...name.matchAll(regex)];
-        return matches.map(match => Number(match[1]));
+        const floorButtons = maps_buttons_left.querySelectorAll("div.button");
+        if (name) {
+            const regex = /F(\d+)_/g; // gフラグで全マッチ取得
+            const matches = [...name.matchAll(regex)];
+            return matches.map(match => Number(match[1]));
+        } else {
+            const returnArr = [];
+            floorButtons.forEach((buttonItem, i) => {
+                if (!buttonItem.classList.contains("invalid")) returnArr.push(i + 1);
+            });
+            return returnArr;
+        }
     }
 
     d.addEventListener("click", e => {
@@ -1350,7 +1339,9 @@ function cdnCompleted () {
                 const tiles = Array.from(exhibitsArea.children);
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
-                        tiles[i]?.classList.remove("inVisible");
+                        setTimeout(() => {
+                            tiles[i]?.classList.remove("inVisible");
+                        }, Math.min(i, 4) * 10);
                         tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText").offsetWidth + "px");
                         tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity").offsetWidth + "px");
                     }
@@ -1414,12 +1405,16 @@ function cdnCompleted () {
             Object.values(maps_locations).forEach((item, index) => {
                 if (getExhibits(i)[1] === item) {
                     const targetName = Object.keys(maps_locations)[index];
+                    const vaildFloors = maps_getFloor();
+                    const targetMeshFloors = maps_getFloor(targetName);
+                    if (!vaildFloors.every(fItem => fItem === true)) {
+                        // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
+                        const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
+                        console.log(vaildFloors, targetMeshFloors, pushFloor);
+                        if (!vaildFloors.includes(pushFloor)) pushFloorButton(pushFloor);
+                    }
                     removeAllLabel();
                     pushLabel(targetName);
-                    // const targetLabel = maps_labelsArea.querySelector(`.mapsLabel[exhibits="${Object.keys(maps_locations)[index]}"]`);
-                    // targetLabel.classList.add("opened");
-                    // maps_addLabelTransition(targetLabel);
-                    // if (!get_isEveryFloorValid()) maps_changeFloor(maps_getFloor(targetObj.name));
                 }
             });
         });
@@ -1435,9 +1430,12 @@ function cdnCompleted () {
             getExhibits(i)[1].activity.days = [1, 2];
         }
         
-        // activitys自体なし : すべてにおいてデフォルト(活動可能最大時間)を使用
-        // 配列にnull : デフォルト(活動可能最大時間)を使用
-        // activitysあり､2日分はなし : 存在する日のデータのみ､それ以外は活動なし
+        // activitys自体なし :
+        //     すべてにおいてデフォルト(活動可能最大時間)を使用
+        // 配列にnull :
+        //     デフォルト(活動可能最大時間)を使用
+        // activitysあり､2日分はなし :
+        //     存在する日のデータのみ､それ以外は活動なし
         (() => {
             const getActivitysJson = () => getExhibits(i)[1]?.activitys;
 
@@ -1613,12 +1611,12 @@ function cdnCompleted () {
 
         F1_Art_WC: {
             location: {
-                name: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
+                name: `${maps_names.Art}${maps_words.Conjs.Inside}`,
             }
         },
         F1_Dining_WC: {
             location: {
-                name: `${maps_names.Dining}${maps_words.Conjs.NextTo}`,
+                name: `${maps_names.Dining}${maps_words.Conjs.Inside}`,
             }
         },
         F1_J_WC: {
@@ -1673,12 +1671,12 @@ function cdnCompleted () {
         },
         F1_Gym_WC: {
             location: {
-                name: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
+                name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
             }
         },
         F1_Gym_WC001: {
             location: {
-                name: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
+                name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
             }
         },
 
@@ -1806,7 +1804,6 @@ function cdnCompleted () {
         exhibitItem?.tag?.forEach(tag => {
             targets.push(tagOrder[tag]?.displayName);
         });
-        let isHit = false;
         searchHits = [];
         const spliteds = [];
         targets?.forEach((target, i) => {
@@ -1821,12 +1818,10 @@ function cdnCompleted () {
                 searchWord === "" ||
                 splited?.length > 1
             ) {
-                isHit = true;
                 searchHits.push([target, i]);
             }
         });
         return {
-            isHit: isHit,
             hits: searchHits,
             spliteds: spliteds
         };
@@ -1841,7 +1836,7 @@ function cdnCompleted () {
         let isConforming = true;
         const searchHits = [];
         const searchRes = getExhibitsSearch(exhibit, searchWord);
-        if (searchRes.isHit) {
+        if (searchRes.hits.length > 0) {
             searchHits.push(searchRes.hits);
             for (const condition of conditions) {
                 if (
@@ -2219,6 +2214,8 @@ function cdnCompleted () {
         });
     }
 
+    const pushFloorButton = (f) => maps_buttons_left.querySelectorAll("div.button")[f - 1]?.click();
+
     function pushLabel (targetMeshName) {
         const location = maps_locations[targetMeshName];
         const baseObject = maps_modelParts[targetMeshName];
@@ -2261,12 +2258,7 @@ function cdnCompleted () {
             } else if (maps_locations[fmtedMeshName]?.onClick) {
                 maps_locations[fmtedMeshName].onClick();
             } else {
-                console.log(
-                    maps_locations[targetMeshName],
-                    targetMeshName,
-                    fmtedMeshName,
-                    scrollToTile(targetMeshName) || scrollToTile(fmtedMeshName)
-                );
+                scrollToTile(targetMeshName) || scrollToTile(fmtedMeshName)
             }
         }
 
@@ -2274,12 +2266,12 @@ function cdnCompleted () {
             getLabelCorrEl(targetMeshName) || getLabelCorrEl(fmtedMeshName)
         );
 
+        const floor = maps_getFloor(targetMeshName);
         const generateEls = [
-            getNewElItem(`${location.location?.name ? location.location?.name + " " : ""}${(() => {
-                const floor = maps_getFloor(targetMeshName);
-                return floor ? `(${floor}階)` : "";
-            })()} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location"),
-            location.description? getNewElItem(location.description, "detail") : null,
+            (location.location?.name || floor.length > 0) ? getNewElItem(`${location.location?.name ? location.location?.name + " " : ""}${(() => {
+                return (floor.length > 0) ? `(${floor}階)` : "";
+            })()} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location") : null,
+            location.description ? getNewElItem(location.description, "detail") : null,
             getNewElItem(location?.image, "image"),
         ];
         generateEls.forEach(el => {
@@ -2319,9 +2311,10 @@ function cdnCompleted () {
         (() => {
             let isImgLoaded = false;
             function onload () {
+                const targetMesh = maps_modelParts[targetMeshName];
                 isImgLoaded = true;
                 maps_frameObject({
-                    target: maps_modelParts[targetMeshName],
+                    target: targetMesh,
                     offsetZ: Math.max(informations.offsetHeight * -.002, -.3),
                 });
                 updateLabelOpacity();
@@ -2350,12 +2343,13 @@ function cdnCompleted () {
             childs.forEach(child => {
                 if (child.element) {
                     child.element.style.opacity = 0;
+                    child.element.style.pointerEvents = "none";
                     setTimeout(() => {
                         // CSS2DObject の場合
                         child.element.remove();
                         // Three.js のオブジェクトからも削除
                         baseObject.remove(child);
-                    }, 1000);
+                    }, 500);
                 }
             });
         }
@@ -2634,6 +2628,11 @@ function cdnCompleted () {
             newTag.addEventListener("click", tagClicked);
         });
         updateSort();
+
+        // アクティブフロアを配列で取得
+        const getActiveFloors = () => [...maps_buttons_left.querySelectorAll(".button")]
+            .filter(btn => !btn.classList.contains("invalid"))
+            .map(btn => btn.getAttribute("floor").replaceAll("f", "") * 1);
 
         (() => { // mapsView
             bottomBar_contents.appendChild(mapsView);
@@ -2995,23 +2994,9 @@ function cdnCompleted () {
                                     location: {
                                         name: locationName
                                     },
-                                    description: `トイレ ${maps_getFloor(partName)[0]}階`,
+                                    description: maps_locations[partName]?.description || "トイレ",
                                 };
                             }
-                            // if (
-                            //     maps_locations[partName]?.location?.name &&
-                            //     maps_locations[partName]?.tag &&
-                            //     !maps_locations[partName].location.name.match(/\(\d+階\)/g)
-                            // ) {
-                            //     maps_locations[partName].location.name += ` (${maps_getFloor(partName).join(",")}階)`;
-                            // }
-                            // if (maps_locations[partName] && !maps_locations[partName]?.description) {
-                            //     maps_locations[partName].description = `${
-                            //         maps_locations[partName].tag ? (
-                            //             maps_locations[partName].tag.includes("byClass") ? tagOrder.byClass.displayName : tagOrder.byVolunteers.displayName
-                            //         ) : ""
-                            //     } ${maps_getFloor(partName)[0]}階`;
-                            // }
 
                             if (!maps_locations[partName]) return;
 
@@ -3329,93 +3314,6 @@ function cdnCompleted () {
                                 touchend(e.clientX, e.clientY);
                             });
                         })();
-
-
-                        (() => { // 無効化済み
-                            return;
-                            function isOverlap(el, x, y) {
-                                const rect = el?.getBoundingClientRect() || 0;
-                                return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-                            }
-
-                            // document 全体でタッチやマウスの開始・終了イベントを監視
-                            let touchStart = [];
-                            let lastHandleEventAt;
-
-                            function handleEvent(x, y) {
-                                if (
-                                    (Date.now() - lastHandleEventAt) < 500 ||
-                                    y >= window.innerHeight - Math.max(maps_buttons_left.clientHeight, maps_buttons_right.clientHeight)
-                                ) return;
-                                lastHandleEventAt = Date.now();
-                                
-                                const candidateLabels = [];
-
-                                Object.values(maps_labels).forEach(labelObj => {
-                                    const labelElement = labelObj.element;
-                                    if (
-                                        isOverlap(labelElement, touchStart[0], touchStart[1]) &&
-                                        Math.abs(x - touchStart[0]) < 5 &&
-                                        Math.abs(y - touchStart[1]) < 5 &&
-                                        labelElement.getAttribute("isPressable") === "true"
-                                    ) {
-                                        candidateLabels.push(labelElement);
-                                    }
-                                });
-
-                                maps_frameObject({
-                                    target: maps_modelParts[candidateLabels[0]?.getAttribute("exhibits")]
-                                });
-
-                                const topLabel = candidateLabels[0];
-
-                                function labelOpenCtrl (el, isToOpen = !el.classList.contains("opened")) {
-                                    maps_addLabelTransition(el);
-                                    if (isToOpen) {
-                                        el.classList.add("opened");
-                                    } else {
-                                        el.classList.remove("opened");
-                                    }
-                                    updateLabelScale(el);
-                                }
-                                const openCtrlTimeoutMs = Math.min(
-                                    2.1 - maps_camera.zoom, .8
-                                ) * 1000;
-                                if (
-                                    Math.abs(x - touchStart[0]) < 5 &&
-                                    Math.abs(y - touchStart[1]) < 5
-                                ) {
-                                    Object.values(maps_labels).forEach(labelObj => {
-                                        const labelElement = labelObj.element;
-                                        if (
-                                            labelElement.classList.contains("opened") &&
-                                            labelElement !== topLabel
-                                        ) {
-                                            setTimeout(() => {
-                                                labelOpenCtrl(labelElement, false);
-                                            }, openCtrlTimeoutMs);
-                                        }
-                                    });
-                                }
-                                if (topLabel) {
-                                    setTimeout(() => {
-                                        labelOpenCtrl(topLabel);
-                                    }, openCtrlTimeoutMs);
-                                }
-                            }
-
-                            d.addEventListener("mousedown", (e) => touchStart = [e.clientX, e.clientY]);
-                            d.addEventListener("mouseup", (e) => handleEvent(e.clientX, e.clientY));
-
-                            d.addEventListener("touchstart", (e) => {
-                                const touch = e.touches[0];
-                                touchStart = [touch.clientX, touch.clientY];
-                            });
-                            d.addEventListener("touchend", (e) => {
-                                const touch = e.changedTouches[0];
-                                handleEvent(touch.clientX, touch.clientY);
-                            });
-                        });
 
                         const truncate = (num, digit = 3) => Math.floor(num * digit) / digit;
 
@@ -3880,15 +3778,10 @@ function cdnCompleted () {
                         });
                     }
 
-                    // アクティブフロアを配列で取得
-                    const activeFloors = [...maps_buttons_left.querySelectorAll(".button")]
-                        .filter(btn => !btn.classList.contains("invalid"))
-                        .map(btn => btn.getAttribute("floor").replaceAll("f", "") * 1);
-
                     Object.values(maps_modelParts).forEach(part => {
                         const isPartActive = (
                             maps_getFloor(part.name)[0] ?
-                            maps_getFloor(part.name).some(floorNum => activeFloors.includes(floorNum)) :
+                            maps_getFloor(part.name).some(floorNum => getActiveFloors().includes(floorNum)) :
                             !( (!isOnlyValid || isShow2DMap) && (
                                 part.name.includes("Roof") ||
                                 part.name.includes("Curve")
@@ -3920,7 +3813,7 @@ function cdnCompleted () {
                     });
 
                     // updateBottomText(activeFloors.length === 1 ? activeFloors[0] : null);
-                    updateButtonText(top_button, activeFloors.length === 1 ? `${activeFloors[0]}${bottomStereotypedText}` : `すべての${bottomStereotypedText}`);
+                    updateButtonText(top_button, getActiveFloors().length === 1 ? `${getActiveFloors()[0]}${bottomStereotypedText}` : `すべての${bottomStereotypedText}`);
                 });
                 updateButtonText(top_button, `すべての${bottomStereotypedText}`);
 
@@ -3970,7 +3863,7 @@ function cdnCompleted () {
                         });
                         controlMethodUpdate();
                     }
-                    if (get_isEveryFloorValid()) maps_buttons_left.querySelectorAll("div.button")[0].click();
+                    if (maps_getFloor().every(fItem => fItem === true)) pushFloorButton(1);
                 });
 
                 updateButtonText(button_currentPos, "現在地");
