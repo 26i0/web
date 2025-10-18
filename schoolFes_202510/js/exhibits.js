@@ -57,6 +57,8 @@ const getClassName = (school, input_grade, input_class) => (
     `${school == "H" || input_class > 3 ? maps_words.Grades.H : maps_words.Grades.J} ${input_grade}年${input_class}組`
 );
 
+const arrowHTMLStr = `<svg xmlns="http://www.w3.org/2000/svg"><g><path d="M228.451,230.092L228.451,850.906L849.265,850.906"></path></g></svg>`;
+
 const maps_names = {
     Bus: "バス",
     Entrance: "玄関",
@@ -96,6 +98,7 @@ const exhibits = {
         name: "暗闇迷路",
         tag: [
             "byClass",
+            "attractions",
             "J1",
         ],
         image: "medias/exhibits/J1_1.png",
@@ -104,6 +107,7 @@ const exhibits = {
         name: "脱出の森",
         tag: [
             "byClass",
+            "attractions",
             "J1",
         ],
     },
@@ -111,6 +115,7 @@ const exhibits = {
         name: "4DX",
         tag: [
             "byClass",
+            "attractions",
             "J1",
         ],
     },
@@ -118,8 +123,8 @@ const exhibits = {
         name: "3番出口",
         tag: [
             "byClass",
-            "J2",
             "attractions",
+            "J2",
         ],
     },
     F2_J2_2: {
@@ -129,21 +134,21 @@ const exhibits = {
             "J2",
             "foods",
             "merchandise",
-            "attractions",
         ],
     },
     F2_J2_3: {
         name: "サスケッチ",
         tag: [
             "byClass",
-            "J2",
             "attractions",
+            "J2",
         ],
     },
     F3_J3_1: {
         name: "煌めきの宇宙探査",
         tag: [
             "byClass",
+            "attractions",
             "J3",
         ],
     },
@@ -151,6 +156,7 @@ const exhibits = {
         name: "沈むなタイタニック号",
         tag: [
             "byClass",
+            "attractions",
             "J3",
         ],
     },
@@ -158,6 +164,8 @@ const exhibits = {
         name: "指名手配犯ごっこ",
         tag: [
             "byClass",
+            "foods",
+            "merchandise",
             "J3",
         ],
     },
@@ -166,6 +174,7 @@ const exhibits = {
         name: "じも天堂",
         tag: [
             "byClass",
+            "foods",
             "H1",
         ],
     },
@@ -173,6 +182,7 @@ const exhibits = {
         name: "MISSION IMPOSSIBLE FIRST MISSION",
         tag: [
             "byClass",
+            "attractions",
             "H1",
         ],
     },
@@ -180,6 +190,8 @@ const exhibits = {
         name: "喫煙所(禁煙)",
         tag: [
             "byClass",
+            "foods",
+            "merchandise",
             "H1",
         ],
     },
@@ -191,6 +203,9 @@ const exhibits = {
         },
         tag: [
             "byClass",
+            "foods",
+            "merchandise",
+            "display",
             "H1",
         ],
     },
@@ -198,6 +213,7 @@ const exhibits = {
         name: "月の消えた町",
         tag: [
             "byClass",
+            "attractions",
             "H1",
         ],
     },
@@ -205,6 +221,7 @@ const exhibits = {
         name: "自森坂の上のポニョ",
         tag: [
             "byClass",
+            "attractions",
             "H1",
         ],
     },
@@ -212,6 +229,8 @@ const exhibits = {
         name: "自森横丁",
         tag: [
             "byClass",
+            "foods",
+            "merchandise",
             "H1",
         ],
     },
@@ -219,6 +238,8 @@ const exhibits = {
         name: "お化け屋敷",
         tag: [
             "byClass",
+            "foods",
+            "attractions",
             "H2",
         ],
     },
@@ -226,6 +247,9 @@ const exhibits = {
         name: "出流原",
         tag: [
             "byClass",
+            "foods",
+            "merchandise",
+            "display",
             "H2",
         ],
     },
@@ -233,6 +257,7 @@ const exhibits = {
         name: "ベイカリーマックス",
         tag: [
             "byClass",
+            "attractions",
             "H2",
         ],
     },
@@ -240,6 +265,7 @@ const exhibits = {
         name: "SHLooN",
         tag: [
             "byClass",
+            "attractions",
             "H2",
         ],
     },
@@ -247,6 +273,7 @@ const exhibits = {
         name: "スペースローラーコースター",
         tag: [
             "byClass",
+            "attractions",
             "H2",
         ],
     },
@@ -254,6 +281,7 @@ const exhibits = {
         name: "トイマニ6",
         tag: [
             "byClass",
+            "attractions",
             "H2",
         ],
     },
@@ -261,6 +289,8 @@ const exhibits = {
         name: "夢を叶えて!たいやきくん",
         tag: [
             "byClass",
+            "merchandise",
+            "attractions",
             "H2",
         ],
     },
@@ -275,6 +305,7 @@ const exhibits = {
         name: "字森",
         tag: [
             "byClass",
+            "display",
             "H3",
         ],
     },
@@ -282,6 +313,7 @@ const exhibits = {
         name: "三組万博",
         tag: [
             "byClass",
+            "display",
             "H3",
         ],
     },
@@ -296,6 +328,7 @@ const exhibits = {
         name: "ネットリネット",
         tag: [
             "byClass",
+            "attractions",
             "H3",
         ],
     },
@@ -303,6 +336,7 @@ const exhibits = {
         name: "お化け屋敷",
         tag: [
             "byClass",
+            "attractions",
             "H3",
         ],
     },
@@ -319,6 +353,7 @@ const exhibits = {
         name: "PROBUX",
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     Omoshiro: {
@@ -329,6 +364,8 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "display",
+            "merchandise",
         ],
     },
     MCBATTLE: {
@@ -339,7 +376,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day2",
+            "announcement",
         ],
     },
     Keion: {
@@ -350,6 +387,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "announcement",
             "day1",
         ],
     },
@@ -362,6 +400,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     PlaneWorkshop: {
@@ -373,20 +412,25 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     Shoten: {
         name: "昇天商店",
+        activitys: {
+            d2: [null, null],
+        },
         tag: [
             "byVolunteers",
-            "day2",
+            "merchandise",
         ],
     },
     F2_Handmade: {
-        name: "はじめ手作り shop",
+        name: "はじめの手作り shop",
         location: `${getClassName("H", 2, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Tekken_1: {
@@ -394,6 +438,8 @@ const exhibits = {
         location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
+            "display",
+            "attractions",
         ],
     },
     F1_SnapNow: {
@@ -405,6 +451,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F3_Yutosara: {
@@ -415,6 +462,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Coffee: {
@@ -422,6 +470,7 @@ const exhibits = {
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     DoyouDance: {
@@ -432,7 +481,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day1",
+            "announcement",
         ],
     },
     AMAZE: {
@@ -443,7 +492,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day1",
+            "announcement",
         ],
     },
     F1_Nazotoki: {
@@ -451,12 +500,15 @@ const exhibits = {
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
+            "attractions",
         ],
     },
     BLUEPEYOUNG: {
         name: "BLUE PEYOUNG",
         tag: [
             "byVolunteers",
+            "foods",
+            "display",
         ],
     },
     F1_SkateDrink: {
@@ -468,6 +520,8 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "foods",
+            "attractions",
         ],
     },
     Tokusatsu: {
@@ -478,6 +532,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     Miyata: {
@@ -489,6 +544,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Cat: {
@@ -496,6 +552,7 @@ const exhibits = {
         location: `${maps_names.Multipurpose}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Nepal: {
@@ -509,6 +566,7 @@ const exhibits = {
         name: "ホストクラブ",
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     F1_Cardboard: {
@@ -520,6 +578,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     F1_Botanya: {
@@ -530,7 +589,7 @@ const exhibits = {
         location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
-            "day2",
+            "merchandise",
         ],
     },
     F1_Warasibe: {
@@ -552,7 +611,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day2",
+            "announcement",
         ],
     },
     F1_PrivateSchool: {
@@ -560,6 +619,7 @@ const exhibits = {
         location: `${maps_names.FrontEntrance}`,
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     F1_Paparazzi: {
@@ -574,6 +634,7 @@ const exhibits = {
         location: `${getClassName("J", 1, 1)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Sawatonagi: {
@@ -581,6 +642,7 @@ const exhibits = {
         location: `${maps_names.Art}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Mononoke: {
@@ -588,6 +650,7 @@ const exhibits = {
         location: `${getClassName("H", 1, 1)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     F3_115: {
@@ -599,6 +662,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     Samba: {
@@ -608,7 +672,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day2",
+            "announcement",
         ],
     },
     F1_Moon_Dormitory: {
@@ -620,6 +684,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     North_Dormitory: {
@@ -630,6 +695,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     Star_Dormitory: {
@@ -637,6 +703,7 @@ const exhibits = {
         location: `${maps_names.Science_A}`,
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     F1_Sustainable: {
@@ -644,6 +711,7 @@ const exhibits = {
         location: `${maps_names.Entrance}`,
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     F1_Glass: {
@@ -651,6 +719,7 @@ const exhibits = {
         location: `${getClassName("H", 1, 7)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
+            "merchandise",
         ],
     },
     IllustManga: {
@@ -661,6 +730,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     Aruaru: {
@@ -668,12 +738,14 @@ const exhibits = {
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}`,
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     F3_Button: {
         name: "Button",
         tag: [
             "byVolunteers",
+            "display",
         ],
     },
     Smash: {
@@ -697,6 +769,7 @@ const exhibits = {
         name: "盗",
         tag: [
             "byVolunteers",
+            "attractions",
         ],
     },
     CoffeeWatashi: {
@@ -707,6 +780,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     F1_StarRabbit: {
@@ -714,11 +788,10 @@ const exhibits = {
         location: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
         activitys: {
             d1: ["11:00"],
-            d2: [null, null],
         },
         tag: [
             "byVolunteers",
-            "day1",
+            "merchandise",
         ],
     },
     F3_Wakuwaku: {
@@ -730,6 +803,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     East_Dormitory: {
@@ -747,6 +821,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     F1_Malasada: {
@@ -754,6 +829,8 @@ const exhibits = {
         location: `${getClassName("J", 1, 1)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
+            "merchandise",
+            "foods",
         ],
     },
     F1_Rukissa: {
@@ -761,6 +838,7 @@ const exhibits = {
         location: `${getClassName("H", 1, 6)}${maps_words.Conjs.Infront}`,
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     F1_FlyYum: {
@@ -768,36 +846,39 @@ const exhibits = {
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}､${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         activitys: {
             d1: ["11:30"],
-            d2: [null, null],
         },
         tag: [
             "byVolunteers",
-            "day1",
+            "foods",
         ],
     },
     BloomSweets: {
         name: "Bloom sweets",
+        activitys: {
+            d2: [null, null],
+            // あとで空配列テスト
+        },
         tag: [
             "byVolunteers",
-            "day2",
+            "foods",
         ],
     },
     cocoFofo: {
         name: "coco fofo",
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     F3_WitchYakisoba: {
         name: "魔女のなぞやきそば",
         location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
         activitys: {
-            d1: [null, null],
             d2: ["11:00", "14:30"],
         },
         tag: [
             "byVolunteers",
-            "day2",
+            "foods",
         ],
     },
     F1_GanGanHao: {
@@ -808,7 +889,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day1",
+            "foods",
         ],
     },
     F1_Kebab: {
@@ -816,6 +897,7 @@ const exhibits = {
         location: `${maps_names.Gym}${maps_words.Conjs.Infront}､${maps_names.Skateboard}`,
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     F3_LittleTaroBar: {
@@ -826,6 +908,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
+            "foods",
         ],
     },
     ChaiWari: {
@@ -835,7 +918,7 @@ const exhibits = {
         },
         tag: [
             "byVolunteers",
-            "day2",
+            "foods",
         ],
     },
     // Satekichihiro: {
@@ -1260,12 +1343,12 @@ function cdnCompleted () {
         startObserve({
             target: tileEl,
             callback: () => {
-                // 上の要素をすべて削除
                 const tiles = Array.from(exhibitsArea.children);
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
                         tiles[i]?.classList.remove("inVisible");
-                        // tiles[i].style.animationDelay = `${i * .05}s`;
+                        tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText").offsetWidth + "px");
+                        tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity").offsetWidth + "px");
                     }
                 }
             },
@@ -1294,7 +1377,10 @@ function cdnCompleted () {
             );
         }
 
-        namesEl.textContent = getExhibits(i)[1].name;
+        const nameTextEl = d.createElement("span");
+        nameTextEl.className = "nameText";
+        nameTextEl.textContent = getExhibits(i)[1].name;
+        namesEl.appendChild(nameTextEl);
         namesEl.classList.add("names");
         
         imagesEl.className = "images";
@@ -1311,18 +1397,11 @@ function cdnCompleted () {
         locationEl.className = "location button";
         locationEl.appendChild(locationText);
         (() => {
-            const arrow = d.createElementNS("http://www.w3.org/2000/svg", "svg");
-            arrow.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-
-            const path = d.createElementNS("http://www.w3.org/2000/svg", "path");
-            path.setAttribute("d", "M228.451,230.092L228.451,850.906L849.265,850.906");
-
             const text = d.createElement("span");
             text.className = "text";
             text.textContent = "地図で見る";
 
-            arrow.appendChild(path);
-            locationEl.appendChild(arrow);
+            locationEl.innerHTML += arrowHTMLStr;
             locationEl.appendChild(text);
         })();
         locationEl.addEventListener("click", e => {
@@ -1600,12 +1679,12 @@ function cdnCompleted () {
         },
 
         F1_Information_Center: {
-            // name: "インフォメーションセンター",
             name: "medias/images/mapInformation.svg",
             description: "インフォメーションセンター",
         },
         F1_Certificate: {
-            name: "金券",
+            name: "medias/images/mapCertificate.svg",
+            description: "金券の販売所",
         },
         F1_Gym_Entrance: {
             name: maps_names.Gym,
@@ -2029,11 +2108,13 @@ function cdnCompleted () {
         exhibitsBottomBar.appendChild(bottomBar_contents);
     })();
 
+    const getLabelCorrEl = (locationName) => exhibits[locationName]?.tileEl || maps_locations[locationName]?.tileEl;
+
     function scrollToTile(value, offsetY = 0) {
         const targetTile = value instanceof Element ? (
             value
         ) : (
-            exhibits[value]?.tileEl || maps_locations[value]?.tileEl
+            getLabelCorrEl(value)
         );
 
         function scrollToAndThen(targetY, callback) {
@@ -2064,27 +2145,28 @@ function cdnCompleted () {
         allTiles.forEach(tileItem => {
             tileOpenDatas.push(tileItem.classList.contains("opened"));
             tileItem.style.transition = "none";
-            requestAnimationFrame(() => {
+        });
+        requestAnimationFrame(() => {
+            allTiles.forEach(tileItem => {
                 openTile(tileItem, false);
             });
-        });
 
-        requestAnimationFrame(() => {
             const rect = targetTile.getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const targetY = rect.top + scrollTop - 170 + offsetY;
 
             allTiles.forEach((tileItem, i) => {
                 if (tileOpenDatas[i]) tileItem.classList.add("opened");
-                requestAnimationFrame(() => {
+            });
+            requestAnimationFrame(() => {
+                allTiles.forEach(tileItem => {
                     tileItem.style.transition = "";
                 });
             });
-            // openTile(targetTile, false);
 
             requestAnimationFrame(() => {
                 scrollToAndThen(targetY);
-                openTile(targetTile, true);
+                if (!targetTile.classList.contains("hidden") && targetTile) openTile(targetTile, true);
             });
         });
 
@@ -2133,9 +2215,9 @@ function cdnCompleted () {
         });
     }
 
-    function pushLabel (targetName) {
-        const location = maps_locations[targetName];
-        const baseObject = maps_modelParts[targetName];
+    function pushLabel (targetMeshName) {
+        const location = maps_locations[targetMeshName];
+        const baseObject = maps_modelParts[targetMeshName];
         const label = d.createElement("div");
         label.className = "mapsLabel";
 
@@ -2167,32 +2249,43 @@ function cdnCompleted () {
         const informations = d.createElement("div");
         informations.className = "informations";
 
+        const fmtedMeshName = getFmtedObjName(targetMeshName);
         function pushedLabel () {
-            const objName = getFmtedObjName(targetName);
             barHeightUpdate(false);
-            if (maps_locations[targetName]?.onClick) {
-                maps_locations[targetName].onClick();
-            } else if (maps_locations[objName]?.onClick) {
-                maps_locations[objName].onClick();
+            if (maps_locations[targetMeshName]?.onClick) {
+                maps_locations[targetMeshName].onClick();
+            } else if (maps_locations[fmtedMeshName]?.onClick) {
+                maps_locations[fmtedMeshName].onClick();
             } else {
                 console.log(
-                    maps_locations[targetName],
-                    targetName,
-                    objName,
-                    scrollToTile(targetName) || scrollToTile(objName)
+                    maps_locations[targetMeshName],
+                    targetMeshName,
+                    fmtedMeshName,
+                    scrollToTile(targetMeshName) || scrollToTile(fmtedMeshName)
                 );
             }
         }
 
+        const isLabelPusheable = (
+            getLabelCorrEl(targetMeshName) || getLabelCorrEl(fmtedMeshName)
+        );
+
         const generateEls = [
-            getNewElItem(location.location?.name || null, "location"),
+            getNewElItem(`${location.location?.name ? location.location?.name + " " : ""}${(() => {
+                const floor = maps_getFloor(targetMeshName);
+                return floor ? `(${floor}階)` : "";
+            })()} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location"),
             location.description? getNewElItem(location.description, "detail") : null,
             getNewElItem(location?.image, "image"),
         ];
         generateEls.forEach(el => {
             if (el) informations?.appendChild(el);
         });
-        informations.addEventListener("click", pushedLabel);
+        if (isLabelPusheable) {
+            informations.addEventListener("click", pushedLabel);
+        } else {
+            informations.style.cursor = "default";
+        }
         label.appendChild(informations);
 
         const labelObject = new CSS2DObject(label);
@@ -2224,7 +2317,7 @@ function cdnCompleted () {
             function onload () {
                 isImgLoaded = true;
                 maps_frameObject({
-                    target: maps_modelParts[targetName],
+                    target: maps_modelParts[targetMeshName],
                     offsetZ: Math.max(informations.offsetHeight * -.002, -.3),
                 });
                 updateLabelOpacity();
@@ -2448,6 +2541,7 @@ function cdnCompleted () {
         searchInputsEl.appendChild(newSearchBarEl);
         searchInputsEl.appendChild(newSearchBarDisplayEl);
 
+        // tag絞り込み生成
         Object.keys(tagOrder).forEach((tag, tagIndex) => {
             const newTag = d.createElement("span");
             newTag.className = `tag${
@@ -2918,7 +3012,11 @@ function cdnCompleted () {
                             function drawLabelText (backgroundColor = "rgba(45, 45, 45, 0.8)") {
                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                                const text = maps_locations[partName]?.name || "";
+                                const text = truncateText({
+                                    text: maps_locations[partName]?.name || "",
+                                    length: 10,
+                                    str: "...",
+                                });
                                 const fontSize = scaleFactor * 220;
                                 ctx.font = `${fontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
                                 ctx.textAlign = "center";
@@ -3092,6 +3190,10 @@ function cdnCompleted () {
                             } else {
                                 // それ以外は従来のテキスト描画
                                 const text = maps_locations[partName]?.name || "";
+                                // const text = truncateText({
+                                //     text: maps_locations[partName]?.name || "",
+                                //     length: 5,
+                                // });
 
                                 // テキストスタイル
                                 ctx.font = `${fontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;

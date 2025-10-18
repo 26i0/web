@@ -245,7 +245,7 @@
             ) {
                 const leftRatio = pagesArea.scrollLeft / (pagesArea.scrollWidth - getPageWidth());
                 if (leftRatio >= 0 && (
-                    window.scrollY <= getScrollYFromRatio((pageContents.length - 1) / pageContents.length)
+                    window.scrollY <= getScrollYFromRatio(1)
                 )) {
                     const topPx = getScrollYFromRatio(leftRatio);
                     window.scrollTo({
@@ -256,14 +256,17 @@
             }
         }
         let lastScrollLeft;
+        let lastIsScrollNow = false;
         function scrollCheck () {
             const isScrollNow = lastScrollLeft !== pagesArea.scrollLeft;
+            lastScrollLeft = pagesArea.scrollLeft;
+            console.log("isScrollNow", isScrollNow);
             if (isScrollNow) {
                 scrollEnded = false;
             } else {
-                scrollEnd();
+                if (!lastIsScrollNow) scrollEnd();
             }
-            lastScrollLeft = pagesArea.scrollLeft;
+            lastIsScrollNow = isScrollNow;
         }
 
         (() => {
@@ -394,12 +397,13 @@
                 }
             }
 
-            if (scrollLeftPx <= 0) scrollCheck();
+            if (scrollLeftPx >= 0) scrollCheck();
         }
         window.addEventListener("scroll", windowScroll);
         windowScroll();
 
         function windowResize () {
+            console.log("windowResize");
             if (isSlideNow) return;
             // 横スクロール総距離
             windowHeight = window.visualViewport?.height || window.innerHeight;
@@ -408,10 +412,12 @@
             const totalHeight = getPagesAreaWidth() / pageSlideRatio + getWindowHeight();
             mainContent.style.setProperty("--totalHeight", totalHeight + "px");
         }
-        let lastTimeWindowHeight;
+        let lastTimeWindowHeight = window.innerHeight;
         window.addEventListener("resize", () => {
-            if (Math.abs(lastTimeWindowHeight - window.innerHeight) > 100) windowResize();
-            lastTimeWindowHeight = window.innerHeight;
+            if (!Math.abs(lastTimeWindowHeight - window.innerHeight) < 100) {
+                windowResize();
+                lastTimeWindowHeight = window.innerHeight;
+            }
         });
         windowResize();
         setTimeout(() => {
