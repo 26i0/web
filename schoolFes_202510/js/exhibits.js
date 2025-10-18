@@ -3,6 +3,8 @@
 import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js";
 let THREE, GLTFLoader, OrbitControls, BufferGeometryUtils, CSS2DRenderer, CSS2DObject;
 
+const getIsThreePerfection = () => !!(THREE && GLTFLoader && OrbitControls && BufferGeometryUtils && CSS2DRenderer && CSS2DObject);
+
 const exhibitsBottomBar = d.querySelector(".exhibits .sortList");
 const exhibitsArea = d.querySelector(".exhibits .list");
 
@@ -1116,20 +1118,20 @@ function cdnCompleted () {
     */
 
     // カメラ
-    const maps_renderer = new THREE.WebGLRenderer({
+    const maps_renderer = THREE ? new THREE.WebGLRenderer({
         antialias: false,
         alpha: true
-    });
+    }) : null;
     const maps_aspect = window.innerWidth / window.innerHeight;
     const maps_cameraSize = 1.2; // 表示範囲の大きさ（好みで調整）
-    const maps_camera = new THREE.OrthographicCamera(
+    const maps_camera = THREE ? new THREE.OrthographicCamera(
         -maps_cameraSize * maps_aspect,  // left
         maps_cameraSize * maps_aspect,   // right
         maps_cameraSize,            // top
         -maps_cameraSize,           // bottom
         1,
         200
-    );
+    ) : null;
 
     window.addEventListener("keydown", e => {
         // 強制的にコンテキスト破棄
@@ -2653,16 +2655,18 @@ function cdnCompleted () {
             compassImg.src = "medias/images/compass.svg";
             compass.appendChild(compassImg);
 
-            const scene = new THREE.Scene();
-            scene.background = null; // 背景色
+            const scene = THREE ? new THREE.Scene() : null;
+            if (scene) scene.background = null; // 背景色
 
-            maps_renderer.setPixelRatio(Math.min(
-                window.devicePixelRatio, 150
-            ));
-            maps_renderer.shadowMap.enabled = false;
+            if (maps_renderer) {
+                maps_renderer.setPixelRatio(Math.min(
+                    window.devicePixelRatio, 150
+                ));
+                maps_renderer.shadowMap.enabled = false;
 
-            // 描画領域を mapsView に追加
-            mapsView.appendChild(maps_renderer.domElement);
+                // 描画領域を mapsView に追加
+                mapsView.appendChild(maps_renderer.domElement);
+            }
 
             // 照明
             const latitude = 35.86059681776511;
@@ -2670,11 +2674,7 @@ function cdnCompleted () {
             const now = new Date();
             
             // 太陽の位置を取得
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.castShadow = false;
-            light.shadow.mapSize.width = 512;
-            light.shadow.mapSize.height = 512;
-            light.shadow.bias = -0.0001;
+            const light = THREE ? new THREE.DirectionalLight(0xffffff, 1) : null;
             function matchSun () {
                 const sunPos = SunCalc.getPosition(now, latitude, longitude);
                 const distance = 1000; // 光源までの距離
@@ -2693,41 +2693,49 @@ function cdnCompleted () {
                 const minIntensity = 0;
                 light.intensity = Math.max(minIntensity, Math.sin(sunPos.altitude) * maxIntensity);            
             }
-            /* 
-            AeroStar:
-            横 : 1
-            縦 : 4.3172690763
-            高 : 1.2329317269
-            地 : 0.06626506024
-            */
-            matchSun();
-            setInterval(matchSun, 1000 * 60);
-            scene.add(light);
+            if (light) {
+                light.castShadow = false;
+                light.shadow.mapSize.width = 512;
+                light.shadow.mapSize.height = 512;
+                light.shadow.bias = -0.0001;
+                /* 
+                AeroStar:
+                横 : 1
+                縦 : 4.3172690763
+                高 : 1.2329317269
+                地 : 0.06626506024
+                */
+               matchSun();
+               setInterval(matchSun, 1000 * 60);
+               scene.add(light);
+            }
 
             // 環境光
-            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+            if (scene) scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
             let cameraDistance = 10; // モデル中心からの距離
             let cameraHeight = 10;    // 高さ（Y座標）
             let camHorizontal = 0;     // 左右角度（度単位）
             let camVertical = 0;   // 垂直角度（度単位）
 
-            maps_camera.position.set(
-                cameraDistance,
-                cameraHeight,
-                cameraDistance
-            );
-            maps_camera.lookAt(0, 0, 0);
+            if (maps_camera) {
+                maps_camera.position.set(
+                    cameraDistance,
+                    cameraHeight,
+                    cameraDistance
+                );
+                maps_camera.lookAt(0, 0, 0);
+            }
 
             // 3Dモデル読み込み
             const loader = GLTFLoader ? new GLTFLoader() : null;
-            const currentLocationPointMesh = new THREE.Mesh(
+            const currentLocationPointMesh = THREE ? new THREE.Mesh(
                 new THREE.BoxGeometry(
                     .01,
                     .01,
                     .01,
                 )
-            );
+            ) : null;
 
             loadModel = () => {
                 if (!loader) return;
@@ -3681,15 +3689,19 @@ function cdnCompleted () {
 
                 const aspect = mapsView.clientWidth / mapsView.clientHeight;
 
-                maps_camera.left   = -maps_cameraSize * aspect;
-                maps_camera.right  = maps_cameraSize * aspect;
-                maps_camera.top    = maps_cameraSize + barTopMargin / mapsView.clientHeight * maps_cameraSize * 2; // topMarginをカメラの高さに換算
-                maps_camera.bottom = -maps_cameraSize;
-                maps_camera.updateProjectionMatrix();
+                if (maps_camera) {
+                    maps_camera.left   = -maps_cameraSize * aspect;
+                    maps_camera.right  = maps_cameraSize * aspect;
+                    maps_camera.top    = maps_cameraSize + barTopMargin / mapsView.clientHeight * maps_cameraSize * 2; // topMarginをカメラの高さに換算
+                    maps_camera.bottom = -maps_cameraSize;
+                    maps_camera.updateProjectionMatrix();
+                }
 
-                maps_renderer.domElement.style.top = `${barTopMargin * -1}px`;
-                maps_renderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
-                if (maps_labelRenderer) maps_labelRenderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
+                if (maps_renderer) {
+                    maps_renderer.domElement.style.top = `${barTopMargin * -1}px`;
+                    maps_renderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
+                    maps_labelRenderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
+                }
                 if (maps_labelsArea) maps_labelsArea.style.top = 0;
 
                 barHeightUpdate();
@@ -3724,13 +3736,13 @@ function cdnCompleted () {
             function controlMethodUpdate(options = {}) {
                 const {
                     touches = {
-                        ONE: THREE.TOUCH.ROTATE,
-                        TWO: THREE.TOUCH.DOLLY_PAN
+                        ONE: THREE?.TOUCH?.ROTATE,
+                        TWO: THREE?.TOUCH?.DOLLY_PAN
                     },
                     mouseButtons = {
-                        LEFT: THREE.MOUSE.ROTATE,
-                        MIDDLE: THREE.MOUSE.PAN,
-                        RIGHT: THREE.MOUSE.NONE
+                        LEFT: THREE?.MOUSE?.ROTATE,
+                        MIDDLE: THREE?.MOUSE?.PAN,
+                        RIGHT: THREE?.MOUSE?.NONE
                     }
                 } = options;
 
@@ -4235,9 +4247,14 @@ function cdnCompleted () {
             })();
 
             // mapsView.appendChild(compassBar);
-            mapsView.appendChild(maps_buttons_left);
-            mapsView.appendChild(maps_buttons_right);
-            mapsView.appendChild(maps_buttons_top);
+            if (getIsThreePerfection()) {
+                mapsView.appendChild(maps_buttons_left);
+                mapsView.appendChild(maps_buttons_right);
+                mapsView.appendChild(maps_buttons_top);
+            } else {
+                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>ご利用の端末は地図に対応していないようです｡</span>"
+                mapsView.style.pointerEvents = "none";
+            }
         })();
     })();
 
@@ -4357,6 +4374,7 @@ function cdnCompleted () {
 (async () => { // import (fallback付き)
     try {
         // 通常のCDN
+        // throw new Error("TestErr");
         THREE = await import("https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js");
         GLTFLoader = (await import("https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/loaders/GLTFLoader.js")).GLTFLoader;
         OrbitControls = (await import("https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/controls/OrbitControls.js")).OrbitControls;

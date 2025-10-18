@@ -325,6 +325,7 @@
 }
 .content.main .exhibits .tile.sortList .content {
     transition: opacity .5s ease-in-out;
+    overflow: hidden;
 }
 .content.main .exhibits .tile.sortList:not(.opened) .content {
     opacity: 0;
@@ -811,6 +812,18 @@
     padding-bottom: 0;
     bottom: 0;
     user-select: none;
+}
+.content.main .exhibits .tile .content > .mapsView > p,
+.content.main .exhibits .tile .content > .mapsView > span {
+    width: 100%;
+    text-align: center;
+}
+.content.main .exhibits .tile .content > .mapsView > p {
+    font-size: 1em;
+}
+.content.main .exhibits .tile .content > .mapsView > span {
+    font-size: .8em;
+    margin-top: 10%;
 }
 
 .content.main .exhibits .tile .content .mapsView canvas {
@@ -1421,9 +1434,9 @@
 .content.main .exhibits .tile.nowBeingHeld .tags.listView .tag {
     transition: none;
 }
-.content.main .exhibits .tag:not(:last-child) {
+/* .content.main .exhibits .tag:not(:last-child) {
     margin-right: 0;
-}
+} */
 .content.main .exhibits .tag {
     cursor: default;
     display: flex;
