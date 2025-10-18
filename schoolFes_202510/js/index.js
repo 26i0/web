@@ -373,8 +373,9 @@
             }
 
             isPageShowNow = (
-                currentIndex - 1 < pageContents.length
-                && (window.scrollY - 3) <= getScrollYFromRatio(1)
+                (currentIndex < pageContents.length)
+                // &&
+                // (window.scrollY - 3) <= getScrollYFromRatio(1)
             );
 
             pagesArea.style.pointerEvents = isPageShowNow ? "auto" : "none";
