@@ -75,7 +75,6 @@
 
             pageEls.push(newPageSet);
         });
-        pagesArea.style.position = "sticky";
 
         let topBarHeight;
         const getPagesAreaWidth = () => pagesArea.scrollWidth - pagesArea.clientWidth;
@@ -241,18 +240,22 @@
 
         function scrollEnd () {
             if (
-                isPageShowNow && !scrollEnded
+                isPageShowNow &&
+                !scrollEnded
             ) {
+                scrollEnded = true;
                 const leftRatio = pagesArea.scrollLeft / (pagesArea.scrollWidth - getPageWidth());
-                if (leftRatio >= 0 && (
-                    window.scrollY <= getScrollYFromRatio(1)
-                )) {
+                if (leftRatio >= 0) {
                     const topPx = getScrollYFromRatio(leftRatio);
                     window.scrollTo({
-                        top: topPx
+                        top: topPx,
+                        behavior: "auto",
+                    });
+                    d.body.style.willChange = "transform";
+                    requestAnimationFrame(() => {
+                        d.body.style.willChange = "auto";
                     });
                 }
-                scrollEnded = true;
             }
         }
         let lastScrollLeft;
@@ -260,7 +263,6 @@
         function scrollCheck () {
             const isScrollNow = lastScrollLeft !== pagesArea.scrollLeft;
             lastScrollLeft = pagesArea.scrollLeft;
-            console.log("isScrollNow", isScrollNow);
             if (isScrollNow) {
                 scrollEnded = false;
             } else {
@@ -334,7 +336,7 @@
             // scrollLeftRatio = scrollLeftPx / getPagesAreaWidth() || 0;
             scrollLeftRatio = (scrollLeftPx / pagesArea.scrollWidth) || 0;
 
-            pageEls[Math.round(scrollLeftRatio * pageContents.length + .45)]?.classList.add("anim");
+            // pageEls[Math.round(scrollLeftRatio * pageContents.length + .45)]?.classList.add("anim");
 
             (() => {
                 const startIdx = Math.min(Math.max(Math.round(scrollLeftRatio * pageContents.length - 2.5), 0), pageContents.length - 2);
@@ -372,6 +374,7 @@
 
             isPageShowNow = (
                 currentIndex - 1 < pageContents.length
+                && (window.scrollY - 3) <= getScrollYFromRatio(1)
             );
 
             pagesArea.style.pointerEvents = isPageShowNow ? "auto" : "none";
