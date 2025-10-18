@@ -1270,20 +1270,25 @@ function cdnCompleted () {
     const maps_buttons_right = d.createElement("div");
     const maps_buttons_left = d.createElement("div");
 
-    function maps_getFloor (name) {
-        const floorButtons = maps_buttons_left.querySelectorAll("div.button");
+    function maps_getFloors (name) {
+        const allFlooButtons = maps_buttons_left.querySelectorAll("div.button");
         if (name) {
             const regex = /F(\d+)_/g; // gフラグで全マッチ取得
             const matches = [...name.matchAll(regex)];
             return matches.map(match => Number(match[1]));
         } else {
             const returnArr = [];
-            floorButtons.forEach((buttonItem, i) => {
+            allFlooButtons.forEach((buttonItem, i) => {
                 if (!buttonItem.classList.contains("invalid")) returnArr.push(i + 1);
             });
             return returnArr;
         }
     }
+
+    const maps_getIsAllFloorVaild = () => {
+        const vaildFloor = maps_getFloors();
+        return vaildFloor.every((v, i) => i + 1 === v) && vaildFloor.length > 1;
+    };
 
     d.addEventListener("click", e => {
         if (exhibitsArea.contains(e.target)) {
@@ -1341,7 +1346,7 @@ function cdnCompleted () {
                     if (tiles[i].classList.contains("inVisible")) {
                         setTimeout(() => {
                             tiles[i]?.classList.remove("inVisible");
-                        }, Math.min(i, 4) * 10);
+                        }, Math.min(i, 4) * 6);
                         tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText").offsetWidth + "px");
                         tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity").offsetWidth + "px");
                     }
@@ -1405,9 +1410,9 @@ function cdnCompleted () {
             Object.values(maps_locations).forEach((item, index) => {
                 if (getExhibits(i)[1] === item) {
                     const targetName = Object.keys(maps_locations)[index];
-                    const vaildFloors = maps_getFloor();
-                    const targetMeshFloors = maps_getFloor(targetName);
-                    if (!vaildFloors.every(fItem => fItem === true)) {
+                    const vaildFloors = maps_getFloors();
+                    const targetMeshFloors = maps_getFloors(targetName);
+                    if (!maps_getIsAllFloorVaild()) {
                         // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
                         const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
                         console.log(vaildFloors, targetMeshFloors, pushFloor);
@@ -2186,7 +2191,7 @@ function cdnCompleted () {
     let maps_model; // モデルを外で保持
     let isShow2DMap = false;
 
-    const getFmtedObjName = (name) => name.replace("F" + maps_getFloor(name) + "_", "").replace(name.match(/\d{3}$/), "");
+    const getFmtedObjName = (name) => name.replace("F" + maps_getFloors(name) + "_", "").replace(name.match(/\d{3}$/), "");
     const getIsImageUrl = (text) => text?.includes("/") && (text?.includes(".svg") || text?.includes(".png"));
 
     function updateLabelOpacity() {
@@ -2266,10 +2271,10 @@ function cdnCompleted () {
             getLabelCorrEl(targetMeshName) || getLabelCorrEl(fmtedMeshName)
         );
 
-        const floor = maps_getFloor(targetMeshName);
+        const floor = maps_getFloors(targetMeshName);
         const generateEls = [
             (location.location?.name || floor.length > 0) ? getNewElItem(`${location.location?.name ? location.location?.name + " " : ""}${(() => {
-                return (floor.length > 0) ? `(${floor}階)` : "";
+                return (floor.length > 0) ? `(${floor.join("､")}階)` : "";
             })()} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location") : null,
             location.description ? getNewElItem(location.description, "detail") : null,
             getNewElItem(location?.image, "image"),
@@ -3780,8 +3785,8 @@ function cdnCompleted () {
 
                     Object.values(maps_modelParts).forEach(part => {
                         const isPartActive = (
-                            maps_getFloor(part.name)[0] ?
-                            maps_getFloor(part.name).some(floorNum => getActiveFloors().includes(floorNum)) :
+                            maps_getFloors(part.name)[0] ?
+                            maps_getFloors(part.name).some(floorNum => getActiveFloors().includes(floorNum)) :
                             !( (!isOnlyValid || isShow2DMap) && (
                                 part.name.includes("Roof") ||
                                 part.name.includes("Curve")
@@ -3863,7 +3868,7 @@ function cdnCompleted () {
                         });
                         controlMethodUpdate();
                     }
-                    if (maps_getFloor().every(fItem => fItem === true)) pushFloorButton(1);
+                    if (maps_getIsAllFloorVaild()) pushFloorButton(1);
                 });
 
                 updateButtonText(button_currentPos, "現在地");
