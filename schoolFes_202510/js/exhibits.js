@@ -1344,9 +1344,7 @@ function cdnCompleted () {
                 const tiles = Array.from(exhibitsArea.children);
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
-                        setTimeout(() => {
-                            tiles[i]?.classList.remove("inVisible");
-                        }, Math.min(i, 4) * 6);
+                        tiles[i]?.classList.remove("inVisible");
                         tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText").offsetWidth + "px");
                         tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity").offsetWidth + "px");
                     }
