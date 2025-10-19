@@ -2270,6 +2270,9 @@ function cdnCompleted () {
         const labelObject = new CSS2DObject(labelEl);
         labelEl.className = "mapsLabel";
 
+        const labelFontSize = maps_labels[targetMeshName].object.userData.fontSize;
+        labelEl.style.setProperty("--labelFontSize", labelFontSize + "px");
+
         function getNewElItem (text, className, pushed) {
             const isDetailPusheable = location.tag || location.onClick;
             if (text) {
@@ -2374,7 +2377,7 @@ function cdnCompleted () {
                 isImgLoaded = true;
                 maps_frameObject({
                     target: targetMesh,
-                    offsetZ: Math.max(informations.offsetHeight * -.002, -.3),
+                    offsetZ: Math.max(informations.offsetHeight * -.005, -.5),
                 });
                 updateLabelOpacity();
             }
@@ -3063,6 +3066,8 @@ function cdnCompleted () {
                             const ctx = canvas.getContext("2d");
                             const scaleFactor = Math.max(Math.min(window.innerWidth / 1250, 2), .5);
 
+                            const labelTextFontSize = scaleFactor * 220;
+
                             function drawLabelText (backgroundColor = "rgba(45, 45, 45, 0.8)") {
                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -3071,8 +3076,7 @@ function cdnCompleted () {
                                     length: 8,
                                     str: "...",
                                 });
-                                const fontSize = scaleFactor * 220;
-                                ctx.font = `${fontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
+                                ctx.font = `${labelTextFontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
                                 ctx.textAlign = "center";
                                 ctx.textBaseline = "middle";
 
@@ -3108,9 +3112,9 @@ function cdnCompleted () {
                                 roundRect(
                                     ctx,
                                     (canvas.width / 2 - textWidth / 2) - textBoxMargin,
-                                    (canvas.height / 2 - fontSize / 2) - textBoxMargin * 1.25,
+                                    (canvas.height / 2 - labelTextFontSize / 2) - textBoxMargin * 1.25,
                                     textWidth + textBoxMargin * 2,
-                                    fontSize + textBoxMargin * 2,
+                                    labelTextFontSize + textBoxMargin * 2,
                                     textBoxMargin
                                 );
 
@@ -3160,7 +3164,7 @@ function cdnCompleted () {
                                     return new THREE.Sprite(spriteMaterial);
                                 })();
 
-                                const baseScale = .2;
+                                const baseScale = .15;
                                 let scaleRatio = [
                                     baseScale * width,
                                     baseScale * height,
@@ -3204,7 +3208,9 @@ function cdnCompleted () {
                                 }
                                 sprite.name = partName + "_label";
                                 sprite.userData = {
-                                    name: part.name
+                                    name: part.name,
+                                    scaleRatio: scaleRatio,
+                                    fontSize: labelTextFontSize,
                                 };
                                 scene.add(sprite);
                                 // Save reference for later control
@@ -3657,8 +3663,8 @@ function cdnCompleted () {
                 if (maps_renderer) {
                     maps_renderer.domElement.style.top = `${barTopMargin * -1}px`;
                     maps_renderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
-                    maps_labelRenderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
                 }
+                if (maps_labelRenderer) maps_labelRenderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
                 if (maps_labelsArea) maps_labelsArea.style.top = 0;
 
                 barHeightUpdate();
@@ -4204,7 +4210,7 @@ function cdnCompleted () {
                 mapsView.appendChild(maps_buttons_right);
                 mapsView.appendChild(maps_buttons_top);
             } else {
-                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>ご利用の端末は地図に対応していないようです｡</span>"
+                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>ご利用の端末は地図に対応していないようです｡</span>";
                 mapsView.style.pointerEvents = "none";
             }
         })();
@@ -4442,15 +4448,17 @@ function cdnCompleted () {
     if (isDevMode) setTimeout(() => {
         jsonTestDev();
     }, 100);
-    // d.querySelectorAll("body > div.main.content > div.exhibits > div.list > div.tile > div.location.button").forEach((el, i) => {
-    //     setTimeout(() => {
-    //         el.click();
-    //         setTimeout(() => {
-    //             d.querySelector("body > div.main.content > div.exhibits > div.tile.sortList.exhibitsBottomBar.opened > div.topContents > div.tabs > div.tab").click();
-    //             el.parentElement.click();
-    //         }, 1000);
-    //     }, i * 2000);
-    // });
+    /* 
+const timeoutMs = 3000;
+d.querySelectorAll("body > div.main.content > div.exhibits > div.list > div.tile > div.location.button").forEach((el, i) => {
+    setTimeout(() => {
+        el.click();
+        setTimeout(() => {
+            d.querySelector("body > div.main.content > div.exhibits > div.tile.sortList.exhibitsBottomBar div.labelsArea > div > div").click();
+        }, timeoutMs / 2);
+    }, i * timeoutMs);
+});
+    */
 }
 
 (async () => { // import (fallback付き)

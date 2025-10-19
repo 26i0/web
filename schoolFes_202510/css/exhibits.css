@@ -140,7 +140,7 @@
     padding-top: 4px;
     padding-bottom: 4px; */
     max-width: calc(
-        100% - var(--activityWidthPx) - 20px
+        100% - var(--activityWidthPx) - 75px
     );
     min-width: 5em;
     border-radius: calc(.5em + 5px);
@@ -183,7 +183,7 @@
 }
 .content.main .exhibits .tile .location .locationText {
     padding-right: var(--locationTextSize);
-    height: var(--locationTextSize);
+    min-height: var(--locationTextSize);
     display: flex;
     align-items: center;
     right: 0;
@@ -915,7 +915,9 @@
 } */
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel {
     position: relative;
-    --fontSize: calc(var(--camZoom) * .3em);
+    --fontSize: calc(
+        var(--camZoom) * var(--labelFontSize) * .03
+    );
     font-size: var(--fontSize);
     height: calc(
         var(--fontSize) * 3
@@ -926,14 +928,14 @@
         calc(100px * var(--camZoom))
     );
     border-radius: calc(
-        2px
+        var(--fontSize) * 1
     );
     --labelBackgroundColor: lightgray;
     background-color: transparent;
     padding: 0;
     overflow: visible;
     --labelPadding: calc(
-        var(--camZoom) * 2px
+        var(--fontSize) * .1
     );
     padding: var(--labelPadding);
     display: flex;
@@ -955,7 +957,7 @@
     align-items: center;
     flex-direction: column;
     --informationsRadius: calc(
-        var(--camZoom) * 5px
+        var(--fontSize) * .5
     );
     border-radius: var(--informationsRadius);
     background-color: var(--labelBackgroundColor);
@@ -968,10 +970,16 @@
     ));
     transform-origin: 0% 0%;
     gap: calc(
-        var(--camZoom) * 1px
+        var(--camZoom) * .5px
     );
     padding: calc(
-        var(--camZoom) * 2px
+        var(--camZoom) * 1px
+    );
+}
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations svg {
+    --locationTextSize: var(--fontSize);
+    right: calc(
+        var(--fontSize) * .05
     );
 }
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations > div {
@@ -982,7 +990,7 @@
     align-items: center;
     /* border-radius: calc(.5em - var(--labelPadding)); */
     border-radius: calc(
-        (var(--informationsRadius) - var(--labelPadding)) * .75
+        var(--informationsRadius) - var(--labelPadding)
     );
     padding: var(--labelPadding);
     background-color: rgb(191, 191, 191);
