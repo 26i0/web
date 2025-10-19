@@ -410,7 +410,7 @@ const exhibits = {
         location: `${maps_names.Science_D}${maps_words.Conjs.Behind}`,
         activitys: {
             d1: ["10:30"],
-            d2: ["10:20", null],
+            d2: ["10:20"],
         },
         tag: [
             "byVolunteers",
@@ -420,7 +420,7 @@ const exhibits = {
     Shoten: {
         name: "昇天商店",
         activitys: {
-            d2: [null, null],
+            d2: [],
         },
         tag: [
             "byVolunteers",
@@ -449,7 +449,7 @@ const exhibits = {
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}､${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         activitys: {
             d1: ["10:30"],
-            d2: [null, null],
+            d2: [],
         },
         tag: [
             "byVolunteers",
@@ -518,7 +518,7 @@ const exhibits = {
         location: `${maps_names.Gym}${maps_words.Conjs.Infront}`,
         activitys: {
             d1: ["10:30", "15:50"],
-            d2: [null, null],
+            d2: [],
         },
         tag: [
             "byVolunteers",
@@ -586,7 +586,7 @@ const exhibits = {
     F1_Botanya: {
         name: "ぼたんやさん",
         activitys: {
-            d2: [null, null],
+            d2: [],
         },
         location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
@@ -693,7 +693,7 @@ const exhibits = {
         name: `${maps_words.Directions.N}${maps_names.Dormitory}Movie`,
         activitys: {
             d1: ["10:30"],
-            d2: [null, null],
+            d2: [],
         },
         tag: [
             "byVolunteers",
@@ -777,7 +777,7 @@ const exhibits = {
     CoffeeWatashi: {
         name: "珈琲渡時",
         activitys: {
-            d1: [null, null],
+            d1: [],
             d2: [null, "13:00"],
         },
         tag: [
@@ -800,7 +800,7 @@ const exhibits = {
         name: "WAKUWAKU",
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}`,
         activitys: {
-            d1: [null, null],
+            d1: [],
             d2: [null, "14:00"],
         },
         tag: [
@@ -818,7 +818,7 @@ const exhibits = {
         name: "タコス",
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}`,
         activitys: {
-            d1: [null, null],
+            d1: [],
             d2: ["11:00"],
         },
         tag: [
@@ -858,7 +858,6 @@ const exhibits = {
         name: "Bloom sweets",
         activitys: {
             d2: [],
-            // あとで空配列テスト
         },
         tag: [
             "byVolunteers",
@@ -887,7 +886,7 @@ const exhibits = {
         name: "ガンガンハオ",
         location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         activitys: {
-            d1: [null, null],
+            d1: [],
         },
         tag: [
             "byVolunteers",
@@ -916,7 +915,7 @@ const exhibits = {
     ChaiWari: {
         name: "Chai wari",
         activitys: {
-            d2: [null, null],
+            d2: [],
         },
         tag: [
             "byVolunteers",
@@ -1454,8 +1453,8 @@ function cdnCompleted () {
             if (getExhibits(i)[1]) {
                 if (!getActivitysJson()) {
                     getExhibits(i)[1].activitys = {
-                        d1: [null, null],
-                        d2: [null, null],
+                        d1: [],
+                        d2: [],
                     };
                 }
             }
