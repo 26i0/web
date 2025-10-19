@@ -1113,6 +1113,8 @@ function tabClassUpdate (tabIndex) {
     contents[tabIndex].classList.add("nowShow");
 }
 
+let loadScModel;
+
 // Scroll運用を停止､確実にボタンによるスライドが生じるようにする
 function barTabClick (tabIndex) {
     const leftPx = tabIndex * bottomBar_contents.scrollWidth;
@@ -1126,6 +1128,8 @@ function barTabClick (tabIndex) {
     }, 650);
     tabClassUpdate(tabIndex);
     barHeightUpdate(true);
+
+    if (tabIndex === 1) loadScModel();
 }
 
 let isCdnCompleted = false;
@@ -1347,18 +1351,28 @@ function cdnCompleted () {
         elements.forEach(el => observer.observe(el));
     }
 
+    let isScModelLoadStarted = false;
+    let isScModelLoaded = false;
+
     function pushLabel (targetName) {
-        const vaildFloors = maps_getFloors();
-        const targetMeshFloors = maps_getFloors(targetName);
-        if (!maps_getIsAllFloorVaild()) {
-            // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
-            const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
-            console.log(vaildFloors, targetMeshFloors, pushFloor);
-            if (!vaildFloors.includes(pushFloor)) pushFloorButton(pushFloor);
+        function push () {
+            const vaildFloors = maps_getFloors();
+            const targetMeshFloors = maps_getFloors(targetName);
+            if (!maps_getIsAllFloorVaild()) {
+                // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
+                const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
+                console.log(vaildFloors, targetMeshFloors, pushFloor);
+                if (!vaildFloors.includes(pushFloor)) pushFloorButton(pushFloor);
+            }
+            removeAllLabel();
+            labelDetailOpen(targetName);
         }
-        removeAllLabel();
-        labelDetailOpen(targetName);
+        if (isScModelLoadStarted) {
+            push();
+        }
     }
+
+    const tilesFragment = d.createDocumentFragment();
 
     for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
         const tileEl = d.createElement("div");
@@ -1382,6 +1396,7 @@ function cdnCompleted () {
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
                         tiles[i]?.classList.remove("inVisible");
+                        tiles[i].style.setProperty("--locationTextWidthPx", tiles[i].querySelector(".location.button").offsetWidth + "px");
                         tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText").offsetWidth + "px");
                         tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity").offsetWidth + "px");
                     }
@@ -1440,6 +1455,7 @@ function cdnCompleted () {
             locationEl.appendChild(text);
         })();
         locationEl.addEventListener("click", e => {
+            if (!isScModelLoaded) return;
             e.stopPropagation();
             barTabClick(1);
             for (const [key, item] of Object.entries(maps_locations)) {
@@ -1507,7 +1523,7 @@ function cdnCompleted () {
 
                 const dateTextEl = d.createElement("div");
                 const dateNum = dayKeyName.replace("d", "") * 1;
-                dateTextEl.innerHTML = `${dateNum}日目 ${getDaySpans(dayItem[0])} ~${getDaySpans(dayItem[1])}`;
+                dateTextEl.innerHTML = `${dateNum}日目 ${getDaySpans(dayItem[0])} ~${getDaySpans(dayItem[1])}<div class="activeText button"><div class="progress"></div><span></span></div>`;
                 dateTextEl.className = "timeItem";
                 dateTextEl.setAttribute("day", dateNum);
                 dateTextEl.setAttribute("timeFrom", dayItem[0]);
@@ -1544,15 +1560,34 @@ function cdnCompleted () {
         tileEl.setAttribute("tag", tagAttributes.join(","));
         tagsEl.classList.add("tags");
         tagsContentEl.classList.add("tagsContent");
+        
+        (() => {
+            // 仮想DOM（DocumentFragment）を作成
+            const fragment = d.createDocumentFragment();
 
-        tileEl.appendChild(namesEl);
-        tileEl.appendChild(locationEl);
-        tileEl.appendChild(activitysEl);
-        tileEl.appendChild(descriptionEl);
-        tileEl.appendChild(imagesEl);
-        tileEl.appendChild(tagsEl);
-        tagsEl.appendChild(tagsContentEl);
-        exhibitsArea.appendChild(tileEl);
+            // まとめて仮想DOMに追加
+            // let htmlStr = "";
+            [
+                namesEl,
+                locationEl,
+                activitysEl,
+                descriptionEl,
+                imagesEl,
+                tagsEl,
+                tagsContentEl,
+            ].forEach(appendEl => {
+                fragment.appendChild(appendEl);
+                // htmlStr += appendEl.outerHTML;
+            });
+            tagsEl.appendChild(tagsContentEl);
+            // 最後に1回だけ実DOMに反映
+            tileEl.appendChild(fragment);
+            
+            // tileEl.innerHTML += htmlStr;
+
+            tilesFragment.appendChild(tileEl);
+            // exhibitsArea.appendChild(tileEl);
+        })();        
 
         function scroll() {
             const maxScroll = tagsContentEl.scrollWidth - tagsContentEl.clientWidth;
@@ -1563,11 +1598,85 @@ function cdnCompleted () {
         scroll();
         tagsContentEl.addEventListener("scroll", scroll);
     }
+    exhibitsArea.appendChild(tilesFragment);
+
+    function updateButtonText (targetEl, existingOptions = {}) {
+        if (!targetEl) return;
+        let options = existingOptions;
+        if (typeof existingOptions === "string") {
+            options = {
+                text: existingOptions,
+            };
+        }
+        const newText = options.text;
+        const newTextArea = d.createElement("span");
+        const existingSpan = targetEl.querySelector("span");
+        if (
+            existingSpan?.textContent !== newText ||
+            existingSpan?.innerHTML !== newText
+        ) {
+            const animDuration = 300;
+            targetEl.querySelectorAll("span").forEach(span => {
+                span.style.animation = "none";
+                span.offsetHeight;
+                span.style.animation = `showText ${animDuration}ms ease-in-out both reverse`;
+                setTimeout(() => {
+                    span.remove();
+                }, animDuration * 2);
+            });
+            newTextArea.innerHTML = newText.replaceAll("\n", "<br>");
+            newTextArea.style.animation = `showText ${animDuration}ms ease-in-out both`;
+            newTextArea.style.animationDelay = `${animDuration}ms`;
+            newTextArea.style.position = "absolute";
+            newTextArea.style.whiteSpace = "nowrap";
+            targetEl.appendChild(newTextArea);
+            targetEl.style.transition = `width ${animDuration * 2}ms ease-in-out, height ${animDuration * 2}ms ease-in-out,`;
+            targetEl.style.position = "relative";
+            targetEl.style.display = "flex";
+            targetEl.style.justifyContent = "center";
+            targetEl.style.alignItems = "center";
+            if (
+                options?.isScaleChange === true ||
+                options?.isScaleChange === undefined
+            ) requestAnimationFrame(() => {
+                const width  = newTextArea.offsetWidth + (
+                    typeof options?.addition?.width === "number" ?
+                    (options?.addition?.width || 0) : 10
+                );
+                const height = newTextArea.offsetHeight;
+                targetEl.style.setProperty("--openedWidth",  width  + "px");
+                targetEl.style.setProperty("--openedHeight", height + "px");
+                targetEl.style.width  = width + "px";
+                targetEl.style.height = height + "px";
+            });
+        }
+    }
 
     // 現在､企画が活動中かどうか
+    const getTimeFromMin = (minutes) => ({
+        h: Math.floor(minutes / 60),
+        m: minutes % 60,
+    });
+    const getFmtedTime = (min) => (
+        Object.values(getTimeFromMin(min)).map(
+            (time, i) => (
+                time ? ((
+                    (i !== 0) ? (
+                        "0".repeat(
+                            2 - (time + "").length
+                        )
+                    ) : ""
+                ) + time + ["時間", "分"][i]) : ""
+            )
+        ).join("")
+    );
+    // let devI = 60 * 8;
     function updateExhibitsActive () {
+        // devI += 30;
+        // const now = new Date(`2025-10-25 ${Object.values(getTimeFromMin(devI)).join(":")}`);
+        // const now = new Date("2025-10-24 10:10");
         const now = new Date();
-        const nowDates = {  
+        const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
             day: now.getDate(),
@@ -1576,47 +1685,86 @@ function cdnCompleted () {
             seconds: now.getSeconds(),
         };
 
-        if (
-            nowDates.year === 2025 &&
-            nowDates.month === 10 &&
-            (nowDates.day === 25 || nowDates.day === 26)
-        ) {   
-            Object.values(exhibits).forEach((exhibitItem) => {
-                if (!exhibitItem.tileEl) return;
-                exhibitItem.tileEl.querySelectorAll(".activity > .timeItem").forEach(timeItemEl => {
-                    const timeFromArr = timeItemEl.getAttribute("timeFrom").split(":").map(item => item * 1);
-                    const timeToArr   = timeItemEl.getAttribute("timeTo").split(":").map(item => item * 1);
-                    const activeTextEl = timeItemEl.querySelector(".activeText");
-                    if (
-                        nowDates.day === timeItemEl.getAttribute("day") * 1 + 24 && (
-                            nowDates.hours >= timeFromArr[0] &&
-                            nowDates.hours <= timeToArr[0]
+        function getDay (day) {
+            const dayIdx = day - 24;
+            return (dayIdx < 0) ? (
+                day + 24
+            ) : dayIdx;
+        }
+
+        Object.values(exhibits).forEach((exhibitItem) => {
+            if (!exhibitItem.tileEl) return;
+            exhibitItem.tileEl.querySelectorAll(".activity > .timeItem").forEach((timeItemEl, dayIdx, allTimeItems) => {
+                const timeFromArr = timeItemEl.getAttribute("timeFrom").split(":").map(item => item * 1);
+                const timeToArr   = timeItemEl.getAttribute("timeTo").split(":").map(item => item * 1);
+                const activeTextEl = timeItemEl.querySelector(".activeText");
+                const progressEl = activeTextEl.querySelector(".progress");
+                const nowDateMin = nowDates.hours * 60 + nowDates.minutes;
+                const isExhibitActive = (
+                    getDay(nowDates.day) === (timeItemEl.getAttribute("day") * 1) && (
+                        (
+                            nowDateMin >= (timeFromArr[0] * 60 + timeFromArr[1])
                         ) && (
-                            nowDates.minutes >= timeFromArr[1] &&
-                            nowDates.minutes <= timeToArr[1]
+                            nowDateMin <  (timeToArr[0]   * 60 + timeToArr[1])
                         )
-                    ) { // 現在活動中
-                        if (!activeTextEl) {
-                            const newActiveTextEl = d.createElement("div");
-                            newActiveTextEl.className = "activeText";
-                            newActiveTextEl.textContent = "(現在活動中)";
-                            timeItemEl.appendChild(newActiveTextEl);
-                        }
+                    )
+                );
+
+                const fromMin = (timeFromArr[0] * 60 + timeFromArr[1]);
+                const toMin   = (timeToArr[0]   * 60 + timeToArr[1]);
+                const elapsedTime = nowDateMin - fromMin;
+
+                let text = `${dayIdx + 1}日目 終了`;
+                const differenceFromTheDay = nowDates.day - getDay(dayIdx + 1);
+                if (differenceFromTheDay === 0) {
+                    progressEl.style.setProperty("--progress", (
+                        (1 - (toMin - fromMin - elapsedTime) / (toMin - fromMin)) * 100 + "%"
+                    ));
+                }
+                if (isExhibitActive && differenceFromTheDay === 0) {
+                    // 活動中
+                    text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}で終了`
+                    activeTextEl.classList.add("exhibitActive");
+                } else {
+                    if ((nowDateMin < toMin) && differenceFromTheDay === 0) {
+                        // まもなく開始
+                        text = `あと${getFmtedTime(Math.abs(elapsedTime))}で開始`;
+                        activeTextEl.classList.add("beforeTheDay");
                     } else {
-                        const removeAnimation = "showText .5s ease-in-out reverse forwards";
-                        if (activeTextEl && activeTextEl.style.animation !== removeAnimation) {
-                            activeTextEl.style.animation = "none";
-                            void activeTextEl.offsetWidth; // 強制再計算（再適用トリガー）
-                            activeTextEl.style.animation = removeAnimation;
-                            setTimeout(() => {
-                                activeTextEl.remove();
-                            }, 500);
+                        if (differenceFromTheDay < 0) {
+                            // 日が違う (すでに終了)
+                            text = "&nbsp;";
+                            activeTextEl.classList.remove("beforeTheDay");
+                        } else {
+                            progressEl.style.setProperty("--progress", "100%");
+                            activeTextEl.classList.add("beforeTheDay");
+                        }
+                        activeTextEl.classList.remove("exhibitActive");
+                    }
+                }
+                updateButtonText(
+                    activeTextEl, {
+                        text: text,
+                        addition: {
+                            width: 5,
+                            isScaleChange: false,
                         }
                     }
-                });
+                );
+
+                // const removeAnimation = "showText .5s ease-in-out reverse forwards";
+                // if (activeTextEl && activeTextEl.style.animation !== removeAnimation) {
+                //     activeTextEl.style.animation = "none";
+                //     void activeTextEl.offsetWidth; // 強制再計算（再適用トリガー）
+                //     activeTextEl.style.animation = removeAnimation;
+                //     setTimeout(() => {
+                //         activeTextEl.remove();
+                //     }, 500);
+                // }
             });
-        }
+        });
     }
+
     updateExhibitsActive();
     setInterval(updateExhibitsActive, 1000);
 
@@ -1835,7 +1983,7 @@ function cdnCompleted () {
             return String.fromCodePoint(cp - OFFSET);
             }
             return ch;
-        }).join('');
+        }).join("");
     }
 
     // 検索
@@ -1900,46 +2048,6 @@ function cdnCompleted () {
             searchHits: searchHits,
             spliteds: searchRes.spliteds,
         };
-    }
-
-    function updateButtonText (targetEl, textValue) {
-        if (!targetEl) return;
-        const newText = textValue;
-        const newTextArea = d.createElement("span");
-        const existingSpan = targetEl.querySelector("span");
-        if (
-            existingSpan?.textContent !== newText ||
-            existingSpan?.innerHTML !== newText
-        ) {
-            const animDuration = 300;
-            targetEl.querySelectorAll("span").forEach(span => {
-                span.style.animation = "none";
-                span.offsetHeight;
-                span.style.animation = `showText ${animDuration}ms ease-in-out both reverse`;
-                setTimeout(() => {
-                    span.remove();
-                }, animDuration * 2);
-            });
-            newTextArea.innerHTML = newText.replaceAll("\n", "<br>");
-            newTextArea.style.animation = `showText ${animDuration}ms ease-in-out both`;
-            newTextArea.style.animationDelay = `${animDuration}ms`;
-            newTextArea.style.position = "absolute";
-            newTextArea.style.whiteSpace = "nowrap";
-            targetEl.appendChild(newTextArea);
-            targetEl.style.transition = `width ${animDuration * 2}ms ease-in-out, height ${animDuration * 2}ms ease-in-out,`;
-            targetEl.style.position = "relative";
-            targetEl.style.display = "flex";
-            targetEl.style.justifyContent = "center";
-            targetEl.style.alignItems = "center";
-            requestAnimationFrame(() => {
-                const width  = newTextArea.offsetWidth + 10;
-                const height = newTextArea.offsetHeight;
-                targetEl.style.setProperty("--openedWidth",  width  + "px");
-                targetEl.style.setProperty("--openedHeight", height + "px");
-                targetEl.style.width  = width + "px";
-                targetEl.style.height = height + "px";
-            });
-        }
     }
 
     function updateSort (searchWord = getSearchValue()) {
@@ -2083,8 +2191,6 @@ function cdnCompleted () {
 
     sortList_topContents.className = "topContents";
 
-    let loadModel;
-
     (() => {
         bottomBar_contents.className = "content";
         sortList_topBar.innerHTML = `
@@ -2103,18 +2209,18 @@ function cdnCompleted () {
         [
             "絞り込み",
             "地図",
-        ].forEach((item, index) => {
+        ].forEach((item, tabIdx) => {
             const tab = d.createElement("div");
 
             tab.className = "tab";
             tab.innerHTML = item;
 
-            tab.addEventListener("click", () => barTabClick(index));
+            tab.addEventListener("click", () => barTabClick(tabIdx));
 
             sortList_tabs.appendChild(tab);
 
-            if (index === 0) setTimeout(() => {
-                barTabClick(index);
+            if (tabIdx === 0) setTimeout(() => {
+                barTabClick(tabIdx);
             });
         });
 
@@ -2161,7 +2267,6 @@ function cdnCompleted () {
         ) : (
             getLabelCorrEl(value)
         );
-        console.log(targetTile);
 
         function scrollToAndThen(targetY, callback) {
             const executionTime = Date.now();
@@ -2377,7 +2482,7 @@ function cdnCompleted () {
                 isImgLoaded = true;
                 maps_frameObject({
                     target: targetMesh,
-                    offsetZ: Math.max(informations.offsetHeight * -.005, -.5),
+                    offsetZ: Math.max(informations.offsetHeight * -.003, -.5),
                 });
                 updateLabelOpacity();
             }
@@ -2722,9 +2827,7 @@ function cdnCompleted () {
             if (scene) scene.background = null; // 背景色
 
             if (maps_renderer) {
-                maps_renderer.setPixelRatio(Math.min(
-                    window.devicePixelRatio, 150
-                ));
+                maps_renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 maps_renderer.shadowMap.enabled = false;
 
                 // 描画領域を mapsView に追加
@@ -2800,11 +2903,15 @@ function cdnCompleted () {
                 )
             ) : null;
 
-            loadModel = () => {
-                if (!loader) return;
+            loadScModel = (loaded) => {
+                if (!loader || isScModelLoadStarted) return;
+                isScModelLoadStarted = true;
+                console.log("scModelLoadStarted");
                 loader.load(
                     "medias/3ds/sc.glb",
                     (gltf) => {
+                        console.log("scModelLoaded");
+                        isScModelLoaded = true;
                         maps_model = gltf.scene;
 
                         maps_model.position.set(0, 0, 0);
@@ -2904,10 +3011,6 @@ function cdnCompleted () {
                                     .map(mesh => {
                                         let geom = mesh.geometry.clone();
 
-                                        // 1. 重複頂点の削除
-                                        const tolerance = 0.0005; // 適宜調整
-                                        geom = BufferGeometryUtils.mergeVertices(geom, tolerance);
-
                                         // 2. ワールド変換を適用
                                         const matrix = new THREE.Matrix4();
                                         matrix.multiplyMatrices(
@@ -2924,7 +3027,8 @@ function cdnCompleted () {
                                         return geom;
                                     });
 
-                                const mergedGeometry = BufferGeometryUtils.mergeGeometries(transformedGeometries, true);
+                                let mergedGeometry = BufferGeometryUtils.mergeGeometries(transformedGeometries, true);
+                                mergedGeometry = BufferGeometryUtils.mergeVertices(mergedGeometry, 0.0005);
                                 if (!mergedGeometry) return;
 
                                 const mergedMaterial = meshes.map(mesh => {
@@ -3437,6 +3541,10 @@ function cdnCompleted () {
                                 return [labelWidth, labelHeight];
                         }
 
+                        function renderScene() {
+                            maps_renderer.render(scene, maps_camera);
+                            maps_labelRenderer.render(scene, maps_camera);
+                        }
                         // 描画ループ
                         let lastAnimUpdateAt;
                         function animate () {
@@ -3444,8 +3552,7 @@ function cdnCompleted () {
                             if (
                                 ((Date.now() - lastAnimUpdateAt > labelAnimUpdateThresholdMs) || !lastAnimUpdateAt) && !d.hidden
                             ) {
-                                maps_renderer.render(scene, maps_camera);
-                                maps_labelRenderer.render(scene, maps_camera);
+                                renderScene();
                                 maps_controls.update();
                                 lastAnimUpdateAt = Date.now();
                             }
@@ -3461,54 +3568,6 @@ function cdnCompleted () {
                         }
                         mapsView.addEventListener("touchstart", removeDirectionMatch);
                         mapsView.addEventListener("mousedown", removeDirectionMatch);
-
-                        (() => { // 無効化済み
-                            return;
-                            const generateTouches = (e) => e ? [e?.clientX || e.touches[0]?.clientX, e?.clientY || e.touches[0]?.clientY] : [null, null];
-
-                            let isNowBarTouch = false;
-                            let firstCameraDeg = camHorizontal;
-                            let firstTouches = [];
-
-                            function barTouchStart (e) {
-                                const touches = generateTouches(e);
-                                isNowBarTouch = true;
-                                firstCameraDeg = camHorizontal;
-                                firstTouches = touches;
-                                window.removeEventListener("deviceorientation", deviceorientationHandler);
-                            }
-
-                            function barTouchMove (e) {
-                                const touches = generateTouches(e);
-                                const differences = [
-                                    touches[0] - firstTouches[0],
-                                    touches[1] - firstTouches[1]
-                                ];
-
-                                if (isNowBarTouch) {
-                                    updateCameraAngle({
-                                        horizontal: firstCameraDeg + differences[0] * -.1
-                                    });
-                                }
-                            }
-
-                            function barTouchEnd (e) {
-                                const touches = generateTouches(e);
-                                isNowBarTouch = false;
-                                // directionSynchronization();
-                            }
-
-                            barTouchStart();
-                            barTouchMove();
-                            barTouchEnd();
-
-                            compassBar.addEventListener("touchstart", barTouchStart);
-                            compassBar.addEventListener("mousedown", barTouchStart);
-                            window.addEventListener("touchmove", barTouchMove);
-                            window.addEventListener("mousemove", barTouchMove);
-                            window.addEventListener("touchend", barTouchEnd);
-                            window.addEventListener("mouseup", barTouchEnd);
-                        });
 
                         const panLimit = 5;
 
@@ -3631,17 +3690,18 @@ function cdnCompleted () {
                             }
                             lastCamZoom = maps_camera.zoom;
                         });
+                        if (loaded) loaded();
                     },
                     (xhr) => {
                         const loadPercentage = xhr.loaded / xhr.total * 100
-                        if (loadPercentage === 100) console.log("3DModel", loadPercentage + "% loaded");
+                        // if (loadPercentage === 100) console.log("3DModel", loadPercentage + "% loaded");
                     },
                     (error) => {
                         console.error("モデル読み込みエラー", error);
                     }
                 );
             };
-            loadModel();
+            setTimeout(loadScModel, 1475);
 
             const labelAnimUpdateThresholdMs = 15;
 
@@ -4448,9 +4508,9 @@ function cdnCompleted () {
         });
 
     }
-    if (isDevMode) setTimeout(() => {
-        jsonTestDev();
-    }, 100);
+    // if (isDevMode) setTimeout(() => {
+    //     jsonTestDev();
+    // }, 100);
     /* 
 const timeoutMs = 3000;
 d.querySelectorAll("body > div.main.content > div.exhibits > div.list > div.tile > div.location.button").forEach((el, i) => {

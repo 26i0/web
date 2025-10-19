@@ -84,7 +84,7 @@
     transition: opacity .5s ease-in-out;
     background: linear-gradient(
         to bottom,
-        transparent 5%,
+        transparent 55%,
         white 80%
     );
     z-index: 4;
@@ -374,16 +374,67 @@
     font-size: .8rem;
     padding-top: 0 !important;
 }
+.content.main .exhibits .tile .activity .timeItem {
+    display: flex;
+    align-items: center;
+}
 .content.main .exhibits .tile .activity .timeItem .activeText {
+    position: absolute !important;
+    left: calc(
+        var(--activityWidthPx)
+    );
     display: inline-block;
-    background-color: lightgray;
-    min-height: 100%;
+    cursor: default;
+    overflow: hidden;
+    background-color: transparent !important;
+    border: 1px solid;
+    outline-offset: -1px;
+    border-color: transparent;
+    box-shadow: none;
+    box-sizing: border-box;
     border-radius: 5px;
+    padding: 0;
+    height: .9rem;
+    padding-top: 0;
     margin-left: 5px;
-    padding-left: 2px;
-    padding-right: 2px;
-    transition: opacity .5s ease-in-out;
+    min-width: calc(
+        min(
+            15em,
+            100% - var(--activityWidthPx) - var(--locationTextWidthPx) - 15px
+        )
+    );
+    transition:
+    opacity .5s ease-in-out,
+    border-color .5s ease-in-out,
+    background-color .5s ease-in-out,
+    width .5s ease-in-out;
     animation: showText .5s ease-in-out;
+}
+.content.main .exhibits .tile .activity .timeItem .activeText.beforeTheDay {
+    border-color: lightgray;
+}
+.content.main .exhibits .tile .activity .timeItem .activeText > .progress {
+    position: absolute;
+    --progress: 0%;
+    width: calc(
+        var(--progress)
+    );
+    height: 100%;
+    left: 0;
+    background-color: lightgray;
+    pointer-events: none;
+}
+.content.main .exhibits .tile .activity .timeItem .activeText.exhibitActive {
+    opacity: 1;
+}
+.content.main .exhibits .tile .activity .timeItem .activeText > span {
+    font-size: .65rem;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: -1px;
+    margin-top: 0;
+    left: 0;
 }
 .content.main .exhibits .tile .activity .timeItem span.numSet {
     display: inline-block;
@@ -1190,7 +1241,11 @@
     opacity: 1;
 }
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel::after {
-    background: linear-gradient(to left, var(--labelBackgroundColor) 0%, transparent 100%);
+    background: linear-gradient(
+        to left,
+        var(--labelBackgroundColor) 0%, 
+        transparent 100%
+    );
 }
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel.opened::after {
     background: transparent;
