@@ -154,7 +154,7 @@ const exhibits = {
             "J3",
         ],
     },
-    F3_J3_2: {
+    F1_J3_2: {
         name: "沈むなタイタニック号",
         tag: [
             "byClass",
@@ -351,15 +351,17 @@ const exhibits = {
     },
 
     // ↓有志
-    PROBUX: {
+    F1_PROBUX: {
         name: "PROBUX",
+        location: `${maps_names.Science_B}`,
         tag: [
             "byVolunteers",
             "foods",
         ],
     },
-    Omoshiro: {
+    F1_Omoshiro: {
         name: "とってもおもしろいこと",
+        location: `${maps_names.Science_A}${maps_words.Conjs.Infront}`,
         activitys: {
             d1: ["11:00"],
             d2: ["11:00"],
@@ -370,9 +372,10 @@ const exhibits = {
             "merchandise",
         ],
     },
-    MCBATTLE: {
+    F1_MCBATTLE: {
         name: "MC BATTLE",
-        location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
+        // focusMeshName: "F1_Entrance_Arch",
         activitys: {
             d2: ["15:00", "16:00"],
         },
@@ -468,7 +471,8 @@ const exhibits = {
         ],
     },
     F1_Coffee: {
-        name: "コーヒーカルチャ",
+        name: "コーヒーカルチャークラブ",
+        //表記ゆれ
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
@@ -640,7 +644,7 @@ const exhibits = {
         ],
     },
     F1_Sawatonagi: {
-        name: "さわとなぎの雑貨",
+        name: "さわとなぎの雑貨やさん",
         location: `${maps_names.Art}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
@@ -854,7 +858,7 @@ const exhibits = {
             "foods",
         ],
     },
-    BloomSweets: {
+    F1_BloomSweets: {
         name: "Bloom sweets",
         activitys: {
             d2: [],
@@ -912,8 +916,9 @@ const exhibits = {
             "foods",
         ],
     },
-    ChaiWari: {
+    F1_ChaiWari: {
         name: "Chai wari",
+        location: `${maps_names.Science_B}${maps_words.Conjs.Infront}`,
         activitys: {
             d2: [],
         },
@@ -1322,6 +1327,19 @@ function cdnCompleted () {
         elements.forEach(el => observer.observe(el));
     }
 
+    function pushLabel (targetName) {
+        const vaildFloors = maps_getFloors();
+        const targetMeshFloors = maps_getFloors(targetName);
+        if (!maps_getIsAllFloorVaild()) {
+            // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
+            const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
+            console.log(vaildFloors, targetMeshFloors, pushFloor);
+            if (!vaildFloors.includes(pushFloor)) pushFloorButton(pushFloor);
+        }
+        removeAllLabel();
+        labelDetailOpen(targetName);
+    }
+
     for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
         const tileEl = d.createElement("div");
         const namesEl = d.createElement("div");
@@ -1404,21 +1422,20 @@ function cdnCompleted () {
         locationEl.addEventListener("click", e => {
             e.stopPropagation();
             barTabClick(1);
-            Object.values(maps_locations).forEach((item, index) => {
-                if (getExhibits(i)[1] === item) {
-                    const targetName = Object.keys(maps_locations)[index];
-                    const vaildFloors = maps_getFloors();
-                    const targetMeshFloors = maps_getFloors(targetName);
-                    if (!maps_getIsAllFloorVaild()) {
-                        // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
-                        const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
-                        console.log(vaildFloors, targetMeshFloors, pushFloor);
-                        if (!vaildFloors.includes(pushFloor)) pushFloorButton(pushFloor);
-                    }
-                    removeAllLabel();
-                    pushLabel(targetName);
+            for (const [key, item] of Object.entries(maps_locations)) {
+                if (
+                    typeof getExhibits(i)[1].focusMeshName === "string" && 
+                    Object.keys(maps_modelParts)?.includes(getExhibits(i)[1]?.focusMeshName)
+                ) {
+                    pushLabel(getExhibits(i)[1].focusMeshName);
+                    break;
+                } else if (getExhibits(i)[1] === item) {
+                    pushLabel(key);
+                    break;
                 }
-            });
+            }
+
+            if (!Object.values(maps_locations).includes(getExhibits(i)[1])) pushLabel("F1_Entrance_Arch");
         });
         // if (getExhibits(i)[1] && (
         //     ["day1", "day2"].every(item => !getExhibits(i)[1].tag.includes(item))
@@ -1593,6 +1610,7 @@ function cdnCompleted () {
 
         F1_Entrance_Arch: {
             name: maps_names.FrontEntrance,
+            description: `正面での${tagOrder.announcement.displayName}は${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施`,
             emphasis: true,
             isAlwaysShow: true,
             isEdgeShow: true,
@@ -1705,7 +1723,7 @@ function cdnCompleted () {
         F1_F2_F3_OutdoorStairs004: exhibits.Aruaru,
         F1_Airplane: exhibits.PlaneWorkshop,
         F1_Science_A: exhibits.Star_Dormitory,
-        F1_Science_B: exhibits.PROBUX,
+        F1_Science_B: exhibits.F1_PROBUX,
         F1_Science_C: exhibits.North_Dormitory,
         F1_Science_D: exhibits.BLUEPEYOUNG,
         F3_Music_3: {
@@ -1735,14 +1753,14 @@ function cdnCompleted () {
     };
     Object.values(maps_locations).forEach((locationItem, i) => {
         const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
-        if (!locationItem?.location?.name && locationName) {
-            locationItem.location = {
-                name: `${locationName}`
-            };
-        }
-        if (typeof locationItem.location === "string") {
-            locationItem.location = {
-                name: locationItem.location
+        if (locationItem) {
+            if (!locationItem?.location?.name && locationName) {
+                locationItem.location = {
+                    name: `${locationName}`
+                };
+            }
+            if (typeof locationItem.location === "string") locationItem.location = {
+                name: locationItem?.location
             };
         }
     });
@@ -2218,7 +2236,7 @@ function cdnCompleted () {
 
     const pushFloorButton = (f) => maps_buttons_left.querySelectorAll("div.button")[f - 1]?.click();
 
-    function pushLabel (targetMeshName) {
+    function labelDetailOpen (targetMeshName) {
         const location = maps_locations[targetMeshName];
         const baseObject = maps_modelParts[targetMeshName];
         const labelEl = d.createElement("div");
@@ -3277,7 +3295,7 @@ function cdnCompleted () {
                                 while (clicked && clicked.type !== "Sprite" && clicked.parent) {
                                     clicked = clicked.parent;
                                 }
-                                if (clicked) pushLabel(clicked.userData.name);
+                                if (clicked) labelDetailOpen(clicked.userData.name);
                             }
                         }
 
