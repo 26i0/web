@@ -976,6 +976,11 @@
         var(--camZoom) * 1px
     );
 }
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations .image img {
+    border-radius: calc(
+        var(--informationsRadius) * .6
+    );
+}
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations svg {
     --locationTextSize: var(--fontSize);
     right: calc(

@@ -3326,7 +3326,7 @@ function cdnCompleted () {
                             const intersects = raycaster.intersectObjects(clickableLabels, true);
 
                             removeAllLabel();
-                            if (intersects.length > 0) {
+                            if (intersects.length > 0) { // ラベル展開､push
                                 let clicked = (() => {
                                     for (const intersect of intersects) {
                                         const clicked = intersect.object;
@@ -3348,17 +3348,18 @@ function cdnCompleted () {
                         (() => {
                             let lastHandleEventAt;
                             let startPos = [];
+                            let isPinchNow = false;
                             function touchstart (x, y) {
                                 startPos = [x, y];
                             }
                             function touchend (x, y) {
-                                const touchThreshold = 50;
+                                const touchThreshold = 25;
                                 if (
                                     ((Date.now() - lastHandleEventAt) > 500 || !lastHandleEventAt) &&
                                     (
                                         Math.abs(startPos[0] - x) < touchThreshold &&
                                         Math.abs(startPos[1] - y) < touchThreshold
-                                    )
+                                    ) && !isPinchNow
                                 ) {
                                     onMouseClick(x, y);
                                     lastHandleEventAt = Date.now();
@@ -3366,11 +3367,13 @@ function cdnCompleted () {
                             }
                             maps_renderer.domElement.addEventListener("touchstart", e => {
                                 const touch = e?.touches[0];
+                                if (e?.touches.length > 1) isPinchNow = true;
                                 if (touch) touchstart(touch.clientX, touch.clientY);
                             });
                             maps_renderer.domElement.addEventListener("touchend", e => {
                                 const touch = e?.touches[0];
                                 if (touch) touchend(touch.clientX, touch.clientY);
+                                isPinchNow = false;
                             });
                             maps_renderer.domElement.addEventListener("mousedown", e => {
                                 touchstart(e.clientX, e.clientY);
