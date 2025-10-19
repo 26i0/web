@@ -99,8 +99,9 @@
 .content.main .exhibits .tile.hidden {
     opacity: var(--baseOpacity);
     pointer-events: none;
-    /* --whenHiddenHeight: 2.5em;
-    height: var(--whenHiddenHeight); */
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 /* .content.main .exhibits .tile.hidden:last-child {
     margin-bottom: calc(
