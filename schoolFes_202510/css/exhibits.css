@@ -142,6 +142,7 @@
     max-width: calc(
         100% - var(--activityWidthPx) - 20px
     );
+    min-width: 5em;
     border-radius: calc(.5em + 5px);
     font-size: .8em;
     display: flex;
@@ -174,14 +175,28 @@
     border-radius: 2em;
     transition: opacity .5s ease-in-out;
 }
+.content.main .exhibits .tile .location {
+    --locationTextSize: 1.25em;
+}
 .content.main .exhibits .tile.hidden .location {
     height: calc(var(--whenHiddenHeight) / 2 - 10px);
 }
+.content.main .exhibits .tile .location .locationText {
+    padding-right: var(--locationTextSize);
+    height: var(--locationTextSize);
+    display: flex;
+    align-items: center;
+    right: 0;
+}
+.content.main .exhibits .list .tile .location svg {
+    position: absolute;
+}
 .content.main .exhibits .tile .location svg {
     position: relative;
-    height: 1.25em;
-    width: 1.25em;
+    height: var(--locationTextSize);
+    width: var(--locationTextSize);
     margin-left: .5px;
+    right: 5px;
     transform: rotate(225deg);
 }
 .content.main .exhibits .tile .location svg path {

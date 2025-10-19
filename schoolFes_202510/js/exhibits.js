@@ -38,6 +38,7 @@ const maps_words = {
     },
     Subject: "科",
     Room: "室",
+    Ridge: "棟",
     Laboratory: "研究",
     Preparation: "準備",
     Conjs: {
@@ -70,9 +71,10 @@ const maps_names = {
     Dormitory: "寮",
     Secretariat: "事務局",
     Gym: `${maps_words.Subjects.PhysicalEdu}館`,
-    Art: `${maps_words.Subjects.Art}棟`,
+    Art: `${maps_words.Subjects.Art}${maps_words.Ridge}`,
     Corridor: "廊下",
     Stairs: "階段",
+    Biotope: "ビオトープ",
     Skateboard: "スケボー場",
     Multipurpose: "多目的ホール",
     Science_A: `${maps_words.Subjects.Science}${maps_words.Room}A`,
@@ -93,6 +95,8 @@ const maps_names = {
     Math_Laboratory: `${maps_words.Subjects.Math}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Life_Laboratory: `${maps_words.Subjects.Life}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Warehouse: "倉庫",
+    Darkroom: "暗室",
+    Seminar: `ゼミ${maps_words.Room}`,
 };
 
 const exhibits = {
@@ -156,6 +160,7 @@ const exhibits = {
     },
     F1_J3_2: {
         name: "沈むなタイタニック号",
+        location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Infront}､${maps_names.Biotope}${maps_words.Conjs.Near}`,
         tag: [
             "byClass",
             "attractions",
@@ -321,6 +326,7 @@ const exhibits = {
     },
     F3_H3_4: {
         name: "ウマ息子~プリティダービー",
+        location: `${maps_names.Music_Large}`,
         tag: [
             "byClass",
             "H3",
@@ -422,6 +428,7 @@ const exhibits = {
     },
     Shoten: {
         name: "昇天商店",
+        location: `${maps_names.Warehouse}`,
         activitys: {
             d2: [],
         },
@@ -473,7 +480,7 @@ const exhibits = {
     F1_Coffee: {
         name: "コーヒーカルチャークラブ",
         //表記ゆれ
-        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
             "foods",
@@ -509,8 +516,9 @@ const exhibits = {
             "attractions",
         ],
     },
-    BLUEPEYOUNG: {
+    F1_BLUEPEYOUNG: {
         name: "BLUE PEYOUNG",
+        location: `${maps_names.Science_D}`,
         tag: [
             "byVolunteers",
             "foods",
@@ -519,7 +527,7 @@ const exhibits = {
     },
     F1_SkateDrink: {
         name: "スケートドリンク",
-        location: `${maps_names.Gym}${maps_words.Conjs.Infront}`,
+        location: `${maps_names.Gym}${maps_words.Conjs.Infront}､${maps_names.Skateboard}`,
         activitys: {
             d1: ["10:30", "15:50"],
             d2: [],
@@ -530,9 +538,9 @@ const exhibits = {
             "attractions",
         ],
     },
-    Tokusatsu: {
+    F3_Tokusatsu: {
         name: "特撮映画上映",
-        location: `${maps_names.Multipurpose}`,
+        location: `${maps_names.Music_Small}`,
         activitys: {
             d1: ["10:40"],
         },
@@ -555,7 +563,7 @@ const exhibits = {
     },
     F1_Cat: {
         name: "猫部のお店",
-        location: `${maps_names.Multipurpose}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.Multipurpose}${maps_words.Conjs.Near}`,
         tag: [
             "byVolunteers",
             "merchandise",
@@ -568,8 +576,9 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Hostclub: {
+    F3_Hostclub: {
         name: "ホストクラブ",
+        location: `${maps_names.Seminar}`,
         tag: [
             "byVolunteers",
             "foods",
@@ -600,7 +609,7 @@ const exhibits = {
     },
     F1_Warasibe: {
         name: "わらしべ長者",
-        location: `${maps_names.Multipurpose}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.Multipurpose}${maps_words.Conjs.Near}`,
         activitys: {
             d1: ["10:30", "15:30"],
             d2: ["10:30", "14:30"],
@@ -630,7 +639,7 @@ const exhibits = {
     },
     F1_Paparazzi: {
         name: "paparazzi",
-        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}`,
+        location: `${maps_names.Darkroom}`,
         tag: [
             "byVolunteers",
         ],
@@ -645,7 +654,7 @@ const exhibits = {
     },
     F1_Sawatonagi: {
         name: "さわとなぎの雑貨やさん",
-        location: `${maps_names.Art}${maps_words.Conjs.Near}`,
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
             "merchandise",
@@ -653,7 +662,7 @@ const exhibits = {
     },
     F1_Mononoke: {
         name: "もののけ",
-        location: `${getClassName("H", 1, 1)}${maps_words.Conjs.Infront}`,
+        location: `${getClassName("H", 1, 1)}${maps_words.Conjs.Infront}の${maps_names.Stairs}`,
         tag: [
             "byVolunteers",
             "display",
@@ -673,6 +682,7 @@ const exhibits = {
     },
     Samba: {
         name: "サンバ",
+        location: `${maps_names.FrontEntrance}`,
         activitys: {
             d2: ["14:30", "15:00"],
         },
@@ -683,7 +693,7 @@ const exhibits = {
     },
     F1_Moon_Dormitory: {
         name: `ちゅきちゅき月${maps_names.Dormitory}`,
-        location: `${maps_names.Secretariat}${maps_words.Conjs.Near}`,
+        location: `${getClassName("H", 1, 3)}${maps_words.Conjs.NextTo}`,
         activitys: {
             d1: [null, "15:00"],
             d2: [null, "14:00"],
@@ -695,6 +705,7 @@ const exhibits = {
     },
     North_Dormitory: {
         name: `${maps_words.Directions.N}${maps_names.Dormitory}Movie`,
+        location: `${maps_names.Science_C}`,
         activitys: {
             d1: ["10:30"],
             d2: [],
@@ -728,8 +739,9 @@ const exhibits = {
             "merchandise",
         ],
     },
-    IllustManga: {
+    F2_IllustManga: {
         name: "イラストマンガ部",
+        location: `${maps_names.Music_Large}${maps_words.Conjs.Near}`,
         activitys: {
             d1: ["11:00"],
             d2: ["11:00"],
@@ -749,6 +761,7 @@ const exhibits = {
     },
     F3_Button: {
         name: "Button",
+        location: `${getClassName("H", 3, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
             "display",
@@ -756,6 +769,7 @@ const exhibits = {
     },
     Smash: {
         name: "スマブラしようぜ!",
+        location: `${maps_names.Art}`,
         tag: [
             "byVolunteers",
         ],
@@ -771,15 +785,17 @@ const exhibits = {
             "byVolunteers",
         ],
     },
-    Steal: {
+    F3_Steal: {
         name: "盗",
+        location: `${getClassName("H", 3, 4)}`,
         tag: [
             "byVolunteers",
             "attractions",
         ],
     },
-    CoffeeWatashi: {
+    F2_CoffeeWatashi: {
         name: "珈琲渡時",
+        location: `${maps_names.Warehouse}`,
         activitys: {
             d1: [],
             d2: [null, "13:00"],
@@ -812,8 +828,9 @@ const exhibits = {
             "foods",
         ],
     },
-    East_Dormitory: {
+    F1_East_Dormitory: {
         name: `${maps_words.Directions.E}${maps_names.Dormitory}`,
+        location: `${maps_names.FrontEntrance}`,
         tag: [
             "byVolunteers",
         ],
@@ -860,6 +877,7 @@ const exhibits = {
     },
     F1_BloomSweets: {
         name: "Bloom sweets",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Behind}`,
         activitys: {
             d2: [],
         },
@@ -868,8 +886,9 @@ const exhibits = {
             "foods",
         ],
     },
-    cocoFofo: {
+    F1_cocoFofo: {
         name: "coco fofo",
+        location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
             "foods",
@@ -907,6 +926,7 @@ const exhibits = {
     },
     F3_LittleTaroBar: {
         name: "リトルクローバー",
+        location: `${getClassName("H", 3, 1)}${maps_words.Conjs.Infront}の${maps_names.Stairs}`,
         activitys: {
             d1: ["13:00"],
             d2: ["11:00"],
@@ -1610,7 +1630,7 @@ function cdnCompleted () {
 
         F1_Entrance_Arch: {
             name: maps_names.FrontEntrance,
-            description: `正面での${tagOrder.announcement.displayName}は${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施`,
+            description: `正面${tagOrder.announcement.displayName}などは<br>${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施`,
             emphasis: true,
             isAlwaysShow: true,
             isEdgeShow: true,
@@ -1628,6 +1648,7 @@ function cdnCompleted () {
             isAlwaysShow: true,
             isEdgeShow: true,
         },
+        F3_H3_4: exhibits.F3_Steal,
 
         F1_Art_WC: {
             location: {
@@ -1699,7 +1720,7 @@ function cdnCompleted () {
                 name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
             }
         },
-
+        F1_Darkroom: exhibits.F1_Paparazzi,
         F1_Information_Center: {
             name: "medias/images/mapInformation.svg",
             description: "インフォメーションセンター",
@@ -1718,19 +1739,24 @@ function cdnCompleted () {
             },
         },
         F2_Art: exhibits.Smash,
+        F2_Warehouse: exhibits.F2_CoffeeWatashi,
 
-        F1_Multipurpose: exhibits.Tokusatsu,
+        F1_Multipurpose: exhibits.F3_H3_4,
         F1_F2_F3_OutdoorStairs004: exhibits.Aruaru,
         F1_Airplane: exhibits.PlaneWorkshop,
         F1_Science_A: exhibits.Star_Dormitory,
         F1_Science_B: exhibits.F1_PROBUX,
         F1_Science_C: exhibits.North_Dormitory,
-        F1_Science_D: exhibits.BLUEPEYOUNG,
+        F1_Science_D: exhibits.F1_BLUEPEYOUNG,
         F3_Music_3: {
             ...exhibits.F1_Tekken_1,
             description: "プラレール展示",
         },
         F3_Warehouse: exhibits.Shoten,
+
+        F3_Seminar: exhibits.F3_Hostclub,
+
+        F2_Music_Small: exhibits.F3_Tokusatsu,
 
         BusStation_Base: {
             name: `${maps_names.Bus}停`,
@@ -2135,6 +2161,7 @@ function cdnCompleted () {
         ) : (
             getLabelCorrEl(value)
         );
+        console.log(targetTile);
 
         function scrollToAndThen(targetY, callback) {
             const executionTime = Date.now();
@@ -2279,7 +2306,7 @@ function cdnCompleted () {
             } else if (maps_locations[fmtedMeshName]?.onClick) {
                 maps_locations[fmtedMeshName].onClick();
             } else {
-                scrollToTile(targetMeshName) || scrollToTile(fmtedMeshName)
+                scrollToTile(maps_locations[targetMeshName].tileEl) || scrollToTile(targetMeshName) || scrollToTile(fmtedMeshName)
             }
         }
 
@@ -2288,10 +2315,23 @@ function cdnCompleted () {
         );
 
         const floor = maps_getFloors(targetMeshName);
+        const locationText = (() => {
+            let text = (
+                location.location?.name ? location.location?.name + " " : ""
+            ) + (
+                (floor.length > 0) ? `(${floor.join("､")}階)` : ""
+            );
+            const sliceIdx = text.length > 14 ? (
+                Math.min(text.indexOf("("), text.indexOf("､") + 1) || Math.floor(text.length / 2)
+            ) : null;
+            if (typeof sliceIdx === "number") text = text.slice(0, sliceIdx) + "<br>" + text.slice(sliceIdx);
+            return text;
+        })();
+
         const generateEls = [
-            (location.location?.name || floor.length > 0) ? getNewElItem(`${location.location?.name ? location.location?.name + " " : ""}${(() => {
-                return (floor.length > 0) ? `(${floor.join("､")}階)` : "";
-            })()} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location") : null,
+            (location.location?.name || floor.length > 0) ? getNewElItem(
+                `${locationText} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location"
+            ) : null,
             location.description ? getNewElItem(location.description, "detail") : null,
             getNewElItem(location?.image, "image"),
         ];
@@ -3028,7 +3068,7 @@ function cdnCompleted () {
 
                                 const text = truncateText({
                                     text: maps_locations[partName]?.name || "",
-                                    length: 10,
+                                    length: 8,
                                     str: "...",
                                 });
                                 const fontSize = scaleFactor * 220;
@@ -4402,6 +4442,15 @@ function cdnCompleted () {
     if (isDevMode) setTimeout(() => {
         jsonTestDev();
     }, 100);
+    // d.querySelectorAll("body > div.main.content > div.exhibits > div.list > div.tile > div.location.button").forEach((el, i) => {
+    //     setTimeout(() => {
+    //         el.click();
+    //         setTimeout(() => {
+    //             d.querySelector("body > div.main.content > div.exhibits > div.tile.sortList.exhibitsBottomBar.opened > div.topContents > div.tabs > div.tab").click();
+    //             el.parentElement.click();
+    //         }, 1000);
+    //     }, i * 2000);
+    // });
 }
 
 (async () => { // import (fallback付き)
