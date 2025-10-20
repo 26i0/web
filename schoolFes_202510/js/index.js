@@ -385,7 +385,7 @@
             isPageShowNow = (
                 // (currentIndex < pageContents.length)
                 // scrollY < getScrollYFromRatio(1)
-                !isInViewport(d.querySelector("body > div.footers"))
+                !isInViewport(d.querySelector("body > div.footers")) || scrollY === 0
             );
 
             pagesArea.style.pointerEvents = isPageShowNow ? "auto" : "none";
@@ -441,30 +441,30 @@
 
     // SVGファイルのパス
     const filePaths = [
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
-        "./medias/pages/0.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
+        "./medias/pages/preparing.png",
     ];
 
     // SVGファイルを読み込む
