@@ -1,14 +1,37 @@
-.main.content {
+.main.content .lyricsArea {
     padding-left: 30px;
     padding-right: 30px;
 }
-.main.content p {
+.main.content .lyricsArea p {
     margin-bottom: 100px;
 }
-.main.content h1 {
-    margin-top: 0;
+.main.content .lyricsArea .songSet:not(:first-child) {
+    border-top-left-radius: var(--minBorderWidth);
+    border-top-right-radius: var(--minBorderWidth);
 }
-.main.content h2 {
-    margin-bottom: 0;
+.main.content .lyricsArea .songSet:not(:last-child) {
+    border-bottom-left-radius: var(--minBorderWidth);
+    border-bottom-right-radius: var(--minBorderWidth);
+}
+.main.content .lyricsArea .songSet {
+    --minBorderWidth: 15px;
+    cursor: default;
+    background-color: transparent;
+    backdrop-filter: none;
+    --webkit-backdrop-filter: none;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+.main.content .lyricsArea .songSet .title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2em;
+    font-weight: bold;
+}
+.main.content .lyricsArea .songSet .subText {
+    font-size: 1.25em;
+}
+.main.content .lyricsArea .songSet .lyric {
+    margin-bottom: 50px;
     font-size: 1rem;
 }

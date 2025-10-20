@@ -143,7 +143,7 @@ const exhibits = {
         ],
     },
     F2_J2_3: {
-        name: "サスケッチ",
+        name: "サスケチック",
         tag: [
             "byClass",
             "attractions",
@@ -158,9 +158,8 @@ const exhibits = {
             "J3",
         ],
     },
-    F1_J3_2: {
+    F3_J3_2: {
         name: "沈むなタイタニック号",
-        location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Infront}､${maps_names.Biotope}${maps_words.Conjs.Near}`,
         tag: [
             "byClass",
             "attractions",
@@ -251,7 +250,7 @@ const exhibits = {
         ],
     },
     F2_H2_2: {
-        name: "出流原",
+        name: "出流原~因習村でお待ちしております。",
         tag: [
             "byClass",
             "foods",
@@ -261,7 +260,8 @@ const exhibits = {
         ],
     },
     F2_H2_3: {
-        name: "ベイカリーマックス",
+        // name: "ベイカリーマックス",
+        name: "H2-3ベイカリーマックス~Coffeeたしなんじゃお★~",
         tag: [
             "byClass",
             "attractions",
@@ -446,7 +446,7 @@ const exhibits = {
         ],
     },
     F1_Tekken_1: {
-        name: "鉄研 5インチ",
+        name: "鉄研 5インチ･プラレール展示",
         location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
@@ -467,7 +467,7 @@ const exhibits = {
         ],
     },
     F3_Yutosara: {
-        name: "ゆうとさらの占い",
+        name: "ゆうとさらの占い部屋",
         location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
         activitys: {
             d1: ["11:00"],
@@ -570,14 +570,14 @@ const exhibits = {
         ],
     },
     F1_Nepal: {
-        name: "ネパール募金",
+        name: "ネパール孤児院募金",
         location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
         ],
     },
     F3_Hostclub: {
-        name: "ホストクラブ",
+        name: "ホストクラブ｢blue★spring｣",
         location: `${maps_names.Seminar}`,
         tag: [
             "byVolunteers",
@@ -794,7 +794,7 @@ const exhibits = {
         ],
     },
     F2_CoffeeWatashi: {
-        name: "珈琲渡時",
+        name: "珈琲道渡時",
         location: `${maps_names.Warehouse}`,
         activitys: {
             d1: [],
@@ -836,7 +836,7 @@ const exhibits = {
         ],
     },
     F1_Tacos: {
-        name: "タコス",
+        name: "ハイサイタコス",
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}`,
         activitys: {
             d1: [],
@@ -1778,7 +1778,7 @@ function cdnCompleted () {
 
         F1_Entrance_Arch: {
             name: maps_names.FrontEntrance,
-            description: `正面${tagOrder.announcement.displayName}などは<br>${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施`,
+            description: `正面${tagOrder.announcement.displayName}などは\n${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施\n(雨天時は${maps_names.Gym}で実施)`,
             emphasis: true,
             isAlwaysShow: true,
             isEdgeShow: true,
@@ -1858,6 +1858,10 @@ function cdnCompleted () {
                 name: `${maps_names.Computers}${maps_words.Conjs.NextTo}`,
             }
         },
+        F1_Gym: {
+            name: `${maps_names.Gym}`,
+            description: `雨天時の正面${tagOrder.announcement.displayName}で利用`,
+        },
         F1_Gym_WC: {
             location: {
                 name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
@@ -1871,10 +1875,12 @@ function cdnCompleted () {
         F1_Darkroom: exhibits.F1_Paparazzi,
         F1_Information_Center: {
             name: "medias/images/mapInformation.svg",
+            location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
             description: "インフォメーションセンター",
         },
         F1_Certificate: {
             name: "medias/images/mapCertificate.svg",
+            location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
             description: "金券の販売所",
         },
         F1_Gym_Entrance: {
@@ -1886,6 +1892,11 @@ function cdnCompleted () {
                 y: .1,
             },
         },
+        F1_J3_2: {
+            ...exhibits.F3_J3_2,
+            location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Infront}､${maps_names.Biotope}${maps_words.Conjs.Near}`,
+        },
+
         F2_Art: exhibits.Smash,
         F2_Warehouse: exhibits.F2_CoffeeWatashi,
 
@@ -2440,9 +2451,10 @@ function cdnCompleted () {
             (location.location?.name || floor.length > 0) ? getNewElItem(
                 `${locationText} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location"
             ) : null,
-            location.description ? getNewElItem(location.description, "detail") : null,
+            location.description ? getNewElItem(location.description.replaceAll("\n", "<br>"), "detail") : null,
             getNewElItem(location?.image, "image"),
         ];
+        if (location.description) location.description = location.description.replaceAll("\n", "");
         generateEls.forEach(el => {
             if (el) informations?.appendChild(el);
         });
@@ -4273,7 +4285,7 @@ function cdnCompleted () {
                 mapsView.appendChild(maps_buttons_right);
                 mapsView.appendChild(maps_buttons_top);
             } else {
-                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>ご利用の端末は地図に対応していないようです｡</span>";
+                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>地図の読み込みに失敗しました｡再読み込みを試行してください｡(何度もこのメッセージが表示される場合､ご利用の端末では利用できない可能性があります｡)</span>";
                 mapsView.style.pointerEvents = "none";
             }
         })();

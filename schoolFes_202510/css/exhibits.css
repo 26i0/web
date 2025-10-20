@@ -47,7 +47,8 @@
     width: calc(100% - var(--exhibitsTileMargin) * 2);
     height: var(--baseHeight);
     border-radius: .9em;
-    background-color: rgba(var(--baseBackgorundRGB), .25);
+    /* background-color: rgba(var(--baseBackgorundRGB), .25); */
+    background-color: transparent;
     box-shadow: 0 0 10px gray;
     display: flex;
     justify-content: flex-start;
@@ -1561,10 +1562,10 @@
     ;
 }
 .content.main .exhibits .tag.inValid {
-    --borderWidth: 2px;
     color: black;
     background-color: transparent;
     font-weight: 200;
+    --borderWidth: 3px;
     outline: var(--themeColor) var(--borderWidth) solid;
     outline-offset: calc(var(--borderWidth) * -1);
 }
