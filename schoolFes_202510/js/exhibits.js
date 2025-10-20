@@ -261,7 +261,7 @@ const exhibits = {
     },
     F2_H2_3: {
         // name: "ベイカリーマックス",
-        name: "H2-3ベイカリーマックス~Coffeeたしなんじゃお★~",
+        name: "ベイカリーマックス~Coffeeたしなんじゃお★~",
         tag: [
             "byClass",
             "attractions",
@@ -324,16 +324,16 @@ const exhibits = {
             "H3",
         ],
     },
-    F3_H3_4: {
+    F1_H3_4: {
         name: "ウマ息子~プリティダービー",
-        location: `${maps_names.Music_Large}`,
+        location: `${maps_names.Multipurpose}`,
         tag: [
             "byClass",
             "H3",
         ],
     },
     F3_H3_5: {
-        name: "ネットリネット",
+        name: "ねっとりねっと",
         tag: [
             "byClass",
             "attractions",
@@ -637,7 +637,7 @@ const exhibits = {
             "display",
         ],
     },
-    F1_Paparazzi: {
+    Paparazzi: {
         name: "paparazzi",
         location: `${maps_names.Darkroom}`,
         tag: [
@@ -717,7 +717,7 @@ const exhibits = {
     },
     Star_Dormitory: {
         name: `星${maps_names.Dormitory}有志`,
-        location: `${maps_names.Science_A}`,
+        // location: `${maps_names.Science_A}`,
         tag: [
             "byVolunteers",
             "merchandise",
@@ -794,7 +794,7 @@ const exhibits = {
         ],
     },
     F2_CoffeeWatashi: {
-        name: "珈琲道渡時",
+        name: "珈琲 道渡時",
         location: `${maps_names.Warehouse}`,
         activitys: {
             d1: [],
@@ -805,9 +805,9 @@ const exhibits = {
             "foods",
         ],
     },
-    F1_StarRabbit: {
+    F2_StarRabbit: {
         name: "星うさぎの贈り物",
-        location: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
+        location: `${maps_names.Music_Large}${maps_words.Conjs.Near}`,
         activitys: {
             d1: ["11:00"],
         },
@@ -955,7 +955,6 @@ const exhibits = {
     // },
 };
 
-const getExhibits = (n) => ([ Object.keys(exhibits)[n], Object.values(exhibits)[n] ])
 const tagGroups = {
     project: {
         isMultSel: false
@@ -1052,6 +1051,251 @@ const tagOrder = {
     //     group: tagGroups.grade
     // },
 };
+
+const maps_pointIcon = "medias/images/mapPoint.svg";
+const maps_locations = {
+    currentLocationPoint: {
+        name: "現在地",
+        description: "おおよその現在地",
+        isEdgeShow: true,
+    },
+
+    F1_Entrance_Arch: {
+        name: maps_names.FrontEntrance,
+        description: `正面${tagOrder.announcement.displayName}などは\n${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施\n(雨天時は${maps_names.Gym}で実施)`,
+        emphasis: true,
+        isAlwaysShow: true,
+        isEdgeShow: true,
+    },
+    Dining_Roof: {
+        name: maps_names.Dining,
+        offset: {
+            y: .05,
+        },
+        description: `${maps_names.Dining}のメニュー`,
+        onClick: () => {
+            window.location.href = "./?page=5";
+        },
+        image: "./medias/pages/preparing.png",
+        isAlwaysShow: true,
+        isEdgeShow: true,
+    },
+    F3_H3_4: {
+        originalValue: "F3_Steal",
+    },
+
+    F1_Art_WC: {
+        location: {
+            name: `${maps_names.Art}${maps_words.Conjs.Inside}`,
+        }
+    },
+    F1_Dining_WC: {
+        location: {
+            name: `${maps_names.Dining}${maps_words.Conjs.Inside}`,
+        }
+    },
+    F1_J_WC: {
+        location: {
+            name: `${getClassName("J", 1, 3)}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_CurveRoom_WC: {
+        location: {
+            name: `${maps_names.Secretariat}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F2_J_WC: {
+        location: {
+            name: `${getClassName("J", 2, 3)}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F3_J_WC: {
+        location: {
+            name: `${getClassName("J", 3, 3)}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_H_WC: {
+        location: {
+            name: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F2_H_WC: {
+        location: {
+            name: `${getClassName("H", 2, 4)}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F3_H_WC: {
+        location: {
+            name: `${getClassName("H", 3, 4)}${maps_words.Conjs.Infront}`,
+        }
+    },
+    F1_WC: {
+        location: {
+            name: `${maps_names.Science_Preparation}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F2_WC: {
+        location: {
+            name: `${maps_names.Cooking}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F3_WC: {
+        location: {
+            name: `${maps_names.Computers}${maps_words.Conjs.NextTo}`,
+        }
+    },
+    F1_Gym: {
+        name: `${maps_names.Gym}`,
+        description: `雨天時の正面${tagOrder.announcement.displayName}で利用`,
+    },
+    F1_Gym_WC: {
+        location: {
+            name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
+        }
+    },
+    F1_Gym_WC001: {
+        location: {
+            name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
+        }
+    },
+    F1_Paparazzi: {
+        originalValue: "Paparazzi",
+        location: `${getClassName("H", 1, 3)}${maps_words.Conjs.NextTo}`,
+    },
+    F2_Paparazzi: {
+        originalValue: "Paparazzi",
+        location: `${getClassName("H", 2, 3)}${maps_words.Conjs.NextTo}`,
+    },
+    F3_Paparazzi: {
+        originalValue: "Paparazzi",
+        location: `${getClassName("H", 3, 3)}${maps_words.Conjs.NextTo}`,
+    },
+    F1_Darkroom:  {
+        originalValue: "Paparazzi",
+    },
+    F1_Information_Center: {
+        name: "medias/images/mapInformation.svg",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
+        description: "インフォメーションセンター",
+    },
+    F1_Certificate: {
+        name: "medias/images/mapCertificate.svg",
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
+        description: "金券の販売所",
+    },
+    F1_Gym_Entrance: {
+        name: maps_names.Gym,
+    },
+    F1_F2_Art: {
+        name: maps_names.Art,
+        offset: {
+            y: .1,
+        },
+    },
+    F1_J3_2: {
+        originalValue: "F3_J3_2",
+        location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Infront}､${maps_names.Biotope}${maps_words.Conjs.Near}`,
+    },
+
+    F2_Art: {
+        originalValue: "Smash",
+    },
+    F2_Warehouse: {
+        originalValue: "F2_CoffeeWatashi"
+    },
+    F1_Multipurpose: {
+        originalValue: "F1_H3_4",
+    },
+    F1_F2_F3_OutdoorStairs004: {
+        originalValue: "Aruaru",
+    },
+    F1_Airplane: {
+        originalValue: "PlaneWorkshop",
+    },
+    F1_Science_A: {
+        originalValue: "Star_Dormitory",
+    },
+    F1_Science_B: {
+        originalValue: "F1_PROBUX",
+    },
+    F1_Science_C: {
+        originalValue: "North_Dormitory",
+    },
+    F1_Science_D: {
+        originalValue: "F1_BLUEPEYOUNG",
+    },
+    F3_Music_3: {
+        originalValue: "F1_Tekken_1",
+        description: "プラレール展示",
+    },
+    F3_Warehouse: exhibits.Shoten,
+
+    F3_Seminar: exhibits.F3_Hostclub,
+
+    F2_Music_Small: exhibits.F3_Tokusatsu,
+
+    BusStation_Base: {
+        name: `${maps_names.Bus}停`,
+        description: `${maps_names.Bus}ダイヤを見る`,
+        image: "./medias/pages/preparing.png",
+        onClick: () => {
+            window.location.href = "./?page=5";
+        },
+        offset: {
+            y: .1,
+        },
+        isAlwaysShow: true,
+        isEdgeShow: true,
+    },
+
+    F1_Rukissa001: {
+        ...exhibits.F1_Rukissa,
+        location: `${getClassName("H", 1, 4)}${maps_words.Conjs.NextTo}`,
+    },
+};
+
+function exhibitsDataCompletion ({
+    isOriginalValue = true,
+    isLocation = true,
+} = {}) {
+    // 場所自動補完
+    Object.values(maps_locations).forEach((locationItem, i) => {
+        if (typeof locationItem === "string") {
+            locationItem = {
+                originalValue: locationItem
+            };
+        }
+        if (isOriginalValue && locationItem?.originalValue) {
+            const replaced = locationItem.originalValue.replace("exhibits.", "");
+            locationItem = {
+                ...exhibits[replaced],
+                ...locationItem,
+                originalValue: replaced,
+            };
+        }
+
+        if (isLocation) {
+            const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
+            if (locationItem) {
+                if (!locationItem?.location?.name && locationName) {
+                    locationItem.location = {
+                        name: `${locationName}`
+                    };
+                }
+                if (typeof locationItem.location === "string") locationItem.location = {
+                    name: locationItem?.location
+                };
+            }
+        }
+
+        maps_locations[Object.keys(maps_locations)[i]] = {
+            ...locationItem,
+        };
+    });
+}
+exhibitsDataCompletion();
+
+const getExhibits = (n) => ([ Object.keys(exhibits)[n], Object.values(exhibits)[n] ])
 
 function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened")) {
     const allTiles = exhibitsArea.querySelectorAll(".tile");
@@ -1373,21 +1617,21 @@ function cdnCompleted () {
     }
 
     const tilesFragment = d.createDocumentFragment();
-
-    for (let i = 0; i < Object.keys(exhibits).length; i += 1) {
+    for (let tileIdx = 0; tileIdx < Object.keys(exhibits).length; tileIdx += 1) {
         const tileEl = d.createElement("div");
         const namesEl = d.createElement("div");
-        const locationEl = d.createElement("div");
         const activitysEl = d.createElement("div");
         const descriptionEl = d.createElement("div");
         const tagsContentEl = d.createElement("div");
         const imagesEl = d.createElement("div");
         const tagsEl = d.createElement("div");
 
-        tileEl.setAttribute("exhibits", getExhibits(i)[0]);
+        // getExhibits(tileIdx)[1].originalValue = getExhibits(tileIdx)[0];
+
+        tileEl.setAttribute("exhibits", getExhibits(tileIdx)[0]);
         tileEl.className = "tile inVisible";
 
-        getExhibits(i)[1].tileEl = tileEl;
+        getExhibits(tileIdx)[1].tileEl = tileEl;
 
         startObserve({
             target: tileEl,
@@ -1396,29 +1640,29 @@ function cdnCompleted () {
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
                         tiles[i]?.classList.remove("inVisible");
-                        tiles[i].style.setProperty("--locationTextWidthPx", tiles[i].querySelector(".location.button").offsetWidth + "px");
-                        tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText").offsetWidth + "px");
-                        tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity").offsetWidth + "px");
+                        tiles[i].style.setProperty("--locationTextWidthPx", tiles[i].querySelector(".location.button")?.offsetWidth || 0 + "px");
+                        tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText")?.offsetWidth || 0 + "px");
+                        tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity")?.offsetWidth || 0 + "px");
                     }
                 }
             },
             once: true,
         });
 
-        if (!getExhibits(i)[1].location) {
-            getExhibits(i)[1].location = {};
-        } else if (typeof getExhibits(i)[1].location === "string") { // nameキーではなく文字があるなら
-            getExhibits(i)[1].location = {
-                name: getExhibits(i)[1].location
+        if (!getExhibits(tileIdx)[1].location) {
+            getExhibits(tileIdx)[1].location = {};
+        } else if (typeof getExhibits(tileIdx)[1].location === "string") { // nameキーではなく文字があるなら
+            getExhibits(tileIdx)[1].location = {
+                name: getExhibits(tileIdx)[1].location
             };
         }
-        const match = getExhibits(i)[0].match(/([JH])(\d+)_(\d+)/);
+        const match = getExhibits(tileIdx)[0].match(/([JH])(\d+)_(\d+)/);
         if (
-            !getExhibits(i)[1]?.location?.name &&
-            getExhibits(i)[1].tag.includes("byClass") &&
+            !getExhibits(tileIdx)[1]?.location?.name &&
+            getExhibits(tileIdx)[1].tag.includes("byClass") &&
             match
         ) {
-            getExhibits(i)[1].location.name = (
+            getExhibits(tileIdx)[1].location.name = (
                 `${getClassName(
                     match[1],
                     match[2],
@@ -1429,50 +1673,92 @@ function cdnCompleted () {
 
         const nameTextEl = d.createElement("span");
         nameTextEl.className = "nameText";
-        nameTextEl.textContent = getExhibits(i)[1].name;
+        nameTextEl.textContent = getExhibits(tileIdx)[1].name;
         namesEl.appendChild(nameTextEl);
         namesEl.classList.add("names");
         
         imagesEl.className = "images";
         const image = d.createElement("img");
         imagesEl.appendChild(image);
-        if (getExhibits(i)[1].image) {
-            image.src = getExhibits(i)[1].image;
+        if (getExhibits(tileIdx)[1].image) {
+            image.src = getExhibits(tileIdx)[1].image;
             imagesEl.appendChild(image);
         }
-        const locationTextContent = getExhibits(i)[1].location.name || "";
-        const locationText = d.createElement("span");
-        locationText.className = "locationText";
-        locationText.textContent = locationTextContent;
-        locationEl.className = "location button";
-        locationEl.appendChild(locationText);
-        (() => {
-            const text = d.createElement("span");
-            text.className = "text";
-            text.textContent = "地図で見る";
+        
+        const locationsEl = d.createElement("div");
+        locationsEl.className = "locationArea";
 
-            locationEl.innerHTML += arrowHTMLStr;
-            locationEl.appendChild(text);
-        })();
-        locationEl.addEventListener("click", e => {
-            if (!isScModelLoaded) return;
-            e.stopPropagation();
-            barTabClick(1);
-            for (const [key, item] of Object.entries(maps_locations)) {
-                if (
-                    typeof getExhibits(i)[1].focusMeshName === "string" && 
-                    Object.keys(maps_modelParts)?.includes(getExhibits(i)[1]?.focusMeshName)
-                ) {
-                    pushLabel(getExhibits(i)[1].focusMeshName);
-                    break;
-                } else if (getExhibits(i)[1] === item) {
-                    pushLabel(key);
-                    break;
+        function addNewLocationButton ({
+            targetEl,
+            locationTextContents = "",
+            pushToFocusMeshName = null,
+        } = {}) {
+            if (!locationTextContents) return;
+            const locationEl = d.createElement("div");
+            const locationText = d.createElement("span");
+            locationText.className = "locationText";
+            locationText.textContent = locationTextContents;
+            locationEl.className = "location button";
+            locationEl.setAttribute("locationTextContents", locationTextContents || "");
+            locationEl.appendChild(locationText);
+            (() => {
+                const text = d.createElement("span");
+                text.className = "text";
+                text.textContent = "地図で見る";
+
+                locationEl.innerHTML += arrowHTMLStr;
+                locationEl.appendChild(text);
+            })();
+            locationEl.addEventListener("click", e => {
+                if (!isScModelLoaded) return;
+                e.stopPropagation();
+                barTabClick(1);
+                for (const [locationKey, locationItem] of Object.entries(maps_locations)) {
+                    if (
+                        pushToFocusMeshName || ((typeof getExhibits(tileIdx)[1].focusMeshName) === "string" && 
+                        Object.keys(maps_modelParts)?.includes(getExhibits(tileIdx)[1]?.focusMeshName))
+                    ) {
+                        pushLabel(pushToFocusMeshName || getExhibits(tileIdx)[1].focusMeshName);
+                        break;
+                    } else if (
+                        ["name", "tag", "location"].every(keyItem => 
+                            getExhibits(tileIdx)[1]?.[keyItem] === locationItem?.[keyItem]
+                        )
+                    ) {
+                        pushLabel(locationKey);
+                        break;
+                    }
                 }
-            }
+                
+                // if (!Object.keys(maps_locations).includes(getExhibits(i)[0])) pushLabel("F1_Entrance_Arch");
+            });
+            targetEl.appendChild(locationEl);
+        }
 
-            if (!Object.values(maps_locations).includes(getExhibits(i)[1])) pushLabel("F1_Entrance_Arch");
-        });
+        (() => {
+            addNewLocationButton({
+                targetEl: locationsEl,
+                locationTextContents: getExhibits(tileIdx)[1]?.location?.name || "",
+            }); // 標準
+            
+            return;
+            Object.values(maps_locations).forEach((locationItem, locationIdx) => {
+                const meshNameStr = Object.keys(maps_locations)[locationIdx] || "";
+                const locationTextStr = locationItem?.location?.name || "";
+                if (
+                    (locationItem?.originalValue === getExhibits(tileIdx)[0]) &&
+                    (locationItem?.name === getExhibits(tileIdx)[1]?.name) &&
+                    Array.from(locationsEl.children).every(child => child.getAttribute("locationTextContents") !== locationTextStr)
+                ) {
+                    addNewLocationButton({
+                        targetEl: locationsEl,
+                        pushToFocusMeshName: meshNameStr,
+                        locationTextContents: locationTextStr,
+                    });
+                }
+            });
+        })();
+        
         // if (getExhibits(i)[1] && (
         //     ["day1", "day2"].every(item => !getExhibits(i)[1].tag.includes(item))
         // )) { // 日数tag自動生成
@@ -1492,7 +1778,7 @@ function cdnCompleted () {
         // activitysあり､2日分はなし :
         //     存在する日のデータのみ､それ以外は活動なし
         (() => {
-            const getActivitysJson = () => getExhibits(i)[1]?.activitys;
+            const getActivitysJson = () => getExhibits(tileIdx)[1]?.activitys;
 
             const defaultFrom = {
                 d1: "10:20",
@@ -1503,9 +1789,9 @@ function cdnCompleted () {
                 d2: "15:00",
             };
 
-            if (getExhibits(i)[1]) {
+            if (getExhibits(tileIdx)[1]) {
                 if (!getActivitysJson()) {
-                    getExhibits(i)[1].activitys = {
+                    getExhibits(tileIdx)[1].activitys = {
                         d1: [],
                         d2: [],
                     };
@@ -1517,7 +1803,7 @@ function cdnCompleted () {
                 if (!dayItem[1]) dayItem[1] = defaultTo[dayKeyName];
 
                 const dayTagName = dayKeyName.replace("d", "day");
-                if (tagOrder[dayTagName]) getExhibits(i)[1]?.tag.push(dayTagName);
+                if (tagOrder[dayTagName]) getExhibits(tileIdx)[1]?.tag.push(dayTagName);
 
                 const getDaySpans = (timeItem) => timeItem.split(":").map(numSet => `<span class="numSet">${numSet.split("").map(num => `<span class="num">${num}</span>`).join("")}</span>`).join(":");
 
@@ -1533,14 +1819,14 @@ function cdnCompleted () {
         })();
         activitysEl.className = "activity";
 
-        descriptionEl.innerHTML = `<span>${getExhibits(i)[1]?.description || ""}</span>`;
+        descriptionEl.innerHTML = `<span>${getExhibits(tileIdx)[1]?.description || ""}</span>`;
         descriptionEl.classList.add("description");
 
         let displayTagNames = [];
         const usedTags = new Set();
 
         Object.keys(tagOrder).forEach((tag) => {
-            if (!getExhibits(i)[1].tag?.includes(tag) || usedTags.has(tag)) return;
+            if (!getExhibits(tileIdx)[1].tag?.includes(tag) || usedTags.has(tag)) return;
             usedTags.add(tag);
             displayTagNames.push([tag, tagOrder[tag].displayName, tagOrder[tag].themeColor]);
         });
@@ -1569,7 +1855,7 @@ function cdnCompleted () {
             // let htmlStr = "";
             [
                 namesEl,
-                locationEl,
+                locationsEl,
                 activitysEl,
                 descriptionEl,
                 imagesEl,
@@ -1599,6 +1885,9 @@ function cdnCompleted () {
         tagsContentEl.addEventListener("scroll", scroll);
     }
     exhibitsArea.appendChild(tilesFragment);
+    exhibitsDataCompletion({
+        isLocation: false,
+    });
 
     function updateButtonText (targetEl, existingOptions = {}) {
         if (!targetEl) return;
@@ -1767,188 +2056,6 @@ function cdnCompleted () {
 
     updateExhibitsActive();
     setInterval(updateExhibitsActive, 1000);
-
-    const maps_pointIcon = "medias/images/mapPoint.svg";
-    const maps_locations = {
-        currentLocationPoint: {
-            name: "現在地",
-            description: "おおよその現在地",
-            isEdgeShow: true,
-        },
-
-        F1_Entrance_Arch: {
-            name: maps_names.FrontEntrance,
-            description: `正面${tagOrder.announcement.displayName}などは\n${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施\n(雨天時は${maps_names.Gym}で実施)`,
-            emphasis: true,
-            isAlwaysShow: true,
-            isEdgeShow: true,
-        },
-        Dining_Roof: {
-            name: maps_names.Dining,
-            offset: {
-                y: .05,
-            },
-            description: `${maps_names.Dining}のメニュー`,
-            onClick: () => {
-                window.location.href = "./?page=5";
-            },
-            image: "./medias/pages/0.png",
-            isAlwaysShow: true,
-            isEdgeShow: true,
-        },
-        F3_H3_4: exhibits.F3_Steal,
-
-        F1_Art_WC: {
-            location: {
-                name: `${maps_names.Art}${maps_words.Conjs.Inside}`,
-            }
-        },
-        F1_Dining_WC: {
-            location: {
-                name: `${maps_names.Dining}${maps_words.Conjs.Inside}`,
-            }
-        },
-        F1_J_WC: {
-            location: {
-                name: `${getClassName("J", 1, 3)}${maps_words.Conjs.NextTo}`,
-            }
-        },
-        F1_CurveRoom_WC: {
-            location: {
-                name: `${maps_names.Secretariat}${maps_words.Conjs.Infront}`,
-            }
-        },
-        F2_J_WC: {
-            location: {
-                name: `${getClassName("J", 2, 3)}${maps_words.Conjs.NextTo}`,
-            }
-        },
-        F3_J_WC: {
-            location: {
-                name: `${getClassName("J", 3, 3)}${maps_words.Conjs.NextTo}`,
-            }
-        },
-        F1_H_WC: {
-            location: {
-                name: `${getClassName("H", 1, 4)}${maps_words.Conjs.Infront}`,
-            }
-        },
-        F2_H_WC: {
-            location: {
-                name: `${getClassName("H", 2, 4)}${maps_words.Conjs.Infront}`,
-            }
-        },
-        F3_H_WC: {
-            location: {
-                name: `${getClassName("H", 3, 4)}${maps_words.Conjs.Infront}`,
-            }
-        },
-        F1_WC: {
-            location: {
-                name: `${maps_names.Science_Preparation}${maps_words.Conjs.NextTo}`,
-            }
-        },
-        F2_WC: {
-            location: {
-                name: `${maps_names.Cooking}${maps_words.Conjs.NextTo}`,
-            }
-        },
-        F3_WC: {
-            location: {
-                name: `${maps_names.Computers}${maps_words.Conjs.NextTo}`,
-            }
-        },
-        F1_Gym: {
-            name: `${maps_names.Gym}`,
-            description: `雨天時の正面${tagOrder.announcement.displayName}で利用`,
-        },
-        F1_Gym_WC: {
-            location: {
-                name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
-            }
-        },
-        F1_Gym_WC001: {
-            location: {
-                name: `${maps_names.Gym}${maps_words.Conjs.Inside}`,
-            }
-        },
-        F1_Darkroom: exhibits.F1_Paparazzi,
-        F1_Information_Center: {
-            name: "medias/images/mapInformation.svg",
-            location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
-            description: "インフォメーションセンター",
-        },
-        F1_Certificate: {
-            name: "medias/images/mapCertificate.svg",
-            location: `${maps_names.FrontEntrance}${maps_words.Conjs.Inside}`,
-            description: "金券の販売所",
-        },
-        F1_Gym_Entrance: {
-            name: maps_names.Gym,
-        },
-        F1_F2_Art: {
-            name: maps_names.Art,
-            offset: {
-                y: .1,
-            },
-        },
-        F1_J3_2: {
-            ...exhibits.F3_J3_2,
-            location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Infront}､${maps_names.Biotope}${maps_words.Conjs.Near}`,
-        },
-
-        F2_Art: exhibits.Smash,
-        F2_Warehouse: exhibits.F2_CoffeeWatashi,
-
-        F1_Multipurpose: exhibits.F3_H3_4,
-        F1_F2_F3_OutdoorStairs004: exhibits.Aruaru,
-        F1_Airplane: exhibits.PlaneWorkshop,
-        F1_Science_A: exhibits.Star_Dormitory,
-        F1_Science_B: exhibits.F1_PROBUX,
-        F1_Science_C: exhibits.North_Dormitory,
-        F1_Science_D: exhibits.F1_BLUEPEYOUNG,
-        F3_Music_3: {
-            ...exhibits.F1_Tekken_1,
-            description: "プラレール展示",
-        },
-        F3_Warehouse: exhibits.Shoten,
-
-        F3_Seminar: exhibits.F3_Hostclub,
-
-        F2_Music_Small: exhibits.F3_Tokusatsu,
-
-        BusStation_Base: {
-            name: `${maps_names.Bus}停`,
-            description: `${maps_names.Bus}ダイヤを見る`,
-            image: "./medias/pages/0.png",
-            onClick: () => {
-                window.location.href = "./?page=5";
-            },
-            offset: {
-                y: .1,
-            },
-            isAlwaysShow: true,
-            isEdgeShow: true,
-        },
-
-        F1_Rukissa001: {
-            ...exhibits.F1_Rukissa,
-            location: `${getClassName("H", 1, 4)}${maps_words.Conjs.NextTo}`,
-        },
-    };
-    Object.values(maps_locations).forEach((locationItem, i) => {
-        const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
-        if (locationItem) {
-            if (!locationItem?.location?.name && locationName) {
-                locationItem.location = {
-                    name: `${locationName}`
-                };
-            }
-            if (typeof locationItem.location === "string") locationItem.location = {
-                name: locationItem?.location
-            };
-        }
-    });
 
     const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
 
@@ -2386,7 +2493,7 @@ function cdnCompleted () {
         const labelObject = new CSS2DObject(labelEl);
         labelEl.className = "mapsLabel";
 
-        const labelFontSize = maps_labels[targetMeshName].object.userData.fontSize;
+        const labelFontSize = maps_labels[targetMeshName]?.object.userData.fontSize;
         labelEl.style.setProperty("--labelFontSize", labelFontSize + "px");
 
         function getNewElItem (text, className, pushed) {
@@ -2923,6 +3030,7 @@ function cdnCompleted () {
                     "medias/3ds/sc.glb",
                     (gltf) => {
                         console.log("scModelLoaded");
+                        
                         isScModelLoaded = true;
                         maps_model = gltf.scene;
 
@@ -3159,7 +3267,10 @@ function cdnCompleted () {
                             const part = maps_modelParts[partName];
 
                             if (!maps_locations[partName] && exhibits[partName]) { // もし該当するlocationがないならexhibitsの値を用いる
-                                maps_locations[partName] = exhibits[partName];
+                                maps_locations[partName] = {
+                                    ...exhibits[partName],
+                                    originalValue: partName,
+                                };
                             }
 
                             if (
@@ -4400,9 +4511,9 @@ function cdnCompleted () {
         element.addEventListener("click", process);
     })();
 
+    console.log("exhibits : ", exhibits);
+    console.log("maps_locations : ", maps_locations);
     function jsonTestDev () {
-        console.log("exhibits : ", exhibits);
-        console.log("maps_locations : ", maps_locations);
 
         const dataStr = `飲食,PROBUX,ながはしまお,いわただいじゅ,理科B,10:20,~,16:00,,10:00,~,15:00,プロテイン
 展示・物販,とってもおもしろいこと,さかいももも,西牟田,理科中庭,11:00,~,16:00,,11:00,~,15:00,"•ステージ制 作•写真展示•Zine 服の販売"

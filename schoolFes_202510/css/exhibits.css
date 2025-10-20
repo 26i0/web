@@ -130,10 +130,18 @@
     width: calc(100% - var(--padding) * 2);
     padding: var(--padding);
 }
-.content.main .exhibits .tile > .location {
+.content.main .exhibits .tile .locationArea {
+    --locationTextSize: 1.25em;
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     right: 5px;
     bottom: calc(var(--tagsAreaHeight) + 12px);
+    z-index: 9;
+}
+.content.main .exhibits .tile > .locationArea > .location {
+    position: relative;
     /* top: calc(
         var(--baseHeight) * .5 - 20px
     ); */
@@ -141,6 +149,10 @@
         var(--baseHeight) / 2 - 50%
     )); */
     padding: 5px;
+    display: flex;
+    margin-left: 5px;
+    justify-content: center;
+    align-items: center;
     /* padding: 2px;
     padding-top: 4px;
     padding-bottom: 4px; */
@@ -151,16 +163,12 @@
     min-width: 5em;
     border-radius: calc(.5em + 5px);
     font-size: .8em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     backdrop-filter: none;
     --webkit-backdrop-filter: none;
     min-height: 1em;
     height: min-content;
     background-color: white;
     transition: height .5s ease-in-out;
-    z-index: 9;
 }
 .content.main .exhibits .tile .images {
     position: relative;
@@ -181,20 +189,17 @@
     border-radius: 2em;
     transition: opacity .5s ease-in-out;
 }
-.content.main .exhibits .tile .location {
-    --locationTextSize: 1.25em;
-}
-.content.main .exhibits .tile.hidden .location {
+.content.main .exhibits .tile.hidden .locationArea {
     height: calc(var(--whenHiddenHeight) / 2 - 10px);
 }
-.content.main .exhibits .tile .location .locationText {
+.content.main .exhibits .tile .locationArea .locationText {
     padding-right: var(--locationTextSize);
     min-height: var(--locationTextSize);
     display: flex;
     align-items: center;
     right: 0;
 }
-.content.main .exhibits .list .tile .location svg {
+.content.main .exhibits .list .tile .locationArea svg {
     position: absolute;
 }
 .content.main .exhibits .tile .location svg {
@@ -203,13 +208,14 @@
     width: var(--locationTextSize);
     margin-left: .5px;
     right: 5px;
+    stroke-width: 100;
     transform: rotate(225deg);
 }
 .content.main .exhibits .tile .location svg path {
     stroke-width: 100;
     transition: stroke-dashoffset .5s ease-in-out;
 }
-.content.main .exhibits .tile .location span.locationText {
+.content.main .exhibits .tile .locationArea span.locationText {
     transition: opacity .5s ease-in-out;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -225,7 +231,7 @@
     }
 }
 
-.content.main .exhibits .tile .location span.text {
+.content.main .exhibits .tile .locationArea span.text {
     position: absolute;
     opacity: 0;
     white-space: nowrap;
