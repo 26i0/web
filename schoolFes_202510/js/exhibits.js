@@ -1237,7 +1237,7 @@ const maps_locations = {
     BusStation_Base: {
         name: `${maps_names.Bus}停`,
         description: `${maps_names.Bus}ダイヤを見る`,
-        image: "./medias/pages/preparing.png",
+        image: "./medias/pages/bus.png",
         onClick: () => {
             window.location.href = "./?page=5";
         },
