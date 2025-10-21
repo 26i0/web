@@ -2126,7 +2126,7 @@ function cdnCompleted () {
         // devI += 30;
         // const now = new Date(`2025-10-25 ${Object.values(getTimeFromMin(devI)).join(":")}`);
         // const now = new Date("2025-10-24 10:10");
-        const now = new Date(isDevMode ? "2025-10-25 12:00" : null);
+        const now = new Date();
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
