@@ -1324,7 +1324,7 @@ const maps_locations = {
 
     BusStation_Base: {
         name: `${maps_names.Bus}停`,
-        description: `${maps_names.Bus}ダイヤを見る`,
+        description: `${maps_names.Bus}ダイヤ`,
         image: "./medias/pages/bus.png",
         onClick: () => {
             window.location.href = "./?page=5";
@@ -2748,23 +2748,44 @@ function cdnCompleted () {
         labelEl.style.setProperty("--numOfEl", generateEls.length);
 
         (() => {
-            let isImgLoaded = false;
+            let isImgLoadStarted = false;
+            const img = generateEls.filter(item => item?.className.includes("image"))[0]?.querySelector("img");
             function onload () {
                 const targetMesh = maps_modelParts[targetMeshName];
-                isImgLoaded = true;
+                isImgLoadStarted = true;
+
                 maps_frameObject({
                     target: targetMesh,
-                    offsetZ: Math.max(informations.offsetHeight * -.003, -.5),
+                    offsetZ: Math.max((
+                        informations.offsetHeight / informations.offsetWidth
+                    ) * -.2, -.5),
+                    zoom: Math.max(
+                        Math.min(
+                            Math.max(
+                                maps_renderer.domElement.offsetWidth,
+                                maps_renderer.domElement.offsetHeight,
+                            ) * .003,
+                            3.6
+                        ),
+                        .5
+                    ),
                 });
                 updateLabelOpacity();
             }
-            const img = generateEls.filter(item => item?.className.includes("image"))[0]?.querySelector("img");
             setTimeout(() => {
                 if (img) {
-                    img.onload = onload;
+                    const now = new Date();
+                    img.onload = (() => {
+                        setTimeout(() => {
+                            console.log(
+                                new Date() - now + "ms",
+                                img.offsetHeight
+                            );
+                            onload();
+                        }, 100);
+                    })();
                     setTimeout(() => {
-                        if (!isImgLoaded) {
-                            img.onload = null;
+                        if (!isImgLoadStarted) {
                             onload();
                         }
                     }, 1000);
