@@ -887,7 +887,7 @@ const exhibits = {
         ],
     },
     F1_cocoFofo: {
-        name: "coco fofo",
+        name: "Cocô Fofo",
         location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
             "byVolunteers",
@@ -1605,7 +1605,6 @@ function cdnCompleted () {
             if (!maps_getIsAllFloorVaild()) {
                 // const pushFloor = vaildFloors.find((v, i) => targetMeshFloors[i]);
                 const pushFloor = vaildFloors.find(fItem => targetMeshFloors.includes(fItem)) || targetMeshFloors[0];
-                console.log(vaildFloors, targetMeshFloors, pushFloor);
                 if (!vaildFloors.includes(pushFloor)) pushFloorButton(pushFloor);
             }
             removeAllLabel();
@@ -1688,8 +1687,7 @@ function cdnCompleted () {
         const locationsEl = d.createElement("div");
         locationsEl.className = "locationArea";
 
-        function addNewLocationButton ({
-            targetEl,
+        function getNewLocationButton ({
             locationTextContents = "",
             pushToFocusMeshName = null,
         } = {}) {
@@ -1721,9 +1719,11 @@ function cdnCompleted () {
                         pushLabel(pushToFocusMeshName || getExhibits(tileIdx)[1].focusMeshName);
                         break;
                     } else if (
-                        ["name", "tag", "location"].every(keyItem => 
-                            getExhibits(tileIdx)[1]?.[keyItem] === locationItem?.[keyItem]
-                        )
+                        // ["name", "tag"].every(keyItem => 
+                        //     getExhibits(tileIdx)[1]?.[keyItem] === locationItem?.[keyItem]
+                        // )
+                        locationItem?.originalValue === getExhibits(tileIdx)[0] &&
+                        locationItem?.location?.name === locationTextContents
                     ) {
                         pushLabel(locationKey);
                         break;
@@ -1732,15 +1732,34 @@ function cdnCompleted () {
                 
                 // if (!Object.keys(maps_locations).includes(getExhibits(i)[0])) pushLabel("F1_Entrance_Arch");
             });
-            targetEl.appendChild(locationEl);
+            // targetEl.appendChild(locationEl);
+            return locationEl;
         }
 
         (() => {
-            addNewLocationButton({
-                targetEl: locationsEl,
+            const appendEls = [];
+            const newBaseEl = getNewLocationButton({
                 locationTextContents: getExhibits(tileIdx)[1]?.location?.name || "",
             }); // 標準
+            if (newBaseEl) {
+                locationsEl.appendChild(newBaseEl);
+                appendEls.push(newBaseEl);
+            }
             
+            
+            Object.entries(maps_locations).filter(([key, value]) =>
+                value?.originalValue === getExhibits(tileIdx)[0]
+            ).map(([key, value]) => ({ key, value })).forEach(({ key, value }) => {
+                const newEl = getNewLocationButton({
+                    pushToFocusMeshName: key,
+                    locationTextContents: value?.location?.name || "",
+                })
+                if (!appendEls.map(el => el.outerHTML).join("").includes(newEl.outerHTML)) {
+                    locationsEl.appendChild(newEl);
+                    appendEls.push(newEl);
+                }
+            });
+
             return;
             Object.values(maps_locations).forEach((locationItem, locationIdx) => {
                 const meshNameStr = Object.keys(maps_locations)[locationIdx] || "";
@@ -1750,7 +1769,7 @@ function cdnCompleted () {
                     (locationItem?.name === getExhibits(tileIdx)[1]?.name) &&
                     Array.from(locationsEl.children).every(child => child.getAttribute("locationTextContents") !== locationTextStr)
                 ) {
-                    addNewLocationButton({
+                    getNewLocationButton({
                         targetEl: locationsEl,
                         pushToFocusMeshName: meshNameStr,
                         locationTextContents: locationTextStr,
