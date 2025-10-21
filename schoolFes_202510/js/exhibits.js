@@ -56,8 +56,11 @@ const maps_words = {
     },
 };
 
-const getClassName = (school, input_grade, input_class) => (
-    `${school == "H" || input_class > 3 ? maps_words.Grades.H : maps_words.Grades.J} ${input_grade}年${input_class}組`
+const getClassName = (school, input_grade, input_class, isShort) => (
+    `${school == "H" || (() => {
+        const grade = input_class > 3 ? maps_words.Grades.H : maps_words.Grades.J;
+        return isShort ? grade[0] : grade;
+    })()} ${input_grade}年${input_class}組`
 );
 
 const arrowHTMLStr = `<svg xmlns="http://www.w3.org/2000/svg"><g><path d="M228.451,230.092L228.451,850.906L849.265,850.906"></path></g></svg>`;
@@ -1811,9 +1814,10 @@ function cdnCompleted () {
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
                         tiles[i]?.classList.remove("inVisible");
-                        tiles[i].style.setProperty("--locationTextWidthPx", tiles[i].querySelector(".location.button")?.offsetWidth || 0 + "px");
-                        tiles[i].style.setProperty("--nameTextWidthPx", tiles[i].querySelector(".names .nameText")?.offsetWidth || 0 + "px");
-                        tiles[i].style.setProperty("--activityWidthPx", tiles[i].querySelector(".activity")?.offsetWidth || 0 + "px");
+                        tiles[i].style.setProperty("--locationTextWidthPx", (tiles[i].querySelector(".location.button")?.offsetWidth || 0) + "px");
+                        tiles[i].style.setProperty("--nameTextWidthPx", (tiles[i].querySelector(".names .nameText")?.offsetWidth || 0) + "px");
+                        tiles[i].style.setProperty("--activityWidthPx", (tiles[i].querySelector(".activity")?.offsetWidth || 0) + "px");
+                        tiles[i].style.setProperty("--activitySpanWidthPx", (tiles[i].querySelector(".activity .activeText span")?.offsetWidth || 0) + "px");
                     }
                 }
             },
@@ -1851,7 +1855,8 @@ function cdnCompleted () {
                     splited[1],
                     splited[2],
                     splited[3],
-                )} ${tagOrder?.byClass?.displayName || ""})</span>`;
+                    true
+                ).replaceAll(" ", "")} ${tagOrder?.byClass?.displayName || ""})</span>`;
             } else {
                 return "";
             }
@@ -2124,12 +2129,9 @@ function cdnCompleted () {
             )
         ).join("")
     );
-    // let devI = 60 * 8;
     function updateExhibitsActive () {
-        // devI += 30;
-        // const now = new Date(`2025-10-25 ${Object.values(getTimeFromMin(devI)).join(":")}`);
-        // const now = new Date("2025-10-24 10:10");
         const now = new Date();
+        console.log("現在時刻:", now.toLocaleString());
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
@@ -2177,8 +2179,9 @@ function cdnCompleted () {
                 }
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中
-                    text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}で終了`
+                    text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}`
                     activeTextEl.classList.add("exhibitActive");
+                    activeTextEl.classList.add("beforeTheDay");
                 } else {
                     if ((nowDateMin < toMin) && differenceFromTheDay === 0) {
                         // まもなく開始

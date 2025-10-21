@@ -1,6 +1,6 @@
 .main.content .lyricsArea {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: min(2%, 30px);
+    padding-right: min(2%, 30px);
 }
 .main.content .lyricsArea p {
     margin-bottom: 100px;

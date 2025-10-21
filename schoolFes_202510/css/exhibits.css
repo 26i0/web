@@ -38,7 +38,7 @@
 }
 .content.main .exhibits .tile {
     --baseOpacity: .2;
-    --baseHeight: 120px;
+    --baseHeight: 160px;
     --baseBackgorundRGB: 211, 211, 211;
     --padding: 8px;
     --tagsAreaHeight: 2.2em;
@@ -138,12 +138,17 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    width: calc(
-        100% - (var(--activityWidthPx) * 1px)
-    );
+    /* width: calc(
+        100% - var(--activityWidthPx)
+    ); */
+    width: 100%;
     height: min-content;
+    /* left: 0; */
     right: 0;
-    bottom: calc(var(--tagsAreaHeight) - 5px);
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    /* bottom: calc(var(--tagsAreaHeight) - 5px); */
+    top: 0;
     z-index: 9;
 }
 .content.main .exhibits .tile > .locationArea .locationScrollArea {
@@ -153,12 +158,13 @@
     justify-content: flex-end;
     align-items: center;
     overflow: auto;
-    width: max-content;
+    width: 100%;
     height: 100%;
     white-space: nowrap;
+    left: 0;
     padding-right: 5px;
-    padding-left: 10px;
-    padding-top: 10px;
+    padding-left: 0;
+    padding-top: 5px;
     padding-bottom: 10px;
 }
 .content.main .exhibits .tile > .locationArea .location:not(:first-child) {
@@ -188,9 +194,10 @@
     /* padding: 2px;
     padding-top: 4px;
     padding-bottom: 4px; */
-    --activityWidth: 0;
+    --activityWidthPx: 0px;
+    /* min-width: 5em; */
     max-width: calc(
-        100% - var(--activityWidth) - 75px
+        100% - var(--activityWidthPx) - 75px
     );
     border-radius: calc(.5em + 5px);
     font-size: .8em;
@@ -439,10 +446,11 @@
     --webkit-backdrop-filter: none;
     position: absolute !important;
     left: calc(
-        var(--activityWidth)
+        var(--activityWidthPx)
     );
     display: inline-block;
     cursor: default;
+    padding: 0;
     overflow: hidden;
     background-color: transparent !important;
     border: 1px solid;
@@ -452,16 +460,19 @@
     box-sizing: border-box;
     border-radius: 5px;
     padding: 0;
-    height: .9rem;
+    height: .9rem !important;
     padding-top: 0;
     margin-left: 5px;
     --locationTextWidthPx: 80px;
     min-width: calc(
-        min(
-            15em,
-            100% - var(--activityWidth) - var(--locationTextWidthPx) - 15px
+        max(
+            var(--activitySpanWidthPx),
+            100% - var(--activityWidthPx) - var(--locationTextWidthPx) - 15px
         )
     );
+    /* min-width: calc(
+        100% - var(--activityWidthPx) - 10px
+    ); */
     transition:
     opacity .5s ease-in-out,
     border-color .5s ease-in-out,
@@ -510,6 +521,7 @@
 }
 .content.main .exhibits .tile .names {
     /* min-height: 1.2em; */
+    margin-top: 30px;
     height: auto;
     white-space: wrap;
     position: relative;
