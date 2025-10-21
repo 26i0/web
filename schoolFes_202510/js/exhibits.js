@@ -57,10 +57,7 @@ const maps_words = {
 };
 
 const getClassName = (school, input_grade, input_class, isShort) => (
-    `${(() => {
-        const grade = (input_class > 3) ? maps_words.Grades.H : maps_words.Grades.J;
-        return isShort ? grade.split("")[0] : grade;
-    })()} ${input_grade}年${input_class}組`
+    `${(school === "H" || school === "h") ? "高校" : "中学"} ${input_grade}年${input_class}組`
 );
 
 const arrowHTMLStr = `<svg xmlns="http://www.w3.org/2000/svg"><g><path d="M228.451,230.092L228.451,850.906L849.265,850.906"></path></g></svg>`;
