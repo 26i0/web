@@ -142,7 +142,7 @@
         100% - var(--activityWidthPx)
     ); */
     width: 100%;
-    height: min-content;
+    height: 35px;
     /* left: 0; */
     right: 0;
     padding-left: 0 !important;
