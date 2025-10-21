@@ -57,9 +57,9 @@ const maps_words = {
 };
 
 const getClassName = (school, input_grade, input_class, isShort) => (
-    `${school == "H" || (() => {
-        const grade = input_class > 3 ? maps_words.Grades.H : maps_words.Grades.J;
-        return isShort ? grade[0] : grade;
+    `${(() => {
+        const grade = (input_class > 3) ? maps_words.Grades.H : maps_words.Grades.J;
+        return isShort ? grade.split("")[0] : grade;
     })()} ${input_grade}年${input_class}組`
 );
 
