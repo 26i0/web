@@ -1841,7 +1841,18 @@ function cdnCompleted () {
 
         const nameTextEl = d.createElement("span");
         nameTextEl.className = "nameText";
-        nameTextEl.textContent = getExhibits(tileIdx)[1].name;
+        nameTextEl.textContent = `${getExhibits(tileIdx)[1].name} ${(() => {
+            if (getExhibits(tileIdx)[1].tag.includes("byClass")) {
+                const splited = getExhibits(tileIdx)[0].match(/([JH])(\d+)_(\d+)/);
+                return `(${getClassName(
+                    splited[1],
+                    splited[2],   
+                    splited[3],   
+                )})`;
+            } else {
+                return "";
+            }
+        })()}`;
         namesEl.appendChild(nameTextEl);
         namesEl.classList.add("names");
         
@@ -4577,7 +4588,7 @@ function cdnCompleted () {
                 mapsView.appendChild(maps_buttons_right);
                 mapsView.appendChild(maps_buttons_top);
             } else {
-                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>地図の読み込みに失敗しました｡再読み込みを試行してください｡(何度もこのメッセージが表示される場合､ご利用の端末では利用できない可能性があります｡)</span>";
+                mapsView.innerHTML = "<p>申し訳ございません｡</p><span>地図の読み込みに失敗しました｡再読み込みを試行してください｡<br>(何度もこのメッセージが表示される場合､ご利用の端末では利用できない可能性があります｡)</span>";
                 mapsView.style.pointerEvents = "none";
             }
         })();
