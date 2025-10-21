@@ -1405,21 +1405,18 @@ function cdnCompleted () {
         200
     ) : null;
 
-    (() => {
-        window.addEventListener("keydown", e => {
-            // 強制的にコンテキスト破棄
-            if (isDevMode && e.code === "KeyP" && maps_renderer && maps_renderer.getContext) {
-                const gl = maps_renderer.getContext();
-                const ext = gl.getExtension('WEBGL_lose_context');
-                if (ext) {
-                    ext.loseContext();
-                    setTimeout(() => {
-                        ext.restoreContext();
-                    }, 2000);
-                }
-            }
-        });
-    })();
+    // (() => {
+    //     window.addEventListener("keydown", e => {
+    //         // 強制的にコンテキスト破棄
+    //         if (isDevMode && e.code === "KeyP" && maps_renderer && maps_renderer.getContext) {
+    //             const gl = maps_renderer.getContext();
+    //             const ext = gl.getExtension('WEBGL_lose_context');
+    //             if (ext) {
+    //                 ext.loseContext();
+    //             }
+    //         }
+    //     });
+    // })();
     
     const maps_labelRenderer = CSS2DRenderer ? new CSS2DRenderer() : null;
     const maps_labelsArea = maps_labelRenderer?.domElement || null;
@@ -1621,9 +1618,93 @@ function cdnCompleted () {
         const namesEl = d.createElement("div");
         const activitysEl = d.createElement("div");
         const descriptionEl = d.createElement("div");
-        const tagsContentEl = d.createElement("div");
         const imagesEl = d.createElement("div");
-        const tagsEl = d.createElement("div");
+        
+        function getTagsEl ({
+            newTags: newTags
+        } = {}) {
+            const tagsEl = d.createElement("div");
+            const tagsContentEl = d.createElement("div");
+
+            tagsEl.className = "tags";
+            tagsContentEl.className = "tagsContent";
+
+            if (newTags?.length > 0) newTags.forEach(tagInfo => {
+                const tagEl = d.createElement("div");
+                if (tagInfo.className) tagEl.className = tagInfo.className;
+                if (tagInfo.textContent) tagEl.textContent = tagInfo.textContent;
+                if (tagInfo.property) {
+                    Object.keys(tagInfo.property).forEach(propKey => {
+                        tagEl.style.setProperty(propKey, tagInfo.property[propKey]);
+                    });
+                }
+                if (tagInfo.attribute) {
+                    Object.keys(tagInfo.attribute).forEach(attrKey => {
+                        tagEl.setAttribute(attrKey, tagInfo.attribute[attrKey]);
+                    });
+                }
+                tagsContentEl.appendChild(tagEl);
+            });
+
+            tagsEl.appendChild(tagsContentEl);
+
+            function tagsContentScroll() {
+                const maxScroll = tagsContentEl.scrollWidth - tagsContentEl.clientWidth;
+                const scrollRatio = maxScroll === 0 ? 0 : tagsContentEl.scrollLeft / maxScroll;
+                tagsEl.style.setProperty("--scrollPx", maxScroll - tagsContentEl.scrollLeft + "px");
+                tagsEl.style.setProperty("--scrollRatio", scrollRatio);
+            }
+            tagsContentScroll();
+            tagsContentEl.addEventListener("scroll", tagsContentScroll);
+
+            return tagsEl;
+        }
+        const tagsEl = getTagsEl({
+            newTags: (() => {
+                let displayTagNames = [];
+                const usedTags = new Set();
+
+                const returnValue = [];
+
+                returnValue.push({
+                    tags: {
+                        textContent: "",
+                        className: "",
+                        property: {
+                            "--themeColor": "",
+                        },
+                        attribute: {
+                            tag: "",
+                        },
+                    },
+                });
+
+                Object.keys(tagOrder).forEach((tag) => {
+                    if (!getExhibits(tileIdx)[1].tag?.includes(tag) || usedTags.has(tag)) return;
+                    usedTags.add(tag);
+                    displayTagNames.push([tag, tagOrder[tag].displayName, tagOrder[tag].themeColor]);
+                });
+                displayTagNames.forEach(item => {
+                    returnValue.push({
+                        textContent: item[1],
+                        className: "tag",
+                        property: {
+                            "--themeColor": item[2],
+                        },
+                        attribute: {
+                            tag: item,
+                        },
+                    });
+                });
+                const tagAttributes = [];
+                displayTagNames.map(subArr => subArr[0]).forEach(item => {
+                    tagAttributes.push(item);
+                });
+                tileEl.setAttribute("tag", tagAttributes.join(","));
+
+                return returnValue;
+            })(),
+        });
 
         // getExhibits(tileIdx)[1].originalValue = getExhibits(tileIdx)[0];
 
@@ -1685,7 +1766,9 @@ function cdnCompleted () {
         }
         
         const locationsEl = d.createElement("div");
+        const locationsScrollEl = d.createElement("div");
         locationsEl.className = "locationArea";
+        locationsScrollEl.className = "locationScrollArea";
 
         function getNewLocationButton ({
             locationTextContents = "",
@@ -1742,7 +1825,7 @@ function cdnCompleted () {
                 locationTextContents: getExhibits(tileIdx)[1]?.location?.name || "",
             }); // 標準
             if (newBaseEl) {
-                locationsEl.appendChild(newBaseEl);
+                locationsScrollEl.appendChild(newBaseEl);
                 appendEls.push(newBaseEl);
             }
             
@@ -1755,7 +1838,7 @@ function cdnCompleted () {
                     locationTextContents: value?.location?.name || "",
                 })
                 if (!appendEls.map(el => el.outerHTML).join("").includes(newEl.outerHTML)) {
-                    locationsEl.appendChild(newEl);
+                    locationsScrollEl.appendChild(newEl);
                     appendEls.push(newEl);
                 }
             });
@@ -1777,6 +1860,7 @@ function cdnCompleted () {
                 }
             });
         })();
+        locationsEl.appendChild(locationsScrollEl);
         
         // if (getExhibits(i)[1] && (
         //     ["day1", "day2"].every(item => !getExhibits(i)[1].tag.includes(item))
@@ -1796,6 +1880,7 @@ function cdnCompleted () {
         //     デフォルト(活動可能最大時間)を使用
         // activitysあり､2日分はなし :
         //     存在する日のデータのみ､それ以外は活動なし
+
         (() => {
             const getActivitysJson = () => getExhibits(tileIdx)[1]?.activitys;
 
@@ -1840,38 +1925,11 @@ function cdnCompleted () {
 
         descriptionEl.innerHTML = `<span>${getExhibits(tileIdx)[1]?.description || ""}</span>`;
         descriptionEl.classList.add("description");
-
-        let displayTagNames = [];
-        const usedTags = new Set();
-
-        Object.keys(tagOrder).forEach((tag) => {
-            if (!getExhibits(tileIdx)[1].tag?.includes(tag) || usedTags.has(tag)) return;
-            usedTags.add(tag);
-            displayTagNames.push([tag, tagOrder[tag].displayName, tagOrder[tag].themeColor]);
-        });
-        displayTagNames.forEach(item => {
-            const tag = d.createElement("span");
-            tag.innerHTML = item[1];
-            // tag.style.backgroundColor = item[2];
-            tag.style.setProperty("--themeColor", item[2]);
-            tag.className = "tag";
-            tag.setAttribute("tag", item);
-            tagsContentEl.appendChild(tag);
-        });
-        const tagAttributes = [];
-        displayTagNames.map(subArr => subArr[0]).forEach(item => {
-            tagAttributes.push(item);
-        });
-        tileEl.setAttribute("tag", tagAttributes.join(","));
-        tagsEl.classList.add("tags");
-        tagsContentEl.classList.add("tagsContent");
         
         (() => {
             // 仮想DOM（DocumentFragment）を作成
             const fragment = d.createDocumentFragment();
 
-            // まとめて仮想DOMに追加
-            // let htmlStr = "";
             [
                 namesEl,
                 locationsEl,
@@ -1879,30 +1937,16 @@ function cdnCompleted () {
                 descriptionEl,
                 imagesEl,
                 tagsEl,
-                tagsContentEl,
             ].forEach(appendEl => {
                 fragment.appendChild(appendEl);
                 // htmlStr += appendEl.outerHTML;
             });
-            tagsEl.appendChild(tagsContentEl);
-            // 最後に1回だけ実DOMに反映
+
             tileEl.appendChild(fragment);
-            
-            // tileEl.innerHTML += htmlStr;
-
             tilesFragment.appendChild(tileEl);
-            // exhibitsArea.appendChild(tileEl);
         })();        
-
-        function scroll() {
-            const maxScroll = tagsContentEl.scrollWidth - tagsContentEl.clientWidth;
-            const scrollRatio = maxScroll === 0 ? 0 : tagsContentEl.scrollLeft / maxScroll;
-            tagsEl.style.setProperty("--scrollPx", maxScroll - tagsContentEl.scrollLeft + "px");
-            tagsEl.style.setProperty("--scrollRatio", scrollRatio);
-        }
-        scroll();
-        tagsContentEl.addEventListener("scroll", scroll);
     }
+
     exhibitsArea.appendChild(tilesFragment);
     exhibitsDataCompletion({
         isLocation: false,
@@ -2187,7 +2231,9 @@ function cdnCompleted () {
         };
     }
 
-    function updateSort (searchWord = getSearchValue()) {
+    function updateSort ({
+        searchWord = getSearchValue(),
+    } = {}) {
         const conditions = getSortConditions();
 
         const allTiles = exhibitsArea.querySelectorAll(".tile");
@@ -2717,29 +2763,29 @@ function cdnCompleted () {
             const searchWord = getSearchWord();
             const sortResult = updateSort();
             
-            if (queryParamTimeout) {
-                clearTimeout(queryParamTimeout);
-            }
-            queryParamTimeout = setTimeout(() => {
-                function deleteParam () {
-                    queryParameter({
-                        type: "delete",
-                        key: "search"
-                    });
-                }
-                if (
-                    newSearchBarEl.value === ""
-                ) {
-                    deleteParam();
-                } else {
-                    deleteParam();
-                    queryParameter({
-                        type: "append",
-                        key: "search",
-                        value: newSearchBarEl.value
-                    });
-                }
-            }, 150);
+            // if (queryParamTimeout) {
+            //     clearTimeout(queryParamTimeout);
+            // }
+            // queryParamTimeout = setTimeout(() => {
+            //     function deleteParam () {
+            //         queryParameter({
+            //             type: "delete",
+            //             key: "search"
+            //         });
+            //     }
+            //     if (
+            //         newSearchBarEl.value === ""
+            //     ) {
+            //         deleteParam();
+            //     } else {
+            //         deleteParam();
+            //         queryParameter({
+            //             type: "append",
+            //             key: "search",
+            //             value: newSearchBarEl.value
+            //         });
+            //     }
+            // }, 150);
 
             sagestsEl.innerHTML = "";
             const isSagestVaild = searchWord && searchWord !== "" && searchWord.length !== 0;
@@ -2815,11 +2861,19 @@ function cdnCompleted () {
             searchBarScroll();
         }
 
+        function setAllTilesTransition (isToTrue) {
+            Object.values(exhibits).forEach(exhibit => {
+                if (exhibit.tileEl) exhibit.tileEl.style.transition = isToTrue ? "" : "none";
+            });
+        }
+
         newSearchBarEl.addEventListener("focus", () => {
             searchInput();
+            setAllTilesTransition(false);
         });
         newSearchBarEl.addEventListener("blur", () => {
             setTimeout(() => {
+                setAllTilesTransition(true);
                 searchAreaEl.classList.remove("focus");
             }, 400);
         });
@@ -2837,7 +2891,6 @@ function cdnCompleted () {
 
         searchBarsEl.querySelector("svg").addEventListener("click", () => {
             searchAreaEl.classList.toggle("opened");
-            updateSort(getSearchValue());
             searchInput();
             searchInputsEl.scrollLeft = 0;
         });

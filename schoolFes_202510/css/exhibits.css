@@ -66,6 +66,7 @@
     height: var(--baseHeight);
     opacity: 0;
     visibility: visible;
+    --activityWidthPx: 0px;
 }
 .content.main .exhibits .list .tile:not(.inVisible) {
     animation: tag_show 1s ease-out backwards;
@@ -134,20 +135,51 @@
     --locationTextSize: 1.25em;
     position: absolute;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
-    right: 5px;
-    bottom: calc(var(--tagsAreaHeight) + 12px);
+    width: calc(
+        100% - (var(--activityWidthPx) * 1px)
+    );
+    height: min-content;
+    right: 0;
+    bottom: calc(var(--tagsAreaHeight) - 5px);
     z-index: 9;
 }
-.content.main .exhibits .tile > .locationArea > .location {
+.content.main .exhibits .tile > .locationArea .locationScrollArea {
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: auto;
+    width: max-content;
+    height: 100%;
+    white-space: nowrap;
+    padding-right: 5px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.content.main .exhibits .tile > .locationArea .location:not(:first-child) {
+    border-top-left-radius: var(--minBorderRadius);
+    border-bottom-left-radius: var(--minBorderRadius);
+}
+.content.main .exhibits .tile > .locationArea .location:not(:last-child) {
+    border-top-right-radius: var(--minBorderRadius);
+    border-bottom-right-radius: var(--minBorderRadius);
+}
+.content.main .exhibits .tile > .locationArea .location {
+    --minBorderRadius: 5px;
+    position: relative;
+    overflow: hidden;
     /* top: calc(
         var(--baseHeight) * .5 - 20px
     ); */
     /* transform: translateY(calc(
         var(--baseHeight) / 2 - 50%
     )); */
+    top: 0;
     padding: 5px;
     display: flex;
     margin-left: 5px;
@@ -156,11 +188,10 @@
     /* padding: 2px;
     padding-top: 4px;
     padding-bottom: 4px; */
-    --activityWidthPx: 0;
+    --activityWidth: 0;
     max-width: calc(
-        100% - var(--activityWidthPx) - 75px
+        100% - var(--activityWidth) - 75px
     );
-    min-width: 5em;
     border-radius: calc(.5em + 5px);
     font-size: .8em;
     backdrop-filter: none;
@@ -193,11 +224,24 @@
     height: calc(var(--whenHiddenHeight) / 2 - 10px);
 }
 .content.main .exhibits .tile .locationArea .locationText {
+    transition: opacity .5s ease-in-out;
     padding-right: var(--locationTextSize);
     min-height: var(--locationTextSize);
     display: flex;
     align-items: center;
+    overflow: hidden;
     right: 0;
+}
+.content.main .exhibits .tile .locationArea .locationText::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    display: block;
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 100%;
+    background: linear-gradient(to left, white 40%, transparent 100%);
 }
 .content.main .exhibits .list .tile .locationArea svg {
     position: absolute;
@@ -214,9 +258,6 @@
 .content.main .exhibits .tile .location svg path {
     stroke-width: 100;
     transition: stroke-dashoffset .5s ease-in-out;
-}
-.content.main .exhibits .tile .locationArea span.locationText {
-    transition: opacity .5s ease-in-out;
 }
 @media (hover: hover) and (pointer: fine) {
     .content.main .exhibits .tile .location:hover span.locationText {
@@ -396,7 +437,7 @@
     --webkit-backdrop-filter: none;
     position: absolute !important;
     left: calc(
-        var(--activityWidthPx)
+        var(--activityWidth)
     );
     display: inline-block;
     cursor: default;
@@ -416,7 +457,7 @@
     min-width: calc(
         min(
             15em,
-            100% - var(--activityWidthPx) - var(--locationTextWidthPx) - 15px
+            100% - var(--activityWidth) - var(--locationTextWidthPx) - 15px
         )
     );
     transition:
