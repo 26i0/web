@@ -2788,7 +2788,7 @@ function cdnCompleted () {
                         if (!isImgLoadStarted) {
                             onload();
                         }
-                    }, 1000);
+                    }, 2500);
                 } else {
                     onload();
                 }
