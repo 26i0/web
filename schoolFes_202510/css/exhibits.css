@@ -531,8 +531,7 @@
     );
 }
 .content.main .exhibits .tile .names .subText {
-    position: absolute;
-    right: 10px;
+    margin-left: 5px;
 }
 .content.main .exhibits .tile .tags {
     position: absolute;

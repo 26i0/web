@@ -1841,14 +1841,14 @@ function cdnCompleted () {
 
         const nameTextEl = d.createElement("span");
         nameTextEl.className = "nameText";
-        nameTextEl.textContent = `${getExhibits(tileIdx)[1].name} ${(() => {
+        nameTextEl.innerHTML = `${getExhibits(tileIdx)[1].name} ${(() => {
             if (getExhibits(tileIdx)[1].tag.includes("byClass")) {
                 const splited = getExhibits(tileIdx)[0].match(/([JH])(\d+)_(\d+)/);
-                return `(${getClassName(
+                return `<span class="subText">(${getClassName(
                     splited[1],
-                    splited[2],   
-                    splited[3],   
-                )})`;
+                    splited[2],
+                    splited[3],
+                )})</span>`;
             } else {
                 return "";
             }
