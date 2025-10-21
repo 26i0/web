@@ -107,7 +107,7 @@ const exhibits = {
             "attractions",
             "J1",
         ],
-        image: "medias/exhibits/J1_1.png",
+        image: "medias/pages/preparing.png",
     },
     F1_J1_2: {
         name: "脱出の森",
@@ -116,6 +116,7 @@ const exhibits = {
             "attractions",
             "J1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_J1_3: {
         name: "4DX",
@@ -124,6 +125,7 @@ const exhibits = {
             "attractions",
             "J1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_J2_1: {
         name: "3番出口",
@@ -132,6 +134,7 @@ const exhibits = {
             "attractions",
             "J2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_J2_2: {
         name: "小岩井サービスエリア",
@@ -141,6 +144,7 @@ const exhibits = {
             "foods",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_J2_3: {
         name: "サスケチック",
@@ -149,6 +153,7 @@ const exhibits = {
             "attractions",
             "J2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_J3_1: {
         name: "煌めきの宇宙探査",
@@ -157,6 +162,7 @@ const exhibits = {
             "attractions",
             "J3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_J3_2: {
         name: "沈むなタイタニック号",
@@ -165,6 +171,7 @@ const exhibits = {
             "attractions",
             "J3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_J3_3: {
         name: "指名手配犯ごっこ",
@@ -174,6 +181,7 @@ const exhibits = {
             "merchandise",
             "J3",
         ],
+        image: "medias/pages/preparing.png",
     },
 
     F1_H1_1: {
@@ -183,6 +191,7 @@ const exhibits = {
             "foods",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H1_2: {
         name: "MISSION IMPOSSIBLE FIRST MISSION",
@@ -191,6 +200,7 @@ const exhibits = {
             "attractions",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H1_3: {
         name: "喫煙所(禁煙)",
@@ -200,6 +210,7 @@ const exhibits = {
             "merchandise",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H1_4: {
         name: "海ん家in Hawaii",
@@ -214,6 +225,7 @@ const exhibits = {
             "display",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H1_5: {
         name: "月の消えた町",
@@ -222,6 +234,7 @@ const exhibits = {
             "attractions",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H1_6: {
         name: "自森坂の上のポニョ",
@@ -230,6 +243,7 @@ const exhibits = {
             "attractions",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H1_7: {
         name: "自森横丁",
@@ -239,6 +253,7 @@ const exhibits = {
             "merchandise",
             "H1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_1: {
         name: "お化け屋敷",
@@ -248,6 +263,7 @@ const exhibits = {
             "attractions",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_2: {
         name: "出流原~因習村でお待ちしております。",
@@ -258,6 +274,7 @@ const exhibits = {
             "display",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_3: {
         // name: "ベイカリーマックス",
@@ -267,6 +284,7 @@ const exhibits = {
             "attractions",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_4: {
         name: "SHLooN",
@@ -275,6 +293,7 @@ const exhibits = {
             "attractions",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_5: {
         name: "スペースローラーコースター",
@@ -283,6 +302,7 @@ const exhibits = {
             "attractions",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_6: {
         name: "トイマニ6",
@@ -291,6 +311,7 @@ const exhibits = {
             "attractions",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_H2_7: {
         name: "夢を叶えて!たいやきくん",
@@ -300,6 +321,7 @@ const exhibits = {
             "attractions",
             "H2",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_H3_1: {
         name: "神社",
@@ -307,6 +329,7 @@ const exhibits = {
             "byClass",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_H3_2: {
         name: "字森",
@@ -315,6 +338,7 @@ const exhibits = {
             "display",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_H3_3: {
         name: "三組万博",
@@ -323,6 +347,7 @@ const exhibits = {
             "display",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_H3_4: {
         name: "ウマ息子~プリティダービー",
@@ -331,6 +356,7 @@ const exhibits = {
             "byClass",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_H3_5: {
         name: "ねっとりねっと",
@@ -339,6 +365,7 @@ const exhibits = {
             "attractions",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_H3_6: {
         name: "お化け屋敷",
@@ -347,6 +374,7 @@ const exhibits = {
             "attractions",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_H3_7: {
         name: "ウォーリーを探せ",
@@ -354,6 +382,7 @@ const exhibits = {
             "byClass",
             "H3",
         ],
+        image: "medias/pages/preparing.png",
     },
 
     // ↓有志
@@ -364,6 +393,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Omoshiro: {
         name: "とってもおもしろいこと",
@@ -377,6 +407,7 @@ const exhibits = {
             "display",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_MCBATTLE: {
         name: "MC BATTLE",
@@ -389,6 +420,7 @@ const exhibits = {
             "byVolunteers",
             "announcement",
         ],
+        image: "medias/pages/preparing.png",
     },
     Keion: {
         name: "軽音ライブ",
@@ -401,6 +433,7 @@ const exhibits = {
             "announcement",
             "day1",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Shooting: {
         name: "射的",
@@ -413,6 +446,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     PlaneWorkshop: {
         name: "飛行機ワークショップ",
@@ -425,6 +459,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     Shoten: {
         name: "昇天商店",
@@ -436,6 +471,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_Handmade: {
         name: "はじめの手作りshop",
@@ -444,6 +480,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Tekken_1: {
         name: "鉄研 5インチ･プラレール展示",
@@ -453,6 +490,7 @@ const exhibits = {
             "display",
             "attractions",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_SnapNow: {
         name: "#snap now",
@@ -465,6 +503,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_Yutosara: {
         name: "ゆうとさらの占い部屋",
@@ -476,6 +515,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Coffee: {
         name: "コーヒーカルチャークラブ",
@@ -485,6 +525,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     DoyouDance: {
         name: "土曜ダンス",
@@ -496,6 +537,7 @@ const exhibits = {
             "byVolunteers",
             "announcement",
         ],
+        image: "medias/pages/preparing.png",
     },
     AMAZE: {
         name: "ダンス部AMAZE",
@@ -507,6 +549,7 @@ const exhibits = {
             "byVolunteers",
             "announcement",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Nazotoki: {
         name: "自森謎解き",
@@ -515,6 +558,7 @@ const exhibits = {
             "byVolunteers",
             "attractions",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_BLUEPEYOUNG: {
         name: "BLUE PEYOUNG",
@@ -524,6 +568,7 @@ const exhibits = {
             "foods",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_SkateDrink: {
         name: "スケートドリンク",
@@ -537,6 +582,7 @@ const exhibits = {
             "foods",
             "attractions",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_Tokusatsu: {
         name: "特撮映画上映",
@@ -548,6 +594,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     Miyata: {
         name: "宮田の即売会",
@@ -560,6 +607,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Cat: {
         name: "猫部のお店",
@@ -568,6 +616,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Nepal: {
         name: "ネパール孤児院募金",
@@ -575,6 +624,7 @@ const exhibits = {
         tag: [
             "byVolunteers",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_Hostclub: {
         name: "ホストクラブ｢blue★spring｣",
@@ -583,6 +633,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Cardboard: {
         name: "ダンボール武器庫",
@@ -595,6 +646,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Botanya: {
         name: "ぼたんやさん",
@@ -606,6 +658,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Warasibe: {
         name: "わらしべ長者",
@@ -617,6 +670,7 @@ const exhibits = {
         tag: [
             "byVolunteers",
         ],
+        image: "medias/pages/preparing.png",
     },
     ChuMinKyo: {
         name: "中民郷学園祭公演",
@@ -628,6 +682,7 @@ const exhibits = {
             "byVolunteers",
             "announcement",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_PrivateSchool: {
         name: "私学助成",
@@ -636,6 +691,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     Paparazzi: {
         name: "paparazzi",
@@ -643,6 +699,7 @@ const exhibits = {
         tag: [
             "byVolunteers",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_YouMayHena: {
         name: "you may hena",
@@ -651,6 +708,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Sawatonagi: {
         name: "さわとなぎの雑貨やさん",
@@ -659,6 +717,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Mononoke: {
         name: "もののけ",
@@ -667,6 +726,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_115: {
         name: "115",
@@ -679,6 +739,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     Samba: {
         name: "サンバ",
@@ -690,6 +751,7 @@ const exhibits = {
             "byVolunteers",
             "announcement",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Moon_Dormitory: {
         name: `ちゅきちゅき月${maps_names.Dormitory}`,
@@ -702,6 +764,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     North_Dormitory: {
         name: `${maps_words.Directions.N}${maps_names.Dormitory}Movie`,
@@ -714,6 +777,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     Star_Dormitory: {
         name: `星${maps_names.Dormitory}有志`,
@@ -722,6 +786,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Sustainable: {
         name: "サステナ委員会",
@@ -730,6 +795,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Glass: {
         name: "ガラス細工部",
@@ -738,6 +804,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_IllustManga: {
         name: "イラストマンガ部",
@@ -750,6 +817,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     Aruaru: {
         name: "自森のあるある展",
@@ -758,6 +826,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_Button: {
         name: "Button",
@@ -766,6 +835,7 @@ const exhibits = {
             "byVolunteers",
             "display",
         ],
+        image: "medias/pages/preparing.png",
     },
     Smash: {
         name: "スマブラしようぜ!",
@@ -773,6 +843,7 @@ const exhibits = {
         tag: [
             "byVolunteers",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Okigae: {
         name: "お着替え 4コマ",
@@ -784,6 +855,7 @@ const exhibits = {
         tag: [
             "byVolunteers",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_Steal: {
         name: "盗",
@@ -792,6 +864,7 @@ const exhibits = {
             "byVolunteers",
             "attractions",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_CoffeeWatashi: {
         name: "珈琲 道渡時",
@@ -804,6 +877,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F2_StarRabbit: {
         name: "星うさぎの贈り物",
@@ -815,6 +889,7 @@ const exhibits = {
             "byVolunteers",
             "merchandise",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_Wakuwaku: {
         name: "WAKUWAKU",
@@ -827,6 +902,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_East_Dormitory: {
         name: `${maps_words.Directions.E}${maps_names.Dormitory}`,
@@ -834,6 +910,7 @@ const exhibits = {
         tag: [
             "byVolunteers",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Tacos: {
         name: "ハイサイタコス",
@@ -846,6 +923,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Malasada: {
         name: "Malasada",
@@ -855,6 +933,7 @@ const exhibits = {
             "merchandise",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Rukissa: {
         name: "るきっさ",
@@ -863,6 +942,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_FlyYum: {
         name: "Fly yum",
@@ -874,6 +954,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_BloomSweets: {
         name: "Bloom sweets",
@@ -885,6 +966,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_cocoFofo: {
         name: "Cocô Fofo",
@@ -893,6 +975,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_WitchYakisoba: {
         name: "魔女のなぞやきそば",
@@ -904,6 +987,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_GanGanHao: {
         name: "ガンガンハオ",
@@ -915,6 +999,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_Kebab: {
         name: "ケバ部",
@@ -923,6 +1008,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F3_LittleTaroBar: {
         name: "リトルクローバー",
@@ -935,6 +1021,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     F1_ChaiWari: {
         name: "Chai wari",
@@ -946,6 +1033,7 @@ const exhibits = {
             "byVolunteers",
             "foods",
         ],
+        image: "medias/pages/preparing.png",
     },
     // Satekichihiro: {
     //     name: "さてきちひろ",
