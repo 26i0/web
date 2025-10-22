@@ -246,9 +246,11 @@
     transition: height .5s ease-in-out;
 }
 .content.main .exhibits .tile .images {
-    position: relative;
+    position: absolute;
     margin: 5px;
-    margin-top: 30px;
+    margin-top: calc(
+        3em + 25px
+    );
     height: 40vh;
     padding: 5px;
     height: min-content;
@@ -579,6 +581,16 @@
 .content.main .exhibits .tile .names {
     /* min-height: 1.2em; */
     /* margin-top: 30px; */
+    /* --fontSize: calc(
+        min(
+            max(
+                (350px - var(--nameTextWidthPx)) * .5,
+                .6em
+            ),
+            .9em
+        )
+    ); */
+    --fontSize: .9em;
     height: calc(
         var(--fontSize) * 2 + 16px
     );
@@ -595,15 +607,21 @@
     );
     /* display: flex;
     align-items: center; */
-    --fontSize: calc(
-        min(
-            max(
-                (350px - var(--nameTextWidthPx)) * .5,
-                .5em
-            ),
-            .9em
-        )
-    );
+}
+.content.main .exhibits .tile .names::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    display: block;
+    top: 50%;
+    right: 0;
+    width: 35px;
+    height: 50%;
+    background: linear-gradient(to left, white 40%, transparent 100%);
+    transition: opacity .5s ease-in-out;
+}
+.content.main .exhibits .tile.opened .names::before {
+    opacity: 0;
 }
 .content.main .exhibits .tile.opened .names {
     height: 100%;

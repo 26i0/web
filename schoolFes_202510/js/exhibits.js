@@ -266,7 +266,7 @@ const exhibits = {
         image: "medias/pages/preparing.png",
     },
     F2_H2_2: {
-        name: "出流原~因習村でお待ちしております。",
+        name: "出流原~因習村でお待ちしております~",
         tag: [
             "byClass",
             "foods",
@@ -571,7 +571,7 @@ const exhibits = {
         image: "medias/pages/preparing.png",
     },
     F1_SkateDrink: {
-        name: "スケートドリンク",
+        name: "スケート･ドリンク",
         location: `${maps_names.Gym}${maps_words.Conjs.Infront}､${maps_names.Skateboard}`,
         activitys: {
             d1: ["10:30", "15:50"],
@@ -867,7 +867,7 @@ const exhibits = {
         image: "medias/pages/preparing.png",
     },
     F2_CoffeeWatashi: {
-        name: "珈琲 道渡時",
+        name: "珈琲道 渡時",
         location: `${maps_names.Warehouse}`,
         activitys: {
             d1: [],
@@ -1587,7 +1587,7 @@ function cdnCompleted () {
 
         // ズームもスムーズに変更する場合
         gsap.to(camera, {
-            zoom: zoom, // 目標ズーム値
+            zoom: Math.max(zoom, maps_camera.zoom), // 目標ズーム値
             duration: duration,
             ease: "power2.inOut",
             onUpdate: () => camera.updateProjectionMatrix()
@@ -1822,7 +1822,7 @@ function cdnCompleted () {
                             });
                             return maxWidth;
                         })() + "px");
-                        tiles[i].style.setProperty("--nameTextWidthPx", (tiles[i].querySelector(".names .nameText")?.offsetWidth || 0) + "px");
+                        tiles[i].style.setProperty("--nameTextWidthPx", (tiles[i].querySelector(".names")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activityWidthPx", (tiles[i].querySelector(".activity")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activitySpanWidthPx", (tiles[i].querySelector(".activity .activeText > span")?.offsetWidth || 0) + "px");
                     }
@@ -2027,7 +2027,7 @@ function cdnCompleted () {
 
                 const dateTextEl = d.createElement("div");
                 const dateNum = dayKeyName.replace("d", "") * 1;
-                dateTextEl.innerHTML = `<span>${dateNum}日目 ${getDaySpans(dayItem[0])} ~${getDaySpans(dayItem[1])}</span><div class="activeText button"><div class="progress"></div><span></span></div>`;
+                dateTextEl.innerHTML = `<span>${dateNum}日目 ${getDaySpans(dayItem[0])}&nbsp;~${getDaySpans(dayItem[1])}</span><div class="activeText button"><div class="progress"></div><span></span></div>`;
                 dateTextEl.className = "timeItem";
                 dateTextEl.setAttribute("day", dateNum);
                 dateTextEl.setAttribute("timeFrom", dayItem[0]);
@@ -2583,6 +2583,7 @@ function cdnCompleted () {
         }
 
         if (!targetTile) return null;
+        targetTile.classList.remove("inVisible");
 
         const tileOpenDatas = [];
         const allTiles = exhibitsArea.querySelectorAll(":scope > .tile");
@@ -2787,7 +2788,7 @@ function cdnCompleted () {
                             Math.max(
                                 maps_renderer.domElement.offsetWidth,
                                 maps_renderer.domElement.offsetHeight,
-                            ) * .003,
+                            ) * .004,
                             3.6
                         ),
                         .5
@@ -3467,245 +3468,256 @@ function cdnCompleted () {
                             element.setAttribute("tag", tagAttributes.join(","));
                         }
 
-                        Object.keys(maps_modelParts).forEach((partName) => {
-                            const part = maps_modelParts[partName];
+                        function addAllLabels () {
+                            Object.keys(maps_modelParts).forEach((meshName) => {
+                                const part = maps_modelParts[meshName];
 
-                            if (!maps_locations[partName] && exhibits[partName]) { // もし該当するlocationがないならexhibitsの値を用いる
-                                maps_locations[partName] = {
-                                    ...exhibits[partName],
-                                    originalValue: partName,
-                                };
-                            }
+                                if (!maps_locations[meshName] && exhibits[meshName]) { // もし該当するlocationがないならexhibitsの値を用いる
+                                    maps_locations[meshName] = {
+                                        ...exhibits[meshName],
+                                        originalValue: meshName,
+                                    };
+                                }
 
-                            if (
-                                partName.includes("_WC") &&
-                                !maps_locations[partName]?.name
-                            ) {
-                                const locationName = maps_locations[partName]?.location.name;
-                                maps_locations[partName] = {
-                                    name: "medias/images/wc.svg",
-                                    location: {
-                                        name: locationName
-                                    },
-                                    description: maps_locations[partName]?.description || "トイレ",
-                                };
-                            }
+                                if (
+                                    meshName.includes("_WC") &&
+                                    !maps_locations[meshName]?.name
+                                ) {
+                                    const locationName = maps_locations[meshName]?.location.name;
+                                    maps_locations[meshName] = {
+                                        name: "medias/images/wc.svg",
+                                        location: {
+                                            name: locationName
+                                        },
+                                        description: maps_locations[meshName]?.description || "トイレ",
+                                    };
+                                }
 
-                            if (!maps_locations[partName]) return;
+                                if (!maps_locations[meshName]) return;
 
-                            const canvas = d.createElement("canvas");
-                            const ctx = canvas.getContext("2d");
-                            const scaleFactor = Math.max(Math.min(window.innerWidth / 1250, 2), .5);
+                                const canvas = d.createElement("canvas");
+                                const ctx = canvas.getContext("2d");
+                                const scaleFactor = Math.max(Math.min(window.innerWidth / 1250, 2), .5);
 
-                            const labelTextFontSize = scaleFactor * 220;
+                                const labelTextFontSize = scaleFactor * 220;
 
-                            function drawLabelText (backgroundColor = "rgba(45, 45, 45, 0.8)") {
-                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                function drawLabelText (backgroundColor = "rgba(45, 45, 45, 0.8)") {
+                                    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                                const text = truncateText({
-                                    text: maps_locations[partName]?.name || "",
-                                    length: 8,
-                                    str: "...",
-                                });
-                                ctx.font = `${labelTextFontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
-                                ctx.textAlign = "center";
-                                ctx.textBaseline = "middle";
+                                    const text = truncateText({
+                                        text: maps_locations[meshName]?.name || "",
+                                        length: 8,
+                                        str: "...",
+                                    });
+                                    ctx.font = `${labelTextFontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
+                                    ctx.textAlign = "center";
+                                    ctx.textBaseline = "middle";
 
-                                const textWidth = ctx.measureText(text).width;
-                                const textBoxMargin = scaleFactor * 80;
+                                    const textWidth = ctx.measureText(text).width;
+                                    const textBoxMargin = scaleFactor * 80;
 
-                                // 背景（角丸）
-                                ctx.fillStyle = backgroundColor;
+                                    // 背景（角丸）
+                                    ctx.fillStyle = backgroundColor;
 
-                                function roundRect(ctx, x, y, width, height, radius) {
-                                    if (typeof radius === "number") {
-                                        radius = { tl: radius, tr: radius, br: radius, bl: radius };
-                                    } else {
-                                        const defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
-                                        for (let side in defaultRadius) {
-                                            radius[side] = radius[side] || defaultRadius[side];
+                                    function roundRect(ctx, x, y, width, height, radius) {
+                                        if (typeof radius === "number") {
+                                            radius = { tl: radius, tr: radius, br: radius, bl: radius };
+                                        } else {
+                                            const defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+                                            for (let side in defaultRadius) {
+                                                radius[side] = radius[side] || defaultRadius[side];
+                                            }
                                         }
+                                        ctx.beginPath();
+                                        ctx.moveTo(x + radius.tl, y);
+                                        ctx.lineTo(x + width - radius.tr, y);
+                                        ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+                                        ctx.lineTo(x + width, y + height - radius.br);
+                                        ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+                                        ctx.lineTo(x + radius.bl, y + height);
+                                        ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+                                        ctx.lineTo(x, y + radius.tl);
+                                        ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+                                        ctx.closePath();
+                                        ctx.fill();
                                     }
-                                    ctx.beginPath();
-                                    ctx.moveTo(x + radius.tl, y);
-                                    ctx.lineTo(x + width - radius.tr, y);
-                                    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
-                                    ctx.lineTo(x + width, y + height - radius.br);
-                                    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
-                                    ctx.lineTo(x + radius.bl, y + height);
-                                    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
-                                    ctx.lineTo(x, y + radius.tl);
-                                    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-                                    ctx.closePath();
-                                    ctx.fill();
+
+                                    roundRect(
+                                        ctx,
+                                        (canvas.width / 2 - textWidth / 2) - textBoxMargin,
+                                        (canvas.height / 2 - labelTextFontSize / 2) - textBoxMargin * 1.25,
+                                        textWidth + textBoxMargin * 2,
+                                        labelTextFontSize + textBoxMargin * 2,
+                                        textBoxMargin
+                                    );
+
+                                    // テキスト
+                                    ctx.fillStyle = "white";
+                                    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
                                 }
 
-                                roundRect(
-                                    ctx,
-                                    (canvas.width / 2 - textWidth / 2) - textBoxMargin,
-                                    (canvas.height / 2 - labelTextFontSize / 2) - textBoxMargin * 1.25,
-                                    textWidth + textBoxMargin * 2,
-                                    labelTextFontSize + textBoxMargin * 2,
-                                    textBoxMargin
-                                );
-
-                                // テキスト
-                                ctx.fillStyle = "white";
-                                ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-                            }
-
-                            function resizeLabelCanvas ({
-                                width: newWidth,
-                                height: newHeight,
-                                sprite: sprite,
-                                backgroundColor: backgroundColor
-                            }) {
-                                canvas.width = 512 * scaleFactor * newWidth;
-                                canvas.height = 512 * scaleFactor * newHeight;
-                                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                                drawLabelText(backgroundColor); // ← 背景と文字を再描画
-                                if (sprite && sprite.material.map instanceof THREE.CanvasTexture) {   
-                                    sprite.material.map.needsUpdate = true;
-                                }
-                            }
-
-                            // 背景を透明に初期化
-                            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                            let text = maps_locations[partName]?.name || maps_pointIcon;
-                            const isImage = getIsImageUrl(text);
-
-                            const fontSize = scaleFactor * 220;
-                            let textHeight = fontSize;
-                            let textWidth  = fontSize;
-
-                            function addLabel ({
-                                width: width,
-                                height: height,
-                                spriteToAdd: spriteToAdd,
-                            }) {
-                                const sprite = spriteToAdd || (() => {
-                                    const texture = new THREE.CanvasTexture(canvas);
-                                    texture.needsUpdate = true;
-                                    const spriteMaterial = new THREE.SpriteMaterial({
-                                        map: texture,
-                                        transparent: true,
-                                        depthTest: false
-                                    });
-                                    return new THREE.Sprite(spriteMaterial);
-                                })();
-
-                                const baseScale = .15;
-                                let scaleRatio = [
-                                    baseScale * width,
-                                    baseScale * height,
-                                ];
-                                if (spriteToAdd) {
-                                    const baseScale = .15;
-                                    scaleRatio = [
-                                        baseScale,
-                                        baseScale,
-                                    ];
-                                }
-
-                                resizeLabelCanvas({
-                                    width: width || 1,
-                                    height: height || 1,
+                                function resizeLabelCanvas ({
+                                    width: newWidth,
+                                    height: newHeight,
                                     sprite: sprite,
-                                    backgroundColor: part === currentLocationPointMesh ? "rgba(220, 45, 80, .8)" : undefined,
-                                });
-
-                                sprite.transparent = true;
-                                sprite.renderOrder = 999;
-                                const spriteScale = .2;
-                                sprite.scale.set(
-                                    spriteScale * scaleRatio[0],
-                                    spriteScale * scaleRatio[1],
-                                    spriteScale,
-                                ); // adjust label size
-                                // match position to geometry center like CSS2DObject
-                                if (part.geometry) {
-                                    const vector = new THREE.Vector3();
-                                    part.geometry.computeBoundingBox();
-                                    part.geometry.boundingBox.getCenter(vector);
-
-                                    const offset = maps_locations[part.name]?.offset;
-                                    vector.x += offset?.x || 0;
-                                    vector.y += offset?.y || 0;
-                                    vector.z += offset?.z || 0;
-
-                                    part.localToWorld(vector);
-                                    sprite.position.copy(vector);
-                                }
-                                sprite.name = partName + "_label";
-                                sprite.userData = {
-                                    name: part.name,
-                                    scaleRatio: scaleRatio,
-                                    fontSize: labelTextFontSize,
-                                };
-                                scene.add(sprite);
-                                // Save reference for later control
-                                maps_labels[partName] = {
-                                    object: sprite,
-                                    part: part
-                                };
-                            }
-
-                            if (isImage) {
-                                const img = new Image();
-                                img.src = text;
-                                img.onload = () => {
-                                    const texture = new THREE.CanvasTexture(img);
-                                    const spriteMaterial = new THREE.SpriteMaterial({
-                                        map: texture,
-                                        transparent: true,
-                                        depthTest: false
-                                    });
-                                    const sprite = new THREE.Sprite(spriteMaterial);
-                                    sprite.renderOrder = 999;
-                                    const imageScale = .03;
-                                    sprite.scale.set(imageScale, imageScale, imageScale); // サイズ調整
-                                    if (part.geometry) {
-                                        const center = new THREE.Vector3();
-                                        part.geometry.computeBoundingBox();
-                                        part.geometry.boundingBox.getCenter(center);
-                                        part.localToWorld(center);
-                                        sprite.position.copy(center);
+                                    backgroundColor: backgroundColor
+                                }) {
+                                    canvas.width = 512 * scaleFactor * newWidth;
+                                    canvas.height = 512 * scaleFactor * newHeight;
+                                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                    drawLabelText(backgroundColor); // ← 背景と文字を再描画
+                                    if (sprite && sprite.material.map instanceof THREE.CanvasTexture) {   
+                                        sprite.material.map.needsUpdate = true;
                                     }
-                                    addLabel({
-                                        width: 1,
-                                        height: 1,
-                                        spriteToAdd: sprite,
+                                }
+
+                                // 背景を透明に初期化
+                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                                let text = maps_locations[meshName]?.name || maps_pointIcon;
+                                const isImage = getIsImageUrl(text);
+
+                                const fontSize = scaleFactor * 220;
+                                let textHeight = fontSize;
+                                let textWidth  = fontSize;
+
+                                function addLabel ({
+                                    width: width,
+                                    height: height,
+                                    spriteToAdd: spriteToAdd,
+                                }) {
+                                    const sprite = spriteToAdd || (() => {
+                                        const texture = new THREE.CanvasTexture(canvas);
+                                        texture.needsUpdate = true;
+                                        const spriteMaterial = new THREE.SpriteMaterial({
+                                            map: texture,
+                                            transparent: true,
+                                            depthTest: false
+                                        });
+                                        return new THREE.Sprite(spriteMaterial);
+                                    })();
+
+                                    const baseScale = .15;
+                                    let scaleRatio = [
+                                        baseScale * width,
+                                        baseScale * height,
+                                    ];
+                                    if (spriteToAdd) {
+                                        const baseScale = .15;
+                                        scaleRatio = [
+                                            baseScale,
+                                            baseScale,
+                                        ];
+                                    }
+
+                                    resizeLabelCanvas({
+                                        width: width || 1,
+                                        height: height || 1,
+                                        sprite: sprite,
+                                        backgroundColor: part === currentLocationPointMesh ? "rgba(220, 45, 80, .8)" : undefined,
                                     });
-                                };
-                            } else {
-                                // それ以外は従来のテキスト描画
-                                const text = maps_locations[partName]?.name || "";
-                                // const text = truncateText({
-                                //     text: maps_locations[partName]?.name || "",
-                                //     length: 5,
-                                // });
 
-                                // テキストスタイル
-                                ctx.font = `${fontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
-                                ctx.textAlign = "center";
-                                ctx.textBaseline = "middle";
+                                    sprite.transparent = true;
+                                    sprite.renderOrder = 999;
+                                    const spriteScale = .2;
+                                    sprite.scale.set(
+                                        spriteScale * scaleRatio[0],
+                                        spriteScale * scaleRatio[1],
+                                        spriteScale,
+                                    ); // adjust label size
+                                    // match position to geometry center like CSS2DObject
+                                    if (part.geometry) {
+                                        const vector = new THREE.Vector3();
+                                        part.geometry.computeBoundingBox();
+                                        part.geometry.boundingBox.getCenter(vector);
 
-                                // テキスト幅を測定
-                                textWidth = ctx.measureText(text).width;
+                                        const offset = maps_locations[part.name]?.offset;
+                                        vector.x += offset?.x || 0;
+                                        vector.y += offset?.y || 0;
+                                        vector.z += offset?.z || 0;
 
-                                addLabel({
-                                    width: Math.max(
-                                        (textWidth / textHeight) * .6,
-                                        2
-                                    ),
-                                    height: 1,
-                                });
-                            }
-                        });
+                                        part.localToWorld(vector);
+                                        sprite.position.copy(vector);
+                                    }
+                                    sprite.name = meshName + "_label";
+                                    sprite.userData = {
+                                        name: part.name,
+                                        scaleRatio: scaleRatio,
+                                        fontSize: labelTextFontSize,
+                                    };
+                                    scene.add(sprite);
+                                    // Save reference for later control
+                                    maps_labels[meshName] = {
+                                        object: sprite,
+                                        part: part
+                                    };
+                                }
+
+                                if (isImage) {
+                                    const img = new Image();
+                                    img.src = text;
+                                    img.onload = () => {
+                                        const texture = new THREE.CanvasTexture(img);
+                                        const spriteMaterial = new THREE.SpriteMaterial({
+                                            map: texture,
+                                            transparent: true,
+                                            depthTest: false
+                                        });
+                                        const sprite = new THREE.Sprite(spriteMaterial);
+                                        sprite.renderOrder = 999;
+                                        const imageScale = .03;
+                                        sprite.scale.set(imageScale, imageScale, imageScale); // サイズ調整
+                                        if (part.geometry) {
+                                            const center = new THREE.Vector3();
+                                            part.geometry.computeBoundingBox();
+                                            part.geometry.boundingBox.getCenter(center);
+                                            part.localToWorld(center);
+                                            sprite.position.copy(center);
+                                        }
+                                        addLabel({
+                                            width: 1,
+                                            height: 1,
+                                            spriteToAdd: sprite,
+                                        });
+                                    };
+                                } else {
+                                    // それ以外は従来のテキスト描画
+                                    const text = maps_locations[meshName]?.name || "";
+                                    // const text = truncateText({
+                                    //     text: maps_locations[partName]?.name || "",
+                                    //     length: 5,
+                                    // });
+
+                                    // テキストスタイル
+                                    ctx.font = `${fontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
+                                    ctx.textAlign = "center";
+                                    ctx.textBaseline = "middle";
+
+                                    // テキスト幅を測定
+                                    textWidth = ctx.measureText(text).width;
+
+                                    addLabel({
+                                        width: Math.max(
+                                            (textWidth / textHeight) * .6,
+                                            2
+                                        ),
+                                        height: 1,
+                                    });
+                                }
+                            });
+                        }
+
+                        addAllLabels();
 
                         maps_renderer.domElement.addEventListener("webglcontextrestored", () => {
-                            // location.reload();
+                            Object.keys(maps_labels).forEach(key => {
+                                const { object } = maps_labels[key];
+                                if (object && scene) {
+                                    scene.remove(object);
+                                }
+                                delete maps_labels[key];
+                            });
+                            addAllLabels();
 
                             // Object.keys(maps_labels).forEach((partName) => {
                             //     const { object, part } = maps_labels[partName];
