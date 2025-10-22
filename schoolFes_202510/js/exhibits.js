@@ -3696,7 +3696,7 @@ function cdnCompleted () {
                         });
 
                         maps_renderer.domElement.addEventListener("webglcontextrestored", () => {
-                            location.reload();
+                            // location.reload();
 
                             // Object.keys(maps_labels).forEach((partName) => {
                             //     const { object, part } = maps_labels[partName];
