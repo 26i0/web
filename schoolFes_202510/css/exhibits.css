@@ -145,7 +145,7 @@
     /* width: calc(
         100% - var(--activityWidthPx)
     ); */
-    width: 50%;
+    width: 35%;
     height: calc(
         100% - var(--tagsAreaHeight) - 5px
     );
@@ -234,7 +234,7 @@
     --activityWidthPx: 0px;
     /* min-width: 5em; */
     max-width: calc(
-        100% - var(--activityWidthPx) - 75px
+        100% - var(--activityWidthPx) - 20px
     );
     border-radius: calc(.5em + 5px);
     font-size: .8em;
@@ -512,15 +512,18 @@
     margin-left: 5px;
     --locationTextWidthPx: 80px;
     z-index: 8;
-    min-width: calc(
+    /* min-width: calc(
         max(
-            min(
-                (var(--tileWidth) - (var(--locationTextWidthPx) * 2 - 65px)) - var(--activityWidthPx),
-                var(--tileWidth) * .4
-            ),
-            var(--activitySpanWidthPx) + 100px
+            (var(--tileWidth) - (var(--locationTextWidthPx) * 2 - 65px)) - var(--activityWidthPx),
+            max(
+                var(--activitySpanWidthPx) + 100px,
+                (var(--tileWidth) - var(--locationTextWidthPx) * 2 + 15px)
+            )
         )
-    );
+    ); */
+    width: calc(
+        var(--tileWidth) * .65
+    ) !important;
 
     /* min-width: calc(
         100% - var(--activityWidthPx) - 10px
@@ -576,19 +579,23 @@
 .content.main .exhibits .tile .names {
     /* min-height: 1.2em; */
     /* margin-top: 30px; */
-    height: auto;
+    height: calc(
+        var(--fontSize) * 2 + 16px
+    );
+    pointer-events: none;
+    transition: height .5s ease-in-out;
+    overflow: clip;
     white-space: wrap;
     position: relative;
-    width: calc(
+    /* width: calc(
         100% - var(--padding) * 2 - (var(--locationTextWidthPx) * 2 - 105px)
+    ); */
+    max-width: calc(
+        65%
     );
-    max-width: 100%;
     /* display: flex;
     align-items: center; */
-}
-.content.main .exhibits .tile .names .nameText {
-    --nameTextWidthPx: 0;
-    font-size: calc(
+    --fontSize: calc(
         min(
             max(
                 (350px - var(--nameTextWidthPx)) * .5,
@@ -597,6 +604,13 @@
             .9em
         )
     );
+}
+.content.main .exhibits .tile.opened .names {
+    height: 100%;
+}
+.content.main .exhibits .tile .names .nameText {
+    --nameTextWidthPx: 0;
+    font-size: var(--fontSize);
 }
 .content.main .exhibits .tile .names .subText {
     margin-left: 5px;
