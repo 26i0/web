@@ -513,7 +513,13 @@
     --locationTextWidthPx: 80px;
     z-index: 8;
     min-width: calc(
-        (var(--tileWidth) - (var(--locationTextWidthPx) * 2 - 65px)) - var(--activityWidthPx)
+        max(
+            min(
+                (var(--tileWidth) - (var(--locationTextWidthPx) * 2 - 65px)) - var(--activityWidthPx),
+                var(--tileWidth) * .4
+            ),
+            var(--activitySpanWidthPx) + 100px
+        )
     );
 
     /* min-width: calc(
@@ -543,14 +549,16 @@
 .content.main .exhibits .tile .activity .timeItem .activeText.exhibitActive {
     opacity: 1;
 }
+.content.main .exhibits .tile .activity .timeItem span {
+    top: -1px;
+}
 .content.main .exhibits .tile .activity .timeItem .activeText > span {
     font-size: .65rem;
     display: flex;
     position: absolute;
     align-items: center;
-    top: -1px;
     margin-top: 0;
-    right: 0;
+    right: 1px;
 }
 .content.main .exhibits .tile .activity .timeItem span.numSet {
     display: inline-block;
