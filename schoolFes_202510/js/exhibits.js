@@ -3216,6 +3216,15 @@ function cdnCompleted () {
             maps_buttons_left.className = "buttons left";
             maps_buttons_top.className = "buttons top";
 
+            const top_noteTextEl = d.createElement("div");
+            top_noteTextEl.className = "note";
+            ["雨天時､特に屋外で実施する企画の実施場所は変化する可能性があります｡"].forEach(newNoteTextStr => {
+                const newTextEl = d.createElement("span");
+                newTextEl.textContent = newNoteTextStr;
+                top_noteTextEl.appendChild(newTextEl);
+            });
+            maps_buttons_top.appendChild(top_noteTextEl);
+
             const top_button = d.createElement("div");
             top_button.className = "button";
             maps_buttons_top.appendChild(top_button);

@@ -1650,10 +1650,22 @@
     border-top-right-radius: var(--maxBorderRadius);
     border-bottom-right-radius: var(--maxBorderRadius);
 }
+.content.main .exhibits .tile .content .buttons.top .note {
+    position: absolute;
+    top: 0;
+}
+.content.main .exhibits .tile .content .buttons.top .note > span {
+    position: relative;
+    font-size: min(
+        clamp(1vw, 15vw, 2.5vw),
+        .7em
+    );
+}
 .content.main .exhibits .tile .content .buttons.top .button {
     border-radius : var(--maxBorderRadius);
     padding-left : 5px;
     padding-right: 5px;
+    top: 32px;
 }
 
 .content.main .exhibits .tile .content .buttons .button.invalid {
