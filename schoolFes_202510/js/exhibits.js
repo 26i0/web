@@ -2137,7 +2137,7 @@ function cdnCompleted () {
         ).join("")
     );
     function updateExhibitsActive () {
-        const now = new Date();
+        const now = new Date(isDevMode ? "2025-10-25 11:00" : undefined);
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
