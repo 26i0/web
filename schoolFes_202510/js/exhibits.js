@@ -1824,7 +1824,7 @@ function cdnCompleted () {
                         })() + "px");
                         tiles[i].style.setProperty("--nameTextWidthPx", (tiles[i].querySelector(".names .nameText")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activityWidthPx", (tiles[i].querySelector(".activity")?.offsetWidth || 0) + "px");
-                        tiles[i].style.setProperty("--activitySpanWidthPx", (tiles[i].querySelector(".activity .activeText span")?.offsetWidth || 0) + "px");
+                        tiles[i].style.setProperty("--activitySpanWidthPx", (tiles[i].querySelector(".activity .activeText > span")?.offsetWidth || 0) + "px");
                     }
                 }
             },
@@ -2027,7 +2027,7 @@ function cdnCompleted () {
 
                 const dateTextEl = d.createElement("div");
                 const dateNum = dayKeyName.replace("d", "") * 1;
-                dateTextEl.innerHTML = `${dateNum}日目 ${getDaySpans(dayItem[0])} ~${getDaySpans(dayItem[1])}<div class="activeText button"><div class="progress"></div><span></span></div>`;
+                dateTextEl.innerHTML = `<span>${dateNum}日目 ${getDaySpans(dayItem[0])} ~${getDaySpans(dayItem[1])}</span><div class="activeText button"><div class="progress"></div><span></span></div>`;
                 dateTextEl.className = "timeItem";
                 dateTextEl.setAttribute("day", dateNum);
                 dateTextEl.setAttribute("timeFrom", dayItem[0]);
@@ -2137,7 +2137,7 @@ function cdnCompleted () {
         ).join("")
     );
     function updateExhibitsActive () {
-        const now = new Date("2025-10-25 11:00");
+        const now = new Date();
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
@@ -2180,7 +2180,7 @@ function cdnCompleted () {
                 const differenceFromTheDay = nowDates.day - getDay(dayIdx + 1);
                 if (differenceFromTheDay === 0) {
                     progressEl.style.setProperty("--progress", (
-                        (1 - (toMin - fromMin - elapsedTime) / (toMin - fromMin)) * 100 + "%"
+                        (1 - (toMin - fromMin - elapsedTime) / (toMin - fromMin)) * 1
                     ));
                 }
                 if (isExhibitActive && differenceFromTheDay === 0) {
@@ -2199,7 +2199,7 @@ function cdnCompleted () {
                             text = "&nbsp;";
                             activeTextEl.classList.remove("beforeTheDay");
                         } else {
-                            progressEl.style.setProperty("--progress", "100%");
+                            progressEl.style.setProperty("--progress", 1);
                             activeTextEl.classList.add("beforeTheDay");
                         }
                         activeTextEl.classList.remove("exhibitActive");

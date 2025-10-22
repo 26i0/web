@@ -11,6 +11,8 @@
     /* margin-top: var(--sagestsHeight); */
     transition: margin-top .5s ease-in-out;
     min-height: 100vh;
+    --mainContentWidth: calc(100vw - 20px);
+    width: var(--mainContentWidth);
 }
 .content.main .exhibits .list {
     overflow-x: hidden;
@@ -44,7 +46,8 @@
     --tagsAreaHeight: 2.2em;
     margin: var(--exhibitsTileMargin);
     margin-bottom: 0;
-    width: calc(100% - var(--exhibitsTileMargin) * 2);
+    --tileWidth: calc(var(--mainContentWidth) - var(--exhibitsTileMargin) * 2);
+    width: var(--tileWidth);
     height: var(--baseHeight);
     border-radius: .9em;
     /* background-color: rgba(var(--baseBackgorundRGB), .25); */
@@ -138,11 +141,14 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
+    overflow: hidden;
     /* width: calc(
         100% - var(--activityWidthPx)
     ); */
     width: 50%;
-    height: 100%;
+    height: calc(
+        100% - var(--tagsAreaHeight) - 5px
+    );
     /* left: 0; */
     right: 0;
     padding-left: 0 !important;
@@ -150,6 +156,25 @@
     /* bottom: calc(var(--tagsAreaHeight) - 5px); */
     top: 0;
     z-index: 9;
+}
+.content.main .exhibits .tile .locationArea::before,
+.content.main .exhibits .tile .locationArea::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    display: block;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    z-index: 6;
+}
+.content.main .exhibits .tile .locationArea::before {
+    top: 0;
+    background: linear-gradient(to bottom, white 0%, transparent 100%);
+}
+.content.main .exhibits .tile .locationArea::after {
+    bottom: 0;
+    background: linear-gradient(to top, white 0%, transparent 100%);
 }
 .content.main .exhibits .tile > .locationArea .locationScrollArea {
     position: relative;
@@ -159,14 +184,21 @@
     align-items: flex-end;
     flex-direction: column;
     overflow: auto;
+    scrollbar-width: none; /* Firefox */
+    scroll-snap-type: y mandatory;
     width: 100%;
-    height: 100%;
+    height: calc(
+        100% - 5px
+    );
     white-space: nowrap;
     left: 0;
     padding-right: 5px;
     padding-left: 0;
-    padding-top: 5px;
+    padding-top: 0;
     padding-bottom: 10px;
+}
+.content.main .exhibits .tile > .locationArea .locationScrollArea::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 /* .content.main .exhibits .tile > .locationArea .location:not(:first-child) {
     border-top-left-radius: var(--minBorderRadius);
@@ -180,6 +212,8 @@
     --minBorderRadius: 5px;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
+    /* scroll-snap-align: start; */
     margin-bottom: 5px;
     /* top: calc(
         var(--baseHeight) * .5 - 20px
@@ -188,6 +222,7 @@
         var(--baseHeight) / 2 - 50%
     )); */
     top: 0;
+    margin-top: 5px;
     padding: 5px;
     display: flex;
     margin-left: 5px;
@@ -436,7 +471,11 @@
     padding-left: var(--padding);
 }
 .content.main .exhibits .tile .activity {
+    position: absolute;
     font-size: .8rem;
+    bottom: calc(
+        var(--tagsAreaHeight) + 25px
+    );
     display: block;
     padding-top: 0 !important;
 }
@@ -444,13 +483,18 @@
     display: flex;
     align-items: center;
 }
+.content.main .exhibits .tile .activity .timeItem :not(.activeText) {
+    z-index: 9;
+}
+.content.main .exhibits .tile .activity .timeItem > span {
+    display: flex;
+    align-items: center;
+}
 .content.main .exhibits .tile .activity .timeItem .activeText {
     backdrop-filter: none;
     --webkit-backdrop-filter: none;
     position: absolute !important;
-    left: calc(
-        var(--activityWidthPx)
-    );
+    left: 0;
     display: inline-block;
     cursor: default;
     padding: 0;
@@ -463,16 +507,15 @@
     box-sizing: border-box;
     border-radius: 5px;
     padding: 0;
-    height: .9rem !important;
+    height: 1rem !important;
     padding-top: 0;
     margin-left: 5px;
     --locationTextWidthPx: 80px;
+    z-index: 8;
     min-width: calc(
-        max(
-            var(--activitySpanWidthPx),
-            50% - var(--activityWidthPx)
-        )
+        (var(--tileWidth) - (var(--locationTextWidthPx) * 2 - 65px)) - var(--activityWidthPx)
     );
+
     /* min-width: calc(
         100% - var(--activityWidthPx) - 10px
     ); */
@@ -488,9 +531,9 @@
 }
 .content.main .exhibits .tile .activity .timeItem .activeText > .progress {
     position: absolute;
-    --progress: 0%;
+    --progress: 0;
     width: calc(
-        var(--progress)
+        var(--progress) * var(--tileWidth)
     );
     height: 100%;
     left: 0;
@@ -507,7 +550,7 @@
     align-items: center;
     top: -1px;
     margin-top: 0;
-    left: 0;
+    right: 0;
 }
 .content.main .exhibits .tile .activity .timeItem span.numSet {
     display: inline-block;
