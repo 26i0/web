@@ -256,7 +256,7 @@ const exhibits = {
         image: "medias/pages/preparing.png",
     },
     F2_H2_1: {
-        name: "お化け屋敷",
+        name: "平野整形外科",
         tag: [
             "byClass",
             "foods",
@@ -519,7 +519,6 @@ const exhibits = {
     },
     F1_Coffee: {
         name: "コーヒーカルチャークラブ",
-        //表記ゆれ
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Behind}`,
         tag: [
             "byVolunteers",
@@ -881,7 +880,7 @@ const exhibits = {
     },
     F2_StarRabbit: {
         name: "星うさぎの贈り物",
-        location: `${maps_names.Music_Large}${maps_words.Conjs.Near}`,
+        location: `${getClassName("H", 3, 3)}${maps_words.Conjs.NextTo}`,
         activitys: {
             d1: ["11:00"],
         },
@@ -1653,7 +1652,38 @@ function cdnCompleted () {
     d.addEventListener("click", e => {
         if (exhibitsArea.contains(e.target)) {
             const tile = e.target.closest(".tile");
-            if (tile) openTile(tile);
+            if (tile) {
+                const targetExhibit = exhibits[tile.getAttribute("exhibits")];
+                const getImageDatas = () => targetExhibit?.image;
+
+                if (!getImageDatas()?.appended) {
+                    if (typeof getImageDatas() === "string") {
+                        targetExhibit.image = {
+                            src: getImageDatas(),
+                            clop: {
+                                sw: 1,
+                                sh: 1,
+                                sx: 0,
+                                sy: 0,
+                            }
+                        };
+                    }
+                    (async() => {
+                        const canvasEl = await clopImage({
+                            src: getImageDatas().src,
+                            cutIdx: typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined,
+                            clop: getImageDatas()?.clop,
+                        });
+                        if (!getImageDatas()?.appended) {
+                            tile.querySelector(".images").appendChild(canvasEl);
+                            getImageDatas().appended = true;
+                            openTile(tile);
+                        }
+                    })();
+                } else {
+                    openTile(tile);
+                }
+            }
         }
         // if (!searchBarsEl.contains(e.target) && !exhibitsBottomBar.contains(e.target)) {
         //     searchAreaEl.classList.remove("opened");
@@ -1703,6 +1733,46 @@ function cdnCompleted () {
         }
     }
 
+    async function clopImage({
+        src,
+        cutIdx,
+        clop
+    } = {}) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+
+                let sw = img.width  * (clop?.sw || 0); // 幅
+                let sh = img.height * (clop?.sh || 0); // 高さ
+                let sx = img.width  * (clop?.sx || 0); // X座標
+                let sy = img.height * (clop?.sy || 0); // Y座標
+
+                if (typeof cutIdx === "number") {
+                    const numOfX = 2;
+                    const numOfY = 4;
+
+                    sw = img.width  / numOfX;
+                    sh = img.height / numOfY;
+                    sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
+                    sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
+                }
+
+                // 出力先のキャンバスサイズを合わせる
+                canvas.width  = sw;
+                canvas.height = sh;
+
+                // 描画（切り抜き → 出力）
+                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+
+                resolve(canvas); // 読み込み完了後にcanvasを返す
+            };
+            img.onerror = (err) => reject(err);
+        });
+    }
+
     const tilesFragment = d.createDocumentFragment();
     for (let tileIdx = 0; tileIdx < Object.keys(exhibits).length; tileIdx += 1) {
         const tileEl = d.createElement("div");
@@ -1710,7 +1780,7 @@ function cdnCompleted () {
         const activitysEl = d.createElement("div");
         const descriptionEl = d.createElement("div");
         const imagesEl = d.createElement("div");
-        
+
         function getTagsEl ({
             newTags: newTags
         } = {}) {
@@ -1749,6 +1819,12 @@ function cdnCompleted () {
             tagsContentEl.addEventListener("scroll", tagsContentScroll);
 
             return tagsEl;
+        }
+
+        if (getExhibits(tileIdx)[1] && (
+            ["day1", "day2"].every(item => !getExhibits(tileIdx)[1].tag.includes(item))
+        )) { // 日数tag自動生成
+            getExhibits(tileIdx)[1]?.tag.push("day1", "day2");
         }
         const tagsEl = getTagsEl({
             newTags: (() => {
@@ -1872,12 +1948,29 @@ function cdnCompleted () {
         namesEl.classList.add("names");
         
         imagesEl.className = "images";
-        const image = d.createElement("img");
-        imagesEl.appendChild(image);
-        if (getExhibits(tileIdx)[1].image) {
-            image.src = getExhibits(tileIdx)[1].image;
-            imagesEl.appendChild(image);
-        }
+
+        /* const getImageDatas = () => getExhibits(tileIdx)[1]?.image;
+        if (getImageDatas()) {
+            if (typeof getImageDatas() === "string") {
+                getExhibits(tileIdx)[1].image = {
+                    src: getImageDatas(),
+                    clop: {
+                        sw: 1,
+                        sh: 1,
+                        sx: 0,
+                        sy: 0,
+                    }
+                };
+            }
+            (async() => {
+                const canvasEl = await clopImage({
+                    src: getImageDatas().src,
+                    cutIdx: typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined,
+                    clop: getImageDatas()?.clop,
+                });
+                imagesEl.appendChild(canvasEl);
+            })();
+        } */
         
         const locationsEl = d.createElement("div");
         const locationsScrollEl = d.createElement("div");
@@ -1975,18 +2068,6 @@ function cdnCompleted () {
             });
         })();
         locationsEl.appendChild(locationsScrollEl);
-        
-        // if (getExhibits(i)[1] && (
-        //     ["day1", "day2"].every(item => !getExhibits(i)[1].tag.includes(item))
-        // )) { // 日数tag自動生成
-        //     getExhibits(i)[1]?.tag.push("day1", "day2");
-        // }
-        // if (getExhibits(i)[1] && !getExhibits(i)[1]?.activity?.days) { // days自動生成
-        //     if (!getExhibits(i)[1]?.activity) {
-        //         getExhibits(i)[1].activity = {};
-        //     }
-        //     getExhibits(i)[1].activity.days = [1, 2];
-        // }
         
         // activitys自体なし :
         //     すべてにおいてデフォルト(活動可能最大時間)を使用

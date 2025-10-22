@@ -255,10 +255,12 @@
     padding: 5px;
     height: min-content;
 }
-.content.main .exhibits .tile.opened .images img {
+.content.main .exhibits .tile.opened .images img,
+.content.main .exhibits .tile.opened .images canvas {
     opacity: 1;
 }
-.content.main .exhibits .tile .images img {
+.content.main .exhibits .tile .images img,
+.content.main .exhibits .tile .images canvas {
     opacity: 0;
     object-fit: cover;
     max-width: 800px;
@@ -1186,7 +1188,8 @@
         var(--camZoom) * 1px
     );
 }
-.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations .image img {
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations .image img,
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations .image canvas {
     border-radius: calc(
         var(--informationsRadius) * .6
     );
@@ -1686,6 +1689,7 @@
     flex-direction: row;
     color: white;
     background-color: var(--themeColor);
+    box-shadow: 0 0 5px var(--themeColor);
     padding-top: 0.1em;
     padding-left : 0.2em;
     padding-right: 0.2em;
