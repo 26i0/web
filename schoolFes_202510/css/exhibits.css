@@ -245,6 +245,9 @@
     background-color: white;
     transition: height .5s ease-in-out;
 }
+.content.main .exhibits .tile > .locationArea .location:not(:first-child) {
+    margin-top: 0;
+}
 .content.main .exhibits .tile .images {
     position: absolute;
     margin: 5px;

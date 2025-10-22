@@ -3596,7 +3596,21 @@ function cdnCompleted () {
 
                                     const text = truncateText({
                                         text: maps_locations[meshName]?.name || "",
-                                        length: 8,
+                                        length: (() => {
+                                            let countJapanese = 0;
+                                            let countOther = 0;
+                                            for (const ch of maps_locations[meshName]?.name || "") {
+                                                // 日本語文字（ひらがな、カタカナ、漢字など）を判定
+                                                if (/[\u3040-\u30FF\u4E00-\u9FFF\u3400-\u4DBF]/.test(ch)) {
+                                                    countJapanese += 1;
+                                                } else {
+                                                    countOther += 1;
+                                                }
+                                            }
+                                            return Math.round(
+                                                7 + 1 * (countOther / (countOther + countJapanese))
+                                            );
+                                        })(),
                                         str: "...",
                                     });
                                     ctx.font = `${labelTextFontSize}px ${getComputedStyle(d.documentElement).getPropertyValue("--baseFonts") || "sans-serif"}`;
