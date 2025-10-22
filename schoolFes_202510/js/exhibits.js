@@ -905,7 +905,7 @@ const exhibits = {
         image: "medias/pages/preparing.png",
     },
     F1_East_Dormitory: {
-        name: `${maps_words.Directions.E}${maps_names.Dormitory}`,
+        name: `${maps_words.Directions.E}${maps_names.Dormitory}有志`,
         location: `${maps_names.FrontEntrance}`,
         tag: [
             "byVolunteers",
@@ -1811,7 +1811,17 @@ function cdnCompleted () {
                 for (let i = 0; i < tiles.indexOf(tileEl) + 1; i += 1) {
                     if (tiles[i].classList.contains("inVisible")) {
                         tiles[i]?.classList.remove("inVisible");
-                        tiles[i].style.setProperty("--locationTextWidthPx", (tiles[i].querySelector(".location.button")?.offsetWidth || 0) + "px");
+                        tiles[i].style.setProperty("--locationTextWidthPx", (() => {
+                            let maxWidth = 0;
+                            tiles[i].querySelectorAll(".location.button").forEach(locationEl => {
+                                const locationTextWidth = locationEl?.offsetWidth || 0;
+                                console.log(locationTextWidth);
+                                if (locationTextWidth > maxWidth) {
+                                    maxWidth = locationTextWidth;
+                                }
+                            });
+                            return maxWidth;
+                        })() + "px");
                         tiles[i].style.setProperty("--nameTextWidthPx", (tiles[i].querySelector(".names .nameText")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activityWidthPx", (tiles[i].querySelector(".activity")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activitySpanWidthPx", (tiles[i].querySelector(".activity .activeText span")?.offsetWidth || 0) + "px");
@@ -1889,7 +1899,7 @@ function cdnCompleted () {
             (() => {
                 const text = d.createElement("span");
                 text.className = "text";
-                text.textContent = "地図で見る";
+                text.textContent = "地図へ";
 
                 locationEl.innerHTML += arrowHTMLStr;
                 locationEl.appendChild(text);
@@ -2127,8 +2137,7 @@ function cdnCompleted () {
         ).join("")
     );
     function updateExhibitsActive () {
-        const now = new Date();
-        console.log("現在時刻:", now.toLocaleString());
+        const now = new Date("2025-10-25 11:00");
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
