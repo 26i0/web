@@ -1165,7 +1165,7 @@
     pointer-events: auto;
     cursor: pointer;
     position: relative;
-    height: min-content;
+    height: min-content !important;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -1431,7 +1431,8 @@
     margin  .5s ease-out
     !important;
 } */
-.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations img {
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations img,
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel .informations canvas {
     position: relative;
     width : 100%;
     height: 100%;
@@ -1467,7 +1468,8 @@
     opacity: 1;
 }
 
-.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel img {
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel img,
+.content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel canvas {
     height: 1em;
     width : 1em;
     border-radius: .35em;

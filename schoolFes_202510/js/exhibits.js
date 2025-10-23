@@ -437,7 +437,7 @@ const exhibits = {
     },
     F1_Shooting: {
         name: "射的",
-        location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
+        location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Behind}`,
         activitys: {
             d1: ["10:40"],
             d2: ["10:20"],
@@ -865,9 +865,9 @@ const exhibits = {
         ],
         image: "medias/pages/preparing.png",
     },
-    F2_CoffeeWatashi: {
+    F1_CoffeeWatashi: {
         name: "珈琲道 渡時",
-        location: `${maps_names.Warehouse}`,
+        location: `${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         activitys: {
             d1: [],
             d2: [null, "13:00"],
@@ -1291,9 +1291,6 @@ const maps_locations = {
     F2_Art: {
         originalValue: "Smash",
     },
-    F2_Warehouse: {
-        originalValue: "F2_CoffeeWatashi"
-    },
     F1_Multipurpose: {
         originalValue: "F1_H3_4",
     },
@@ -1387,26 +1384,98 @@ exhibitsDataCompletion();
 
 const getExhibits = (n) => ([ Object.keys(exhibits)[n], Object.values(exhibits)[n] ])
 
+async function clopImage({
+    src,
+    cutIdx,
+    clop
+} = {}) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            let sw = img.width  * (clop?.sw || 0); // 幅
+            let sh = img.height * (clop?.sh || 0); // 高さ
+            let sx = img.width  * (clop?.sx || 0); // X座標
+            let sy = img.height * (clop?.sy || 0); // Y座標
+
+            if (typeof cutIdx === "number") {
+                const numOfX = 2;
+                const numOfY = 4;
+
+                sw = img.width  / numOfX;
+                sh = img.height / numOfY;
+                sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
+                sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
+            }
+
+            // 出力先のキャンバスサイズを合わせる
+            canvas.width  = sw;
+            canvas.height = sh;
+
+            // 描画（切り抜き → 出力）
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+
+            resolve(canvas); // 読み込み完了後にcanvasを返す
+        };
+        img.onerror = (err) => reject(err);
+    });
+}
+
 function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened")) {
     const allTiles = exhibitsArea.querySelectorAll(".tile");
 
-    targetTile.style.setProperty("--tileOpenHeight", (() => {
-        let height = 0;
-        Array.from(targetTile.children).forEach(child => {
-            height += (
-                child.scrollHeight
-            );
-        });
-        return height;
-    })() + "px");
+    function open () {
+        targetTile.style.setProperty("--tileOpenHeight", (() => {
+            let height = 0;
+            Array.from(targetTile.children).forEach(child => {
+                height += (
+                    child.scrollHeight
+                );
+            });
+            return height;
+        })() + "px");
 
-    allTiles.forEach(element => {
-        if (element !== targetTile) element.classList.remove("opened");
-    });
-    if (isToOpen) {
-        targetTile.classList.add("opened");
+        allTiles.forEach(element => {
+            if (element !== targetTile) element.classList.remove("opened");
+        });
+        if (isToOpen) {
+            targetTile.classList.add("opened");
+        } else {
+            targetTile.classList.remove("opened");
+        }
+    }
+    const targetExhibit = exhibits[targetTile.getAttribute("exhibits")];
+
+    const getImageDatas = () => targetExhibit?.image;
+    if (typeof getImageDatas() === "string") {
+        targetExhibit.image = {
+            src: getImageDatas(),
+            clop: {
+                sw: 1,
+                sh: 1,
+                sx: 0,
+                sy: 0,
+            }
+        };
+    }
+    if (!getImageDatas()?.appended) {
+        (async() => {
+            const canvasEl = await clopImage({
+                src: getImageDatas().src,
+                cutIdx: typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined,
+                clop: getImageDatas()?.clop,
+            });
+            if (!getImageDatas()?.appended) {
+                targetTile.querySelector(".images").appendChild(canvasEl);
+                getImageDatas().appended = true;
+                open();
+            }
+        })();
     } else {
-        targetTile.classList.remove("opened");
+        open();
     }
 }
 
@@ -1654,35 +1723,7 @@ function cdnCompleted () {
             const tile = e.target.closest(".tile");
             if (tile) {
                 const targetExhibit = exhibits[tile.getAttribute("exhibits")];
-                const getImageDatas = () => targetExhibit?.image;
-
-                if (!getImageDatas()?.appended) {
-                    if (typeof getImageDatas() === "string") {
-                        targetExhibit.image = {
-                            src: getImageDatas(),
-                            clop: {
-                                sw: 1,
-                                sh: 1,
-                                sx: 0,
-                                sy: 0,
-                            }
-                        };
-                    }
-                    (async() => {
-                        const canvasEl = await clopImage({
-                            src: getImageDatas().src,
-                            cutIdx: typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined,
-                            clop: getImageDatas()?.clop,
-                        });
-                        if (!getImageDatas()?.appended) {
-                            tile.querySelector(".images").appendChild(canvasEl);
-                            getImageDatas().appended = true;
-                            openTile(tile);
-                        }
-                    })();
-                } else {
-                    openTile(tile);
-                }
+                openTile(tile);
             }
         }
         // if (!searchBarsEl.contains(e.target) && !exhibitsBottomBar.contains(e.target)) {
@@ -1733,46 +1774,6 @@ function cdnCompleted () {
         }
     }
 
-    async function clopImage({
-        src,
-        cutIdx,
-        clop
-    } = {}) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.src = src;
-            img.onload = () => {
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-
-                let sw = img.width  * (clop?.sw || 0); // 幅
-                let sh = img.height * (clop?.sh || 0); // 高さ
-                let sx = img.width  * (clop?.sx || 0); // X座標
-                let sy = img.height * (clop?.sy || 0); // Y座標
-
-                if (typeof cutIdx === "number") {
-                    const numOfX = 2;
-                    const numOfY = 4;
-
-                    sw = img.width  / numOfX;
-                    sh = img.height / numOfY;
-                    sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
-                    sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
-                }
-
-                // 出力先のキャンバスサイズを合わせる
-                canvas.width  = sw;
-                canvas.height = sh;
-
-                // 描画（切り抜き → 出力）
-                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
-
-                resolve(canvas); // 読み込み完了後にcanvasを返す
-            };
-            img.onerror = (err) => reject(err);
-        });
-    }
-
     const tilesFragment = d.createDocumentFragment();
     for (let tileIdx = 0; tileIdx < Object.keys(exhibits).length; tileIdx += 1) {
         const tileEl = d.createElement("div");
@@ -1820,58 +1821,6 @@ function cdnCompleted () {
 
             return tagsEl;
         }
-
-        if (getExhibits(tileIdx)[1] && (
-            ["day1", "day2"].every(item => !getExhibits(tileIdx)[1].tag.includes(item))
-        )) { // 日数tag自動生成
-            getExhibits(tileIdx)[1]?.tag.push("day1", "day2");
-        }
-        const tagsEl = getTagsEl({
-            newTags: (() => {
-                let displayTagNames = [];
-                const usedTags = new Set();
-
-                const returnValue = [];
-
-                returnValue.push({
-                    tags: {
-                        textContent: "",
-                        className: "",
-                        property: {
-                            "--themeColor": "",
-                        },
-                        attribute: {
-                            tag: "",
-                        },
-                    },
-                });
-
-                Object.keys(tagOrder).forEach((tag) => {
-                    if (!getExhibits(tileIdx)[1].tag?.includes(tag) || usedTags.has(tag)) return;
-                    usedTags.add(tag);
-                    displayTagNames.push([tag, tagOrder[tag].displayName, tagOrder[tag].themeColor]);
-                });
-                displayTagNames.forEach(item => {
-                    returnValue.push({
-                        textContent: item[1],
-                        className: "tag",
-                        property: {
-                            "--themeColor": item[2],
-                        },
-                        attribute: {
-                            tag: item,
-                        },
-                    });
-                });
-                const tagAttributes = [];
-                displayTagNames.map(subArr => subArr[0]).forEach(item => {
-                    tagAttributes.push(item);
-                });
-                tileEl.setAttribute("tag", tagAttributes.join(","));
-
-                return returnValue;
-            })(),
-        });
 
         // getExhibits(tileIdx)[1].originalValue = getExhibits(tileIdx)[0];
 
@@ -1949,7 +1898,7 @@ function cdnCompleted () {
         
         imagesEl.className = "images";
 
-        /* const getImageDatas = () => getExhibits(tileIdx)[1]?.image;
+        const getImageDatas = () => getExhibits(tileIdx)[1]?.image;
         if (getImageDatas()) {
             if (typeof getImageDatas() === "string") {
                 getExhibits(tileIdx)[1].image = {
@@ -1970,7 +1919,7 @@ function cdnCompleted () {
                 });
                 imagesEl.appendChild(canvasEl);
             })();
-        } */
+        }
         
         const locationsEl = d.createElement("div");
         const locationsScrollEl = d.createElement("div");
@@ -2076,46 +2025,105 @@ function cdnCompleted () {
         // activitysあり､2日分はなし :
         //     存在する日のデータのみ､それ以外は活動なし
 
-        (() => {
-            const getActivitysJson = () => getExhibits(tileIdx)[1]?.activitys;
 
-            const defaultFrom = {
-                d1: "10:20",
-                d2: "10:00",
-            };
-            const defaultTo = {
-                d1: "16:00",
-                d2: "15:00",
-            };
 
-            if (getExhibits(tileIdx)[1]) {
-                if (!getActivitysJson()) {
-                    getExhibits(tileIdx)[1].activitys = {
-                        d1: [],
-                        d2: [],
-                    };
-                }
+        
+        const getActivitysJson = () => getExhibits(tileIdx)[1]?.activitys;
+        const defaultFrom = {
+            d1: "10:20",
+            d2: "10:00",
+        };
+        const defaultTo = {
+            d1: "16:00",
+            d2: "15:00",
+        };
+
+        if (getExhibits(tileIdx)[1]) {
+            if (!getActivitysJson()) {
+                getExhibits(tileIdx)[1].activitys = {
+                    d1: [],
+                    d2: [],
+                };
             }
-            Object.values(getActivitysJson()).forEach((dayItem, jsonIndex) => {
-                const dayKeyName = Object.keys(getActivitysJson())[jsonIndex];
-                if (!dayItem[0]) dayItem[0] = defaultFrom[dayKeyName];
-                if (!dayItem[1]) dayItem[1] = defaultTo[dayKeyName];
+        }
+        // 日数tag自動生成
+        ["d1", "d2"].forEach(dayItem => {
+            if (getExhibits(tileIdx)[1]?.activitys?.[dayItem]) {
+                getExhibits(tileIdx)[1].tag.push(dayItem.replace("d", "day"));
+            }
+        });
+        console.log(
+            getExhibits(tileIdx)[1].name,
+            getExhibits(tileIdx)[1].tag,
+        );
 
-                const dayTagName = dayKeyName.replace("d", "day");
-                if (tagOrder[dayTagName]) getExhibits(tileIdx)[1]?.tag.push(dayTagName);
+        const tagsEl = getTagsEl({
+            newTags: (() => {
+                let displayTagNames = [];
+                const usedTags = new Set();
 
-                const getDaySpans = (timeItem) => timeItem.split(":").map(numSet => `<span class="numSet">${numSet.split("").map(num => `<span class="num">${num}</span>`).join("")}</span>`).join(":");
+                const returnValue = [];
 
-                const dateTextEl = d.createElement("div");
-                const dateNum = dayKeyName.replace("d", "") * 1;
-                dateTextEl.innerHTML = `<span>${dateNum}日目 ${getDaySpans(dayItem[0])}&nbsp;~${getDaySpans(dayItem[1])}</span><div class="activeText button"><div class="progress"></div><span></span></div>`;
-                dateTextEl.className = "timeItem";
-                dateTextEl.setAttribute("day", dateNum);
-                dateTextEl.setAttribute("timeFrom", dayItem[0]);
-                dateTextEl.setAttribute("timeTo", dayItem[1]);
-                activitysEl.appendChild(dateTextEl);
-            });
-        })();
+                returnValue.push({
+                    tags: {
+                        textContent: "",
+                        className: "",
+                        property: {
+                            "--themeColor": "",
+                        },
+                        attribute: {
+                            tag: "",
+                        },
+                    },
+                });
+
+                Object.keys(tagOrder).forEach((tag) => {
+                    if (!getExhibits(tileIdx)[1].tag?.includes(tag) || usedTags.has(tag)) return;
+                    usedTags.add(tag);
+                    displayTagNames.push([tag, tagOrder[tag].displayName, tagOrder[tag].themeColor]);
+                });
+                displayTagNames.forEach(item => {
+                    returnValue.push({
+                        textContent: item[1],
+                        className: "tag",
+                        property: {
+                            "--themeColor": item[2],
+                        },
+                        attribute: {
+                            tag: item,
+                        },
+                    });
+                });
+                const tagAttributes = [];
+                displayTagNames.map(subArr => subArr[0]).forEach(item => {
+                    tagAttributes.push(item);
+                });
+                tileEl.setAttribute("tag", tagAttributes.join(","));
+
+                return returnValue;
+            })(),
+        });
+
+        Object.values(getActivitysJson()).forEach((dayItem, jsonIndex) => {
+            const dayKeyName = Object.keys(getActivitysJson())[jsonIndex];
+            if (!dayItem[0]) dayItem[0] = defaultFrom[dayKeyName];
+            if (!dayItem[1]) dayItem[1] = defaultTo[dayKeyName];
+
+            const dayTagName = dayKeyName.replace("d", "day");
+            if (tagOrder[dayTagName]) getExhibits(tileIdx)[1]?.tag.push(dayTagName);
+
+            const getDaySpans = (timeItem) => timeItem.split(":").map(numSet => `<span class="numSet">${numSet.split("").map(num => `<span class="num">${num}</span>`).join("")}</span>`).join(":");
+
+            const dateTextEl = d.createElement("div");
+            const dateNum = dayKeyName.replace("d", "") * 1;
+            dateTextEl.innerHTML = `<span>${dateNum}日目 ${getDaySpans(dayItem[0])}&nbsp;~${getDaySpans(dayItem[1])}</span><div class="activeText button"><div class="progress"></div><span></span></div>`;
+            dateTextEl.className = "timeItem";
+            dateTextEl.setAttribute("day", dateNum);
+            dateTextEl.setAttribute("timeFrom", dayItem[0]);
+            dateTextEl.setAttribute("timeTo", dayItem[1]);
+            activitysEl.appendChild(dateTextEl);
+        });
+
         activitysEl.className = "activity";
 
         descriptionEl.innerHTML = `<span>${getExhibits(tileIdx)[1]?.description || ""}</span>`;
@@ -2755,6 +2763,7 @@ function cdnCompleted () {
         labelEl.style.setProperty("--labelFontSize", labelFontSize + "px");
 
         function getNewElItem (text, className, pushed) {
+            console.log("text", text);
             const isDetailPusheable = location.tag || location.onClick;
             if (text) {
                 const el = d.createElement("div");
@@ -2817,7 +2826,9 @@ function cdnCompleted () {
                 `${locationText} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location"
             ) : null,
             location.description ? getNewElItem(location.description.replaceAll("\n", "<br>"), "detail") : null,
-            getNewElItem(location?.image, "image"),
+            getNewElItem((
+                typeof location?.image === "string" ? location?.image : location?.image?.src
+            ), "image"),
         ];
         if (location.description) location.description = location.description.replaceAll("\n", "");
         generateEls.forEach(el => {
