@@ -3000,25 +3000,29 @@ function cdnCompleted () {
                     });
                 }
 
-                if (showData?.src && getIsImageUrl(showData.src)) {
-                    // 非同期処理をawaitで待つ
-                    const canvasEl = await clopImage({
-                        src: showData?.src,
-                        page: showData?.page,
-                        cutIdx: typeof showData?.cutIdx === "number" ? showData.cutIdx : undefined,
-                        clop: showData?.clop || {
-                            sw: 1,
-                            sh: 1,
-                            sx: 0,
-                            sy: 0,
-                        },
-                        rotate: showData?.rotate,
-                    });
-                    el.appendChild(canvasEl);
+                if (className === "image" || showData?.src) {
+                    if (getIsImageUrl(showData.src)) {
+                        // 非同期処理をawaitで待つ
+                        const canvasEl = await clopImage({
+                            src: showData?.src,
+                            page: showData?.page,
+                            cutIdx: typeof showData?.cutIdx === "number" ? showData.cutIdx : undefined,
+                            clop: showData?.clop || {
+                                sw: 1,
+                                sh: 1,
+                                sx: 0,
+                                sy: 0,
+                            },
+                            rotate: showData?.rotate,
+                        });
+                        el.appendChild(canvasEl);
+                    } else {
+                        return null;
+                    }
                 } else if (typeof showData === "string") {
                     el.innerHTML = showData.replaceAll("\n", "<br>");
                 }
-                return el;
+                return el.innerHTML ? el : null;
             } else {
                 return null;
             }
