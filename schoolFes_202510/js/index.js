@@ -439,35 +439,13 @@
         }, 100);
     }
 
-    // SVGファイルのパス
-    const filePaths = [
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-        "./medias/pages/preparing.png",
-    ];
+    // ファイルのパス
+    const filePaths = [];
+    for (let i = 0; i < 40; i += 1) {
+        filePaths.push(`./medias/pages/page_${i + 1}.webp`);
+    }
 
-    // SVGファイルを読み込む
+    // ファイルを読み込む
     let i = 0;
     function next () {
         if (filePaths.length <= i + 1) {

@@ -223,7 +223,8 @@
     )); */
     top: 0;
     margin-top: 5px;
-    padding: 5px;
+    --locationBasePadding: 5px;
+    padding: var(--locationBasePadding);
     display: flex;
     margin-left: 5px;
     justify-content: center;
@@ -244,6 +245,16 @@
     height: min-content;
     background-color: white;
     transition: height .5s ease-in-out;
+}
+.content.main .exhibits .tile > .locationArea .location.caseRain {
+    --caseRainYPadding: calc(
+        var(--locationBasePadding) * 1.5
+    );
+    padding-top: var(--caseRainYPadding);
+    padding-bottom: var(--caseRainYPadding);
+}
+.content.main .exhibits .tile > .locationArea .location.caseRain .locationText {
+    font-size: .5em;
 }
 .content.main .exhibits .tile > .locationArea .location:not(:first-child) {
     margin-top: 0;
@@ -619,10 +630,13 @@
     position: absolute;
     pointer-events: none;
     display: block;
-    top: 50%;
+    --height: 42.5%;
+    top: calc(
+        100% - var(--height)
+    );
+    height: var(--height);
     right: 0;
     width: 35px;
-    height: 50%;
     background: linear-gradient(to left, white 40%, transparent 100%);
     transition: opacity .5s ease-in-out;
 }
@@ -1671,7 +1685,8 @@
     border-radius : var(--maxBorderRadius);
     padding-left : 5px;
     padding-right: 5px;
-    top: 32px;
+    /* top: 32px; */
+    top: 0;
 }
 
 .content.main .exhibits .tile .content .buttons .button.invalid {

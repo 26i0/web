@@ -36,6 +36,8 @@ const maps_words = {
         J: "中学",
         H: "高校",
     },
+    CaseRain: "雨天時",
+    CaseNormal: "通常時",
     Subject: "科",
     Room: "室",
     Ridge: "棟",
@@ -82,18 +84,18 @@ const maps_names = {
     Science_C: `${maps_words.Subjects.Science}${maps_words.Room}C`,
     Science_D: `${maps_words.Subjects.Science}${maps_words.Room}D`,
     Science_Preparation: `${maps_words.Subjects.Science}${maps_words.Preparation}${maps_words.Room}`,
-    Science_Laboratory: `${maps_words.Subjects.Science}${maps_words.Laboratory}${maps_words.Room}`,
-    SocialStudies_Laboratory: `${maps_words.Subjects.SocialStudies}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
-    English_Laboratory: `${maps_words.Subjects.English}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    Science_Lab: `${maps_words.Subjects.Science}${maps_words.Laboratory}${maps_words.Room}`,
+    SocialStudies_Lab: `${maps_words.Subjects.SocialStudies}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    English_Lab: `${maps_words.Subjects.English}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Music_Small: `小${maps_words.Subjects.Music}${maps_words.Room}`,
     Music_Large: `大${maps_words.Subjects.Music}${maps_words.Room}`,
-    Music_Laboratory: `${maps_words.Subjects.Music}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    Music_Lab: `${maps_words.Subjects.Music}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Music_2: `第2${maps_words.Subjects.Music}${maps_words.Room}`,
     Music_3: `第3${maps_words.Subjects.Music}${maps_words.Room}`,
     Cooking: `調理${maps_words.Room}`,
     Computers: `${maps_words.Subjects.Information}教${maps_words.Room}`,
-    Math_Laboratory: `${maps_words.Subjects.Math}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
-    Life_Laboratory: `${maps_words.Subjects.Life}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    Math_Lab: `${maps_words.Subjects.Math}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
+    Life_Lab: `${maps_words.Subjects.Life}${maps_words.Subject}${maps_words.Laboratory}${maps_words.Room}`,
     Warehouse: "倉庫",
     Darkroom: "暗室",
     Seminar: `ゼミ${maps_words.Room}`,
@@ -106,9 +108,6 @@ const exhibits = {
             "attractions",
             "J1",
         ],
-        image: {
-            src: "medias/pages/preparing.png",
-        },
     },
     F1_J1_2: {
         name: "脱出の森",
@@ -116,7 +115,6 @@ const exhibits = {
             "attractions",
             "J1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_J1_3: {
         name: "4DX",
@@ -124,7 +122,6 @@ const exhibits = {
             "attractions",
             "J1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_J2_1: {
         name: "3番出口",
@@ -132,7 +129,6 @@ const exhibits = {
             "attractions",
             "J2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_J2_2: {
         name: "小岩井サービスエリア",
@@ -141,7 +137,6 @@ const exhibits = {
             "foods",
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_J2_3: {
         name: "サスケチック",
@@ -149,7 +144,6 @@ const exhibits = {
             "attractions",
             "J2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_J3_1: {
         name: "煌めきの宇宙探査",
@@ -157,7 +151,6 @@ const exhibits = {
             "attractions",
             "J3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_J3_2: {
         name: "沈むなタイタニック号",
@@ -165,7 +158,6 @@ const exhibits = {
             "attractions",
             "J3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_J3_3: {
         name: "指名手配犯ごっこ",
@@ -174,7 +166,6 @@ const exhibits = {
             "merchandise",
             "J3",
         ],
-        image: "medias/pages/preparing.png",
     },
 
     F1_H1_1: {
@@ -183,7 +174,6 @@ const exhibits = {
             "foods",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H1_2: {
         name: "MISSION IMPOSSIBLE FIRST MISSION",
@@ -191,7 +181,6 @@ const exhibits = {
             "attractions",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H1_3: {
         name: "喫煙所(禁煙)",
@@ -200,7 +189,6 @@ const exhibits = {
             "merchandise",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H1_4: {
         name: "海ん家in Hawaii",
@@ -214,7 +202,6 @@ const exhibits = {
             "display",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H1_5: {
         name: "月の消えた町",
@@ -222,7 +209,6 @@ const exhibits = {
             "attractions",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H1_6: {
         name: "自森坂の上のポニョ",
@@ -230,7 +216,6 @@ const exhibits = {
             "attractions",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H1_7: {
         name: "自森横丁",
@@ -239,7 +224,6 @@ const exhibits = {
             "merchandise",
             "H1",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_1: {
         name: "平野整形外科",
@@ -248,7 +232,6 @@ const exhibits = {
             "attractions",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_2: {
         name: "出流原~因習村でお待ちしております~",
@@ -258,7 +241,6 @@ const exhibits = {
             "display",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_3: {
         // name: "ベイカリーマックス",
@@ -267,7 +249,6 @@ const exhibits = {
             "attractions",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_4: {
         name: "SHLooN",
@@ -275,7 +256,6 @@ const exhibits = {
             "attractions",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_5: {
         name: "スペースローラーコースター",
@@ -283,7 +263,6 @@ const exhibits = {
             "attractions",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_6: {
         name: "トイマニ6",
@@ -291,7 +270,6 @@ const exhibits = {
             "attractions",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F2_H2_7: {
         name: "夢を叶えて!たいやきくん",
@@ -300,14 +278,12 @@ const exhibits = {
             "attractions",
             "H2",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_H3_1: {
         name: "神社",
         tag: [
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_H3_2: {
         name: "字森",
@@ -315,7 +291,6 @@ const exhibits = {
             "display",
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_H3_3: {
         name: "三組万博",
@@ -323,7 +298,6 @@ const exhibits = {
             "display",
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F1_H3_4: {
         name: "ウマ息子~プリティダービー",
@@ -331,7 +305,6 @@ const exhibits = {
         tag: [
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_H3_5: {
         name: "ねっとりねっと",
@@ -339,7 +312,6 @@ const exhibits = {
             "attractions",
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_H3_6: {
         name: "お化け屋敷",
@@ -347,14 +319,12 @@ const exhibits = {
             "attractions",
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
     F3_H3_7: {
         name: "ウォーリーを探せ",
         tag: [
             "H3",
         ],
-        image: "medias/pages/preparing.png",
     },
 
     // ↓有志
@@ -364,7 +334,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 23,
+            cutIdx: 0,
+        },
     },
     F1_Omoshiro: {
         name: "とってもおもしろいこと",
@@ -377,7 +350,10 @@ const exhibits = {
             "display",
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 22,
+            cutIdx: 3,
+        },
     },
     F1_MCBATTLE: {
         name: "MC BATTLE",
@@ -389,7 +365,10 @@ const exhibits = {
         tag: [
             "announcement",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 20,
+            cutIdx: 3,
+        },
     },
     Keion: {
         name: "軽音ライブ",
@@ -401,7 +380,10 @@ const exhibits = {
             "announcement",
             "day1",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 19,
+            cutIdx: 2,
+        },
     },
     F1_Shooting: {
         name: "射的",
@@ -413,7 +395,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 29,
+            cutIdx: 3,
+        },
     },
     PlaneWorkshop: {
         name: "飛行機ワークショップ",
@@ -425,7 +410,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 24,
+            cutIdx: 3,
+        },
     },
     F3_Shoten: {
         name: "昇天商店",
@@ -436,7 +424,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 32,
+            cutIdx: 0,
+        },
     },
     F2_Handmade: {
         name: "はじめの手作りshop",
@@ -444,16 +435,22 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 30,
+            cutIdx: 2,
+        },
     },
     F1_Tekken_1: {
         name: "鉄研 5インチ･プラレール展示",
-        location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
+        location: `${maps_names.Science_Lab}${maps_words.Conjs.Behind}`,
         tag: [
             "display",
             "attractions",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 21,
+            cutIdx: 2,
+        },
     },
     F1_SnapNow: {
         name: "#snap now",
@@ -465,7 +462,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 25,
+            cutIdx: 2,
+        },
     },
     F3_Yutosara: {
         name: "ゆうとさらの占い部屋",
@@ -476,7 +476,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 31,
+            cutIdx: 0,
+        },
     },
     F1_Coffee: {
         name: "コーヒーカルチャークラブ",
@@ -484,7 +487,7 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: null,
     },
     DoyouDance: {
         name: "土曜ダンス",
@@ -495,7 +498,10 @@ const exhibits = {
         tag: [
             "announcement",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 19,
+            cutIdx: 1,
+        },
     },
     AMAZE: {
         name: "ダンス部AMAZE",
@@ -506,7 +512,10 @@ const exhibits = {
         tag: [
             "announcement",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 20,
+            cutIdx: 2,
+        },
     },
     F1_Nazotoki: {
         name: "自森謎解き",
@@ -514,7 +523,10 @@ const exhibits = {
         tag: [
             "attractions",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 23,
+            cutIdx: 2,
+        },
     },
     F1_BLUEPEYOUNG: {
         name: "BLUE PEYOUNG",
@@ -523,7 +535,10 @@ const exhibits = {
             "foods",
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 27,
+            cutIdx: 3,
+        },
     },
     F1_SkateDrink: {
         name: "スケート･ドリンク",
@@ -536,7 +551,10 @@ const exhibits = {
             "foods",
             "attractions",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 24,
+            cutIdx: 1,
+        },
     },
     F3_Tokusatsu: {
         name: "特撮映画上映",
@@ -547,7 +565,10 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 29,
+            cutIdx: 1,
+        },
     },
     Miyata: {
         name: "宮田の即売会",
@@ -559,7 +580,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 27,
+            cutIdx: 2,
+        },
     },
     F1_Cat: {
         name: "猫部のお店",
@@ -567,14 +591,20 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 26,
+            cutIdx: 1,
+        },
     },
     F1_Nepal: {
         name: "ネパール孤児院募金",
         location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 22,
+            cutIdx: 0,
+        },
     },
     F3_Hostclub: {
         name: "ホストクラブ｢blue★spring｣",
@@ -582,7 +612,7 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: null,
     },
     F1_Cardboard: {
         name: "ダンボール武器庫",
@@ -594,7 +624,10 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 21,
+            cutIdx: 3,
+        },
     },
     F1_Botanya: {
         name: "ぼたんやさん",
@@ -605,7 +638,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 27,
+            cutIdx: 0,
+        },
     },
     F1_Warasibe: {
         name: "わらしべ長者",
@@ -614,9 +650,11 @@ const exhibits = {
             d1: ["10:30", "15:30"],
             d2: ["10:30", "14:30"],
         },
-        tag: [
-        ],
-        image: "medias/pages/preparing.png",
+        tag: [],
+        image: {
+            page: 25,
+            cutIdx: 3,
+        },
     },
     ChuMinKyo: {
         name: "中民郷学園祭公演",
@@ -627,7 +665,10 @@ const exhibits = {
         tag: [
             "announcement",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 19,
+            cutIdx: 0,
+        },
     },
     F1_PrivateSchool: {
         name: "私学助成",
@@ -635,14 +676,19 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 31,
+            cutIdx: 2,
+        },
     },
     Paparazzi: {
         name: "paparazzi",
         location: `${maps_names.Darkroom}`,
-        tag: [
-        ],
-        image: "medias/pages/preparing.png",
+        tag: [],
+        image: {
+            page: 27,
+            cutIdx: 1,
+        },
     },
     F1_YouMayHena: {
         name: "you may hena",
@@ -650,7 +696,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 20,
+            cutIdx: 1,
+        },
     },
     F1_Sawatonagi: {
         name: "さわとなぎの雑貨やさん",
@@ -658,7 +707,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 26,
+            cutIdx: 2,
+        },
     },
     F1_Mononoke: {
         name: "もののけ",
@@ -666,11 +718,14 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 28,
+            cutIdx: 1,
+        },
     },
     F3_115: {
         name: "115",
-        location: `${maps_names.Music_Laboratory}${maps_words.Conjs.Near}`,
+        location: `${maps_names.Music_Lab}${maps_words.Conjs.Near}`,
         activitys: {
             d1: ["13:00", "15:40"],
             d2: ["13:00"],
@@ -678,7 +733,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 31,
+            cutIdx: 1,
+        },
     },
     Samba: {
         name: "サンバ",
@@ -689,7 +747,10 @@ const exhibits = {
         tag: [
             "announcement",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 19,
+            cutIdx: 3,
+        },
     },
     F1_Moon_Dormitory: {
         name: `ちゅきちゅき月${maps_names.Dormitory}`,
@@ -701,7 +762,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 28,
+            cutIdx: 2,
+        },
     },
     North_Dormitory: {
         name: `${maps_words.Directions.N}${maps_names.Dormitory}Movie`,
@@ -713,7 +777,10 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 29,
+            cutIdx: 0,
+        },
     },
     Star_Dormitory: {
         name: `星${maps_names.Dormitory}有志`,
@@ -721,7 +788,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 22,
+            cutIdx: 1,
+        },
     },
     F1_Sustainable: {
         name: "サステナ委員会",
@@ -729,7 +799,10 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 25,
+            cutIdx: 0,
+        },
     },
     F1_Glass: {
         name: "ガラス細工部",
@@ -737,7 +810,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 25,
+            cutIdx: 1,
+        },
     },
     F2_IllustManga: {
         name: "イラストマンガ部",
@@ -749,7 +825,10 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 30,
+            cutIdx: 3,
+        },
     },
     Aruaru: {
         name: "自森のあるある展",
@@ -757,7 +836,10 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 21,
+            cutIdx: 1,
+        },
     },
     F3_Button: {
         name: "Button",
@@ -765,14 +847,19 @@ const exhibits = {
         tag: [
             "display",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 32,
+            cutIdx: 1,
+        },
     },
     Smash: {
         name: "スマブラしようぜ!",
         location: `${maps_names.Art}`,
-        tag: [
-        ],
-        image: "medias/pages/preparing.png",
+        tag: [],
+        image: {
+            page: 28,
+            cutIdx: 0,
+        },
     },
     F1_Okigae: {
         name: "お着替え 4コマ",
@@ -781,9 +868,11 @@ const exhibits = {
             d1: ["11:00"],
             d2: ["10:30"],
         },
-        tag: [
-        ],
-        image: "medias/pages/preparing.png",
+        tag: [],
+        image: {
+            page: 26,
+            cutIdx: 0,
+        },
     },
     F3_Steal: {
         name: "盗",
@@ -791,7 +880,7 @@ const exhibits = {
         tag: [
             "attractions",
         ],
-        image: "medias/pages/preparing.png",
+        image: null,
     },
     F1_CoffeeWatashi: {
         name: "珈琲道 渡時",
@@ -803,7 +892,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 30,
+            cutIdx: 0,
+        },
     },
     F2_StarRabbit: {
         name: "星うさぎの贈り物",
@@ -814,7 +906,10 @@ const exhibits = {
         tag: [
             "merchandise",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 24,
+            cutIdx: 0,
+        },
     },
     F3_Wakuwaku: {
         name: "WAKUWAKU",
@@ -826,14 +921,19 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 31,
+            cutIdx: 3,
+        },
     },
     F1_East_Dormitory: {
         name: `${maps_words.Directions.E}${maps_names.Dormitory}有志`,
         location: `${maps_names.FrontEntrance}`,
-        tag: [
-        ],
-        image: "medias/pages/preparing.png",
+        tag: [],
+        image: {
+            page: 29,
+            cutIdx: 2,
+        },
     },
     F1_Tacos: {
         name: "ハイサイタコス",
@@ -845,7 +945,7 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: null,
     },
     F1_Malasada: {
         name: "Malasada",
@@ -854,7 +954,10 @@ const exhibits = {
             "merchandise",
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 26,
+            cutIdx: 3,
+        },
     },
     F1_Rukissa: {
         name: "るきっさ",
@@ -862,10 +965,13 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 23,
+            cutIdx: 1,
+        },
     },
     F1_FlyYum: {
-        name: "Fly yum",
+        name: "Fly yum!",
         location: `${maps_names.Gym}${maps_words.Conjs.Behind}､${maps_names.Woodworking}${maps_words.Conjs.NextTo}`,
         activitys: {
             d1: ["11:30"],
@@ -873,7 +979,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 28,
+            cutIdx: 3,
+        },
     },
     F1_BloomSweets: {
         name: "Bloom sweets",
@@ -884,7 +993,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 23,
+            cutIdx: 3,
+        },
     },
     F1_cocoFofo: {
         name: "Cocô Fofo",
@@ -892,7 +1004,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 20,
+            cutIdx: 0,
+        },
     },
     F3_WitchYakisoba: {
         name: "魔女のなぞやきそば",
@@ -903,7 +1018,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 32,
+            cutIdx: 3,
+        },
     },
     F1_GanGanHao: {
         name: "ガンガンハオ",
@@ -914,7 +1032,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 21,
+            cutIdx: 0,
+        },
     },
     F1_Kebab: {
         name: "ケバ部",
@@ -922,7 +1043,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 24,
+            cutIdx: 2,
+        },
     },
     F3_LittleTaroBar: {
         name: "リトルクローバー",
@@ -934,7 +1058,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 32,
+            cutIdx: 2,
+        },
     },
     F1_ChaiWari: {
         name: "Chai wari",
@@ -945,7 +1072,10 @@ const exhibits = {
         tag: [
             "foods",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            page: 22,
+            cutIdx: 2,
+        },
     },
     // Satekichihiro: {
     //     name: "さてきちひろ",
@@ -1062,7 +1192,7 @@ const maps_locations = {
 
     F1_Entrance_Arch: {
         name: maps_names.FrontEntrance,
-        description: `正面${tagOrder.announcement.displayName}などは\n${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施\n(雨天時は${maps_names.Gym}で実施)`,
+        description: `正面${tagOrder.announcement.displayName}などは\n${maps_names.FrontEntrance}${maps_words.Conjs.Infront}で実施\n(${maps_words.CaseRain}は${maps_names.Gym}で実施)`,
         emphasis: true,
         isAlwaysShow: true,
         isEdgeShow: true,
@@ -1074,9 +1204,9 @@ const maps_locations = {
         },
         description: `${maps_names.Dining}のメニュー`,
         onClick: () => {
-            window.location.href = "./?page=5";
+            window.location.href = "./?page=37";
         },
-        image: "./medias/pages/preparing.png",
+        image: "./medias/pages/page_37.webp",
         isAlwaysShow: true,
         isEdgeShow: true,
     },
@@ -1150,7 +1280,7 @@ const maps_locations = {
     },
     F1_Gym: {
         name: `${maps_names.Gym}`,
-        description: `雨天時の正面${tagOrder.announcement.displayName}で利用`,
+        description: `${maps_words.CaseRain}の正面${tagOrder.announcement.displayName}で利用`,
     },
     F1_Gym_WC: {
         location: {
@@ -1237,15 +1367,50 @@ const maps_locations = {
     BusStation_Base: {
         name: `${maps_names.Bus}停`,
         description: `${maps_names.Bus}ダイヤ`,
-        image: "./medias/pages/bus.png",
+        image: "./medias/pages/page_38.webp",
         onClick: () => {
-            window.location.href = "./?page=5";
+            window.location.href = "./?page=38";
         },
         offset: {
             y: .1,
         },
         isAlwaysShow: true,
         isEdgeShow: true,
+    },
+
+    F1_Kebab_caseRain: {
+        location: `${maps_names.Science_A}${maps_words.Conjs.Near}`,
+    },
+    F2_FlyYum_caseRain: {
+        originalValue: "F1_FlyYum",
+        location: `${getClassName("H", 2, 6)}${maps_words.Conjs.Infront}`,
+    },
+    F2_Tacos_caseRain: {
+        location: `${getClassName("H", 2, 6)}${maps_words.Conjs.Infront}`,
+        originalValue: "F1_Tacos",
+    },
+    F2_SnapNow_caseRain: {
+        location: `${getClassName("H", 2, 6)}${maps_words.Conjs.Infront}`,
+        originalValue: "F1_SnapNow",
+    },
+    F1_GanGanHao_caseRain: {
+        location: `${maps_names.Science_Lab}${maps_words.Conjs.Near}`,
+    },
+    F2_Omoshiro_caseRain: {
+        location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
+        originalValue: "F1_Omoshiro",
+    },
+    F3_cocoFofo_caseRain: {
+        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
+        originalValue: "F1_cocoFofo",
+    },
+    F3_YouMayHena_caseRain: {
+        location: `${maps_names.Music_Lab}${maps_words.Conjs.Infront}`,
+        originalValue: "F1_YouMayHena",
+    },
+    F3_Sawatonagi_caseRain: {
+        location: `${getClassName("H", 3, 4)}${maps_words.Conjs.Near}`,
+        originalValue: "F1_Sawatonagi",
     },
 
     F1_Rukissa001: {
@@ -1259,8 +1424,8 @@ function exhibitsDataCompletion ({
     isLocation = true,
     isImage = true,
 } = {}) {
-    // 場所自動補完
-    Object.values(maps_locations).forEach((locationItem, i) => {
+    // 自動補完
+    Object.entries(maps_locations).forEach(([keyItem, locationItem]) => {
         if (typeof locationItem === "string") {
             locationItem = {
                 originalValue: locationItem
@@ -1276,7 +1441,7 @@ function exhibitsDataCompletion ({
         }
 
         if (isLocation) {
-            const locationName = maps_names[Object.keys(maps_locations)[i].replace(/F\d+_/g, "")];
+            const locationName = maps_names[keyItem.replace(/F\d+_/g, "")];
             if (locationItem) {
                 if (!locationItem?.location?.name && locationName) {
                     locationItem.location = {
@@ -1287,23 +1452,34 @@ function exhibitsDataCompletion ({
                     name: locationItem?.location
                 };
             }
+        }
 
-            if (isImage && locationItem?.image) {
-                if (typeof locationItem.image === "string") {
-                    locationItem.image = {
-                        src: locationItem.image,
-                        clop: {
-                            sw: 1,
-                            sh: 1,
-                            sx: 0,
-                            sy: 0,
-                        },
-                    };
-                }
+        if (isImage && locationItem?.image) {
+            if (typeof locationItem.image === "string") {
+                locationItem.image = {
+                    src: locationItem.image,
+                    clop: {
+                        sw: 1,
+                        sh: 1,
+                        sx: 0,
+                        sy: 0,
+                    },
+                };
             }
         }
 
-        maps_locations[Object.keys(maps_locations)[i]] = {
+        const caseRainStr = "_caseRain";
+        if (keyItem.includes(caseRainStr)) {
+            if (!locationItem?.originalValue) locationItem.originalValue = keyItem.replace((
+                new RegExp(`(${caseRainStr})(?!.*${caseRainStr})`)
+            ), "");
+
+            if (!locationItem.location.name.includes(maps_words.CaseRain)) {
+                locationItem.location.isCaseRain = true;
+            }
+        }
+
+        maps_locations[keyItem] = {
             ...locationItem,
         };
     });
@@ -1316,12 +1492,11 @@ const loadedImages = {};
 async function clopImage({
     src,
     cutIdx,
-    clop
+    clop,
+    rotate,
 } = {}) {
-    function drawCloppedImage(img, cutIdx, clop) {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
+    function drawCloppedImage(img, cutIdx, clop, rotate) {
+        // クロップ処理
         let sw = img.width  * (clop?.sw || 1);
         let sh = img.height * (clop?.sh || 1);
         let sx = img.width  * (clop?.sx || 0);
@@ -1329,31 +1504,58 @@ async function clopImage({
 
         if (typeof cutIdx === "number") {
             const numOfX = 2;
-            const numOfY = 4;
+            const numOfY = 2;
             sw = img.width  / numOfX;
             sh = img.height / numOfY;
             sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
             sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
         }
 
-        canvas.width  = sw;
-        canvas.height = sh;
-        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+        // まずクロップした画像を中間キャンバスに描画
+        const croppedCanvas = document.createElement("canvas");
+        croppedCanvas.width = sw;
+        croppedCanvas.height = sh;
+        const croppedCtx = croppedCanvas.getContext("2d");
+        croppedCtx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
 
+        // 回転処理
+        let angle = (typeof rotate === "number" && rotate !== 0) ? (rotate * Math.PI / 180) : 0;
+        let finalW = sw, finalH = sh;
+        if (angle !== 0) {
+            // 回転後の画像サイズを計算
+            const cos = Math.abs(Math.cos(angle));
+            const sin = Math.abs(Math.sin(angle));
+            finalW = Math.ceil(sw * cos + sh * sin);
+            finalH = Math.ceil(sw * sin + sh * cos);
+        }
+        // 回転用キャンバス
+        const canvas = document.createElement("canvas");
+        canvas.width  = finalW;
+        canvas.height = finalH;
+        const ctx = canvas.getContext("2d");
+
+        if (angle !== 0) {
+            // キャンバス中心に移動、回転、元の中心に描画
+            ctx.translate(finalW / 2, finalH / 2);
+            ctx.rotate(angle);
+            ctx.drawImage(croppedCanvas, -sw / 2, -sh / 2, sw, sh);
+        } else {
+            ctx.drawImage(croppedCanvas, 0, 0, sw, sh);
+        }
         return canvas;
     }
 
     return new Promise((resolve, reject) => {
         // すでに読み込まれている場合は即座に処理
         if (loadedImages[src]) {
-            return resolve(drawCloppedImage(loadedImages[src], cutIdx, clop));
+            return resolve(drawCloppedImage(loadedImages[src], cutIdx, clop, rotate));
         }
 
         // 未読み込みなら新規ロード
         const img = new Image();
         img.onload = () => {
             loadedImages[src] = img;
-            resolve(drawCloppedImage(img, cutIdx, clop));
+            resolve(drawCloppedImage(img, cutIdx, clop, rotate));
         };
         img.onerror = (err) => reject(err);
         img.src = src;
@@ -1393,7 +1595,7 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
     const targetExhibit = exhibits[targetTile.getAttribute("exhibits")];
 
     const getImageDatas = () => targetExhibit?.image;
-    if (typeof getImageDatas() === "string") {
+    if (typeof getImageDatas() === "string" || getImageDatas() === undefined) {
         targetExhibit.image = {
             src: getImageDatas(),
             clop: {
@@ -1407,9 +1609,10 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
     if (!getImageDatas()?.appended && isToOpen) {
         (async() => {
             const canvasEl = await clopImage({
-                src: getImageDatas().src,
-                cutIdx: typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined,
+                src: getImageDatas()?.src,
+                cutIdx: (typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined),
                 clop: getImageDatas()?.clop,
+                rotate: getImageDatas()?.rotate || 0,
             });
             if (!getImageDatas()?.appended) {
                 targetTile.querySelector(".images").appendChild(canvasEl);
@@ -1430,7 +1633,7 @@ function getBarOptionsHeight () {
     return barOptionsHeight;
 }
 
-function barHeightUpdate (isToOpen = exhibitsBottomBar.classList.contains("opened")) {
+function updateBarHeight (isToOpen = exhibitsBottomBar.classList.contains("opened")) {
     if (isToOpen) {
         const nowShow = exhibitsBottomBar.querySelector(".content > div.nowShow");
         const areaHeight = getBarOptionsHeight() + nowShow?.offsetHeight;
@@ -1443,7 +1646,7 @@ function barHeightUpdate (isToOpen = exhibitsBottomBar.classList.contains("opene
     }
 }
 
-barHeightUpdate();
+updateBarHeight();
 
 function tabClassUpdate (tabIndex) {
     const tabs = sortList_tabs.querySelectorAll(".tab");
@@ -1473,7 +1676,7 @@ function barTabClick (tabIndex) {
         bottomBar_contents.scrollLeft = leftPx;
     }, 650);
     tabClassUpdate(tabIndex);
-    barHeightUpdate(true);
+    updateBarHeight(true);
 
     if (tabIndex === 1) loadScModel();
 }
@@ -1845,7 +2048,40 @@ function cdnCompleted () {
         namesEl.appendChild(nameTextEl);
         namesEl.classList.add("names");
         
-        imagesEl.className = "images";
+        (() => {
+            const perPage = 4;
+            const exhibitIndex = tileIdx >= 30 ? tileIdx + 2 : tileIdx;
+            const cutIdx = (exhibitIndex + 2) % perPage;
+
+            const getImageDatas = () => getExhibits(tileIdx)[1]?.image;    
+            imagesEl.className = "images";
+
+            const isNoImage = getExhibits(tileIdx)[1].image === null;
+            if (
+                isNoImage || getExhibits(tileIdx)[1].image === undefined
+            ) getExhibits(tileIdx)[1].image = {};
+
+            if (!getImageDatas()?.src) {
+                getExhibits(tileIdx)[1].image.src = (
+                    isNoImage ? "medias/pages/noImage.webp" : (
+                        `medias/pages/page_${
+                            typeof getImageDatas()?.page === "number" ? (
+                                getImageDatas().page
+                            ) : 
+                            (
+                                11 + (Math.floor(exhibitIndex / perPage) || 0)
+                            )
+                        }.webp`
+                    )
+                );
+            }
+            if (getImageDatas()?.cutIdx === undefined && !isNoImage) {
+                getExhibits(tileIdx)[1].image.cutIdx = cutIdx;
+            }
+            if (getExhibits(tileIdx)[1].image.rotate === undefined) {
+                getExhibits(tileIdx)[1].image.rotate = isNoImage ? 0 : -90
+            }
+        })();
 
         const getImageDatas = () => getExhibits(tileIdx)[1]?.image;
         if (getImageDatas()) {
@@ -1875,7 +2111,7 @@ function cdnCompleted () {
             const locationEl = d.createElement("div");
             const locationText = d.createElement("span");
             locationText.className = "locationText";
-            locationText.textContent = locationTextContents;
+            locationText.textContent = `${locationTextContents.replaceAll("\n", " ")}`;
             locationEl.className = "location button";
             locationEl.setAttribute("locationTextContents", locationTextContents || "");
             locationEl.appendChild(locationText);
@@ -1930,6 +2166,11 @@ function cdnCompleted () {
             Object.entries(maps_locations).filter(([key, value]) =>
                 value?.originalValue === getExhibits(tileIdx)[0]
             ).map(([key, value]) => ({ key, value })).forEach(({ key, value }) => {
+                const isCaseRain = value?.location?.isCaseRain;
+                if (isCaseRain) {
+                    value.location.name = `${maps_words.CaseRain} : ${value.location.name}`;
+                }
+
                 const newEl = getNewLocationButton({
                     pushToFocusMeshName: key,
                     locationTextContents: value?.location?.name || "",
@@ -1938,6 +2179,8 @@ function cdnCompleted () {
                     locationsScrollEl.appendChild(newEl);
                     appendEls.push(newEl);
                 }
+
+                if (isCaseRain) newEl.classList.add("caseRain");
             });
 
             return;
@@ -2162,9 +2405,7 @@ function cdnCompleted () {
     );
     function updateExhibitsActive () {
         let now = new Date();
-        if (isDevMode) {
-            now = new Date("2025-10-25 11:00");
-        }
+        // if (isDevMode) now = new Date("2025-10-25 11:00");
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
@@ -2258,6 +2499,7 @@ function cdnCompleted () {
         });
     }
 
+    // 企画のアクティブを司る
     updateExhibitsActive();
     setInterval(updateExhibitsActive, 1000);
 
@@ -2523,7 +2765,7 @@ function cdnCompleted () {
             numOfHitsArea.innerHTML = `<span>${targetExhibits.length}</span> / <span>${Object.keys(exhibits).length}</span> <span class="subText">件の該当した企画を表示中</span>`;
         })();
 
-        const targetEl = beforeVisibleTileEls.find(elItem => !elItem.classList.contains("hidden"));
+        const targetEl = beforeVisibleTileEls?.find(elItem => !elItem.classList.contains("hidden"));
         if (
             beforeVisibleTileEls &&
             (window.scrollY > window.innerHeight / 2) &&
@@ -2596,7 +2838,7 @@ function cdnCompleted () {
             ) {
                 barTabClick(tabIndex);
             }
-            barHeightUpdate();
+            updateBarHeight();
         }
 
         // bottomBar_contents.addEventListener("scroll", scroll);
@@ -2697,27 +2939,32 @@ function cdnCompleted () {
     let isShow2DMap = false;
 
     const getFmtedObjName = (name) => name.replace("F" + maps_getFloors(name) + "_", "").replace(name.match(/\d{3}$/), "");
-    const getIsImageUrl = (text) => text?.includes("/") && (text?.includes(".svg") || text?.includes(".png"));
+    const getIsImageUrl = (text) => text?.includes("/") && (
+        [".png", ".svg", ".webp"].some(item => text?.includes(item))
+    );
 
     function updateLabelOpacity() {
-        Object.values(maps_labels).forEach(({ object, part }, index) => {
+        Object.values(maps_labels).forEach(({ object: labelObj, part }, index) => {
             const isAlwaysShow = maps_locations[part.name]?.isAlwaysShow || false;
 
             const meshOpacity = gsap.getProperty(Array.isArray(part.material) ? part.material[0] : part.material, "opacity");
             if (
                 meshOpacity === 1 || isAlwaysShow
             ) {
-                if (getIsSortConforming(maps_locations[part.name], getSortConditions(), getSearchValue()).isConforming) {
-                    gsap.to(object.material, {
+                if (
+                    getIsSortConforming(maps_locations[part.name], getSortConditions(), getSearchValue()).isConforming &&
+                    (labelObj.userData.isCaseRainVisible === true || labelObj.userData.isCaseRainVisible === undefined)
+                ) {
+                    gsap.to(labelObj.material, {
                         opacity: 1
                     });
                 } else {
-                    gsap.to(object.material, {
+                    gsap.to(labelObj.material, {
                         opacity: .5
                     });
                 }
             } else {
-                gsap.to(object.material, {
+                gsap.to(labelObj.material, {
                     opacity: 0
                 });
             }
@@ -2756,18 +3003,20 @@ function cdnCompleted () {
                 if (showData?.src && getIsImageUrl(showData.src)) {
                     // 非同期処理をawaitで待つ
                     const canvasEl = await clopImage({
-                        src: showData.src,
+                        src: showData?.src,
+                        page: showData?.page,
                         cutIdx: typeof showData?.cutIdx === "number" ? showData.cutIdx : undefined,
-                        clop: showData.clop || {
+                        clop: showData?.clop || {
                             sw: 1,
                             sh: 1,
                             sx: 0,
                             sy: 0,
                         },
+                        rotate: showData?.rotate,
                     });
                     el.appendChild(canvasEl);
                 } else if (typeof showData === "string") {
-                    el.innerHTML = showData;
+                    el.innerHTML = showData.replaceAll("\n", "<br>");
                 }
                 return el;
             } else {
@@ -2780,7 +3029,7 @@ function cdnCompleted () {
 
         const fmtedMeshName = getFmtedObjName(targetMeshName);
         function pushedLabel () {
-            barHeightUpdate(false);
+            updateBarHeight(false);
             if (maps_locations[targetMeshName]?.onClick) {
                 maps_locations[targetMeshName].onClick();
             } else if (maps_locations[fmtedMeshName]?.onClick) {
@@ -2801,7 +3050,7 @@ function cdnCompleted () {
             ) + (
                 (floor.length > 0) ? `(${floor.join("､")}階)` : ""
             );
-            const sliceIdx = text.length > 14 ? (
+            const sliceIdx = text.replaceAll("<br>", "").length > 14 ? (
                 Math.min(text.indexOf("("), text.indexOf("､") + 1) || Math.floor(text.length / 2)
             ) : null;
             if (typeof sliceIdx === "number") text = text.slice(0, sliceIdx) + "<br>" + text.slice(sliceIdx);
@@ -2821,8 +3070,7 @@ function cdnCompleted () {
                 await getNewElItem({
                     // typeof location?.image === "string" ? location?.image : location?.image?.src
                     showData: {
-                        src: location?.image?.src,
-                        cutIdx: location?.image?.cutIdx
+                        ...location?.image
                     },
                     className: "image",
                 }),
@@ -3211,7 +3459,11 @@ function cdnCompleted () {
 
             newTag.addEventListener("click", tagClicked);
         });
+        setAllTilesTransition(false);
         updateSort();
+        setTimeout(() => {
+            setAllTilesTransition(true);
+        }, 500);
 
         // アクティブフロアを配列で取得
         const getActiveFloors = () => [...maps_buttons_left.querySelectorAll(".button")]
@@ -3230,7 +3482,7 @@ function cdnCompleted () {
 
             const top_noteTextEl = d.createElement("div");
             top_noteTextEl.className = "note";
-            ["雨天時､特に屋外で実施する企画の実施場所は変化する可能性があります｡"].forEach(newNoteTextStr => {
+            [``].forEach(newNoteTextStr => {
                 const newTextEl = d.createElement("span");
                 newTextEl.textContent = newNoteTextStr;
                 top_noteTextEl.appendChild(newTextEl);
@@ -3328,6 +3580,29 @@ function cdnCompleted () {
                     .01,
                 )
             ) : null;
+
+            function setCaseRainVisible (isToVisible) {
+                const caseRainStr = "_caseRain";
+                Object.entries(maps_labels).forEach(([keyItem, {
+                    object: labelObj,
+                    part: mesh,
+                }]) => {
+                    const notRainCaseMesh = Object.values(maps_labels).find(meshItem =>
+                        getFmtedObjName(meshItem.part.name) + caseRainStr === getFmtedObjName(mesh.name || "")
+                    )?.object;
+                    // const targetMeshIsActiveF = maps_getFloors().some(floorItem => maps_getFloors(mesh.part.name).includes(floorItem));
+
+                    if (mesh?.name.includes(caseRainStr)) {
+
+                        if (labelObj.visible) {
+                            labelObj.userData.isCaseRainVisible = isToVisible;
+                        }
+                        if (notRainCaseMesh) {
+                            notRainCaseMesh.userData.isCaseRainVisible = !isToVisible;
+                        }
+                    }
+                });
+            }
 
             loadScModel = (loaded) => {
                 if (!loader || isScModelLoadStarted) return;
@@ -3826,6 +4101,8 @@ function cdnCompleted () {
 
                         addAllLabels();
 
+                        setCaseRainVisible(false);
+
                         maps_renderer.domElement.addEventListener("webglcontextrestored", () => {
                             Object.keys(maps_labels).forEach(key => {
                                 const { object } = maps_labels[key];
@@ -4157,7 +4434,9 @@ function cdnCompleted () {
                     }
                 );
             };
-            if (!isScModelLoadStarted) setTimeout(loadScModel, 1475);
+            if (!isScModelLoadStarted) {
+                setTimeout(loadScModel, 1475);
+            }
 
             const labelAnimUpdateThresholdMs = 15;
 
@@ -4186,7 +4465,7 @@ function cdnCompleted () {
                 if (maps_labelRenderer) maps_labelRenderer.setSize(mapsView.clientWidth, mapsView.clientHeight + barTopMargin);
                 if (maps_labelsArea) maps_labelsArea.style.top = 0;
 
-                barHeightUpdate();
+                updateBarHeight();
             }
 
             windowResize();
@@ -4315,8 +4594,59 @@ function cdnCompleted () {
                 });
             }
 
+            function setMeshVisible ({
+                mesh,
+                isActive,
+            } = {}) {
+                const isMeshActive = isActive;
+                if (Array.isArray(mesh.material)) {
+                    mesh.material = mesh.material.map(mat => mat.clone());
+                    mesh.material.forEach(mat => {
+                        mat.transparent = true;
+                        mat.depthWrite = isMeshActive;
+                    });
+                } else {
+                    mesh.material = mesh.material.clone();
+                    mesh.material.transparent = true;
+                    mesh.material.depthWrite = isMeshActive;
+                }
+
+                if (mesh.visible) {
+                    gsap.to(mesh.material, {
+                        duration: 0.5,
+                        opacity: isMeshActive ? 1 : .05,
+                        ease: "power2.inOut"
+                    });
+                    setEdgeStyle(mesh, {
+                        opacity: isMeshActive ? 1 : 0
+                    });
+                }
+            }
+
             const button_dimension = d.createElement("div");
             button_dimension.className = "dimension button";
+
+            const button_caseRain = d.createElement("div");
+            const caseRainMsgs = {
+                normal: maps_words.CaseNormal,
+                rain: maps_words.CaseRain,
+            };
+
+            button_caseRain.className = "button";
+            maps_buttons_right.appendChild(button_caseRain);
+
+            const updateCaseRainText = (isCaseRain) => updateButtonText(
+                button_caseRain, (isCaseRain ? caseRainMsgs.normal : caseRainMsgs.rain) + "にする"
+            );
+            updateCaseRainText(false);
+
+            button_caseRain.addEventListener("click", () => {
+                button_caseRain.classList.toggle("pushed");
+                const isPushed = button_caseRain.classList.contains("pushed");
+
+                updateCaseRainText(isPushed);
+                setCaseRainVisible(isPushed);
+            });
 
             const button_currentPos = d.createElement("div");
             button_currentPos.className = "button";
@@ -4340,7 +4670,9 @@ function cdnCompleted () {
                 button.setAttribute("floor", Object.keys(floors)[Object.keys(floors).length - index - 1]);
                 button.className = "button";
 
-                const bottomStereotypedText = "階を表示中";
+                const bottomStereotypedText = `階､${
+                    button_caseRain.classList.contains("pushed") ? maps_words.CaseRain : maps_words.CaseNormal
+                }を表示中`;
 
                 button.addEventListener("click", () => {
                     removeAllLabel();
@@ -4362,38 +4694,20 @@ function cdnCompleted () {
                         });
                     }
 
-                    Object.values(maps_modelParts).forEach(part => {
-                        const isPartActive = (
-                            maps_getFloors(part.name)[0] ?
-                            maps_getFloors(part.name).some(floorNum => getActiveFloors().includes(floorNum)) :
-                            !( (!isOnlyValid || isShow2DMap) && (
-                                part.name.includes("Roof") ||
-                                part.name.includes("Curve")
-                            ))
-                        );
-
-                        if (Array.isArray(part.material)) {
-                            part.material = part.material.map(mat => mat.clone());
-                            part.material.forEach(mat => {
-                                mat.transparent = true;
-                                mat.depthWrite = isPartActive;
-                            });
-                        } else {
-                            part.material = part.material.clone();
-                            part.material.transparent = true;
-                            part.material.depthWrite = isPartActive;
-                        }
-
-                        if (part.visible) {
-                            gsap.to(part.material, {
-                                duration: 0.5,
-                                opacity: isPartActive ? 1 : .05,
-                                ease: "power2.inOut"
-                            });
-                            setEdgeStyle(part, {
-                                opacity: isPartActive ? 1 : 0
-                            });
-                        }
+                    Object.values(maps_modelParts).forEach(mesh => {
+                        setMeshVisible({
+                            mesh: mesh,
+                            isActive: (
+                                maps_getFloors(mesh.name)[0] ? (
+                                    maps_getFloors(mesh.name).some(floorNum => getActiveFloors().includes(floorNum))
+                                ) : (
+                                    !( (!isOnlyValid || isShow2DMap) && (
+                                        mesh.name.includes("Roof") ||
+                                        mesh.name.includes("Curve")
+                                    ))
+                                )
+                            ),
+                        });
                     });
 
                     // updateBottomText(activeFloors.length === 1 ? activeFloors[0] : null);
@@ -4720,6 +5034,7 @@ function cdnCompleted () {
                 // 不正確なため停止中 ↓
                 // maps_buttons_right.appendChild(button_currentPos);
                 maps_buttons_right.appendChild(button_dimension);
+
                 maps_buttons_top.appendChild(compass);
             })();
 
@@ -4781,7 +5096,7 @@ function cdnCompleted () {
             }
         });
 
-        barHeightUpdate(false);
+        updateBarHeight(false);
 
         let lastTouchendTime = Date.now();
 
@@ -4801,10 +5116,10 @@ function cdnCompleted () {
                 if (e?.target === sortList_topBar && Math.abs(difference[1]) === 0) { // topBarTap
                     e.preventDefault();
                     e.stopPropagation();
-                    barHeightUpdate(!isNowOpen);
+                    updateBarHeight(!isNowOpen);
                 } else if (isHolded) { // swipe
                     const threshold = 100;
-                    barHeightUpdate(isNowOpen ? difference[1] * -1 < threshold : difference[1] > threshold);
+                    updateBarHeight(isNowOpen ? difference[1] * -1 < threshold : difference[1] > threshold);
                 }
             }
             isHolded = false;
@@ -4848,95 +5163,7 @@ function cdnCompleted () {
     console.log("maps_locations : ", maps_locations);
     function jsonTestDev () {
 
-        const dataStr = `飲食,PROBUX,H3-6 ながはしまお,いわただいじゅ,理科B,10:20,~,16:00,,10:00,~,15:00,プロテイン
-展示・物販,とってもおもしろいこと,H3-3 さかいももも,西牟田,理科中庭,11:00,~,16:00,,11:00,~,15:00,ステージ制作 写真展示Zine 服の販売
-発表,MC BATTLE,H2-1 せきぐちいたる,確認中,,,~,,,15:00,~,16:00,正面玄関でラップ
-発表,軽音ライブ,H3-4 たかだなおき,平松はるか,,13:30,~,15:50,,,~,,正面発表
-物販,射的,H3-5 ささきちひろ,樋口,体育館横,10:40,~,16:00,,10:20,~,15:00,射的お菓子販売
-物販,飛行機ワークショップ,J2-2 首籐大輔,かわかみふみや,人力飛行機小屋,10:30,~,16:00,,10:20,~,15:00,ワークショップ
-物販,昇天商店,H2-7 やのはるか,宇都宮,横倉庫,,~,,,10:00,~,15:00,過疎コンビニ風物販 絵
-物販,はじめの手作りshop,H1-1 あおきはじめ,いけのやかな,壁画前,10:20,~,16:00,,10:00,~,15:00,はじめの手作り売る
-アトラクション・展示,鉄研   5インチ･プラレール展示,H2-3はやしかなと,みやわき,理科中庭､  第二音楽室,10:20,~,16:00,,10:00,~,15:00,鉄道走らせる､プラレールの展示
-物販,#snap now,H2-1 おおたなつめ,宮下,体育館前,10:30,~,16:00,,10:00,~,15:00,証明写真チェキ売る
-物販,ゆうとさらの占い部屋,H3-6 かわさきゆう,長沢,壁画前,11:00,~,16:00,,,~,,占い
-飲食,コーヒーカルチャークラブ,H3-7 うちだはる,近藤ひらく,理科室中庭,10:20,~,16:00,,10:00,~,15:00,コーヒーとDJ
-発表,土曜ダンス,H3-6 おおたけさくら,宮内まゆみ,,10:30,~,10:35,,,~,,正面発表
-発表,ダンス部AMAZE,H3-6 おおたけさくら,宮内まゆみ,,11:00,~,11:10,,,~,,正面発表
-アトラクション,自森謎解き,H2-5 まつもとゆうき,まつもとだいち,正面玄関,10:20,~,16:00,,10:00,~,15:00,全校舎を使い謎解きをさせる
-飲食・展示,BLUE PEYOUNG,H2-4 なかやまた,はらちひろ,理科Ｄ,10:20,~,16:00,,10:00,~,15:00,ペヤングドリンク販売
-飲食・アトラクション,スケート•ドリンク,H1-5 なかのりおん,長沢,スケボー場,10:30,~,15:50,,10:00,~,15:00,ドリンク販売•スケボー体験
-展示,特撮映画上映,H1 バルデリアレックス,むぎ,小音,10:40,~,16:00,,,~,,自作映画上映
-物販,宮田の即売会,H2-5 宮田りゅうせい,りま,正面玄関,10:20,~,15:00,,13:00,~,15:00,絵を売る
-物販,猫部のお店,H2-3 たてのそら,吉岡ひでみ,多目的前廊下,10:20,~,16:00,,10:00,~,15:00,猫の物の販売
-その他,ネパール孤児院募金,H3-2 かなざわつむぎ,樋口,美術棟横,10:20,~,16:00,,10:00,~,15:00,ネパール孤児院募金
-飲食,ホストクラブ｢Blue★Spring｣,H3-7 てつま,平松はるか,確認中,10:20,~,16:00,,10:00,~,15:00,ホスト
-展示,ダンボール武器庫,H1-3 ツッキーれおん,むぎ,壁画前,10:20,~,16:00,,10:20,~,15:00,展示
-物販,ぼたんやさん,H3-3 はぎわらさとみ,玉木しの,体育館前,,~,,,10:00,~,15:00,ボタンを売る
-その他,わらしべ長者,H3-6 マコーミックあまね,木下かい,多目的前廊下,10:30,~,15:30,,10:30,~,14:30,物々交換させるいわゆるわらしべ長者を目指す
-発表,中民郷学園祭公演,H2-5まつもとしお,むらやまみどり,,,~,,,10:00,~,13:00,正面発表
-展示,私学助成,H2-7 しまおかこたろう,藤原,正面玄関,10:20,~,16:00,,10:00,~,15:00,私学助成に関する展示 署名
-その他,paparazzi,H2-1 なっつ,福島,暗室,10:20,~,16:00,,10:00,~,15:00,写真撮る
-物販,you may hena,H3-2しまざきよう,岩下さら,体育館前,10:20,~,16:00,,10:00,~,15:00,ヘナ プラ板
-物販,さわとなぎの雑貨屋さん,H1-6 いわかわなぎ,吉岡ひでみ,美術棟横,10:20,~,16:00,,10:00,~,15:00,可愛い雑貨売る
-展示,もののけ,H3-6 くぼみおう,かわかみふみや,階段下,10:20,~,16:00,,10:00,~,15:00,展示 ダンス
-物販,115,H2-2こいぬまつぬぎ,奥村,音研前廊下,13:00,~,15:40,,13:00,~,15:00,雑貨
-発表,サンバ,H3-4おかのかんた,林,,,~,,,14:30,~,15:00,正面発表
-物販,ちゅきちゅき月寮,H2 國方にこ,福島,壁画前,10:20,~,15:00,,10:00,~,14:00,雑誌ブロマイド販売
-展示,北寮Movie,H3-6 ほしやまこじろう,ゆうだい,理科c,10:30,~,16:00,,10:00,~,15:00,映画上映
-物販,星寮有志,H2-1 いわたななみ,にわさん,理科a,10:20,~,16:00,,10:00,~,15:00,雑誌､ big love
-展示,サステナ委員会,H2-1 かないこはる,健一,事務局前,10:20,~,16:00,,10:00,~,15:00,天ぷら娜節電などの展示回収 アンケート
-物販,ガラス細工部,H3-4ちはな,はらちひろ,階段下,10:20,~,16:00,,10:00,~,15:00,ガラス売る
-展示,イラスト•マンガ部,H1-3なかむらゆみこ,高橋まき,大音前廊下,11:00,~,16:00,,11:00,~,15:00,イラストマンガ部の展示物販
-展示,自森のあるある展,H3-7 もりみずき,原裕子,階段,10:20,~,16:00,,10:00,~,15:00,展示
-展示,Button,H3-1 ありばひなこ,平松はるか,壁画前,10:20,~,16:00,,10:00,~,15:00,展示 絵ボタンを置く
-その他,スマブラしようぜ!,H3-4あさかわたすく,いけのやかな,美術棟,10:20,~,16:00,,10:00,~,15:00,スマブラする
-その他,お着替え   4コマ,H2-7 いまいゆな,ふじわら,壁画前,11:00,~,16:00,,10:30,~,15:00,プリクラ兼古着屋
-アトラクション,盗,H3-4もりしゅんたろう,沼,,10:20,~,16:00,,10:00,~,15:00,音を立てずに物を撮れたら景品プレゼント
-飲食,珈琲道   渡時,H3-4むらやまげんこう,肥沼健一,横倉庫,10:20,~,16:00,,10:00,~,13:00,コーヒー
-物販,星うさぎの贈り物,H3-2なかむらるあん,林,高一中庭,11:00,~,16:00,,,~,,雑貨を売る   ヘアピンイヤリングなど
-飲食,WAKUWAKU,H3-3えいざん,鈴木さん,階段前,10:20,~,16:00,,10:00,~,14:00,瓶コーラを売る•似顔絵
-その他,東寮有志,H3-1 さくらだはるき,薮内,正面,10:20,~,16:00,,10:00,~,15:00,どうあげ
-飲食,ハイサイタコス,H2-5 たいち,渡辺,木工室横,10:20,~,16:00,,11:00,~,15:00,タコス
-飲食・物販,Malasada,H3-4 しの,沖山,体育館前,10:20,~,16:00,,10:00,~,15:00,マラサダ､  ミサンガの販売
-飲食,るきっさ,,沼,壁画前,10:20,~,16:00,,10:00,~,15:00,喫茶店兼カジノ
-飲食,Fly yum!,H2-5 たなかめい,玉木,木工室横,11:30,~,16:00,,,~,,フライドオレ オ､  クッキーを売る
-飲食,Bloom sweets,H3-3 さいとうなつは,後藤,理科室中庭,,~,,,10:00,~,15:00,マフィンドーナツ売る
-飲食,coco^fofo,H3-5 たがことみ,師岡,体育館前,10:20,~,16:00,,10:00,~,15:00,ドリトスチップスの加工品を売る
-飲食,魔女のなぞやーきそば,H3-6 おおたけさくら,藤原,壁画前,,~,,,11:00,~,14:30,焼きそば売る
-飲食,ガンガンハオ,H2-7 えりはるり,むらやまみどり,体育館前,10:20,~,16:00,,,~,,台湾のうまそうなもの売る
-飲食,ケバ部,H2-3 あずまけいと,はらちひろ,スケボー場,10:20,~,16:00,,10:00,~,15:00,ケバブ
-飲食,リトルクローバー,J3-3 むらやまこと,畑佐,階段,13:00,~,16:00,,11:00,~,15:00,クッキーや編み物の販売
-飲食,Chai wari,H3-6 おぐらりん,岡田,理科中庭,,~,,,10:00,~,15:00,チャイ焼き芋売る
-アトラクション,暗闇迷路,ふくむらすみれはやかわきょう,渡部,,10:20,~,16:00,,10:00,~,15:00,真っ暗闇の迷路
-アトラクション,脱出の森,もりもとゆの,志賀,,10:20,~,16:00,,10:00,~,15:00,お化け屋敷兼脱出ゲーム
-アトラクション,4DX,さいとう,健一,,10:20,~,16:00,,10:00,~,15:00,自主制作映画を見せる4DX
-アトラクション,3番出口,かわさきそうた,康,,10:20,~,16:00,,10:00,~,15:00,間違い探し
-物販・飲食,小岩井サービスエリア,いとうねいろ,まゆみ,,10:20,~,16:00,,10:00,~,15:00,教室をＳＡに見立てて駐車場､お店ゲームコーナーを作る
-アトラクション,サスケチック,しもべっぷたいち,かわかみふみや,,10:20,~,16:00,,10:00,~,15:00,サスケアスレチックを作る
-アトラクション,煌めきの宇宙探査,かねいわか,服部,,10:20,~,16:00,,10:00,~,15:00,プラネタリウムの中でトロッコを走らせる
-アトラクション,沈むなタイタニック号,うちだのの,沖山,中学中庭,10:20,~,16:00,,10:00,~,15:00,中庭に4人乗りバイキングを作る｡  クラスにはパン屋とカジノも作る
-飲食・物販・その他,指名手配犯ごっこ,わたなべりゅうのすけ,畑佐,,10:20,~,16:00,,10:00,~,15:00,学校内に散らばる指名手配班を探す
-飲食,じも天堂,まきそら,林,,10:20,~,16:00,,10:00,~,15:00,駄菓子屋
-アトラクション,MISSION IMPOSSIBLEFIRST MISSION,やまぐちりお,福島,,10:20,~,16:00,,10:00,~,15:00,ミッションインポッシブルのオマージュ
-飲食・物販,喫煙所(禁煙),矢生,てつひさ,,10:20,~,16:00,,10:00,~,15:00,休憩所   キャストもいて物を買ってもらう
-飲食・物販・展示,海ん家in Hawaii,さいとうこころ,西牟田,,10:50,~,16:00,,10:30,~,14:00,海と飲食店作る
-アトラクション,月の消えた町,やましたゆうき,こんどうひらく,,10:20,~,16:00,,10:00,~,15:00,教室を暗くして目以外の五感で出口へ向かう
-アトラクション,自森坂の上のポニョ,ほんださわ,よしおか,,10:20,~,16:00,,10:00,~,15:00,アトラクション
-飲食・物販,自森横丁,たぐちあおの,しょうじょう,,10:20,~,16:00,,10:00,~,15:00,室内屋台､  駄菓子屋   万引きをしても良い？？？
-飲食・アトラクション,お化け屋敷,ひうらじょうたろう,みやしたまゆこ,,10:20,~,16:00,,10:00,~,15:00,調節驚かさないお化け屋敷
-物販・飲食・展示,出流原～因習村でお待ちしております～,しみずこはな,おくむら,,10:20,~,16:00,,10:00,~,15:00,射的や駄菓子屋と妖怪と村人が巻き込まれ？イベントの発生
-アトラクション,ベイカリーマックス～coffee たしなんじゃお⭐,のむらにこ,内田かずき,,10:20,~,16:00,,10:00,~,15:00,コーヒーカップに人を乗せてトークする
-アトラクション,SHLooN,なかやまたいすけ,まつもとだいち,,10:20,~,16:00,,10:00,~,15:00,ウエスタン風のバー｡  ビリヤード
-アトラクション,スペースローラーコースター,ちばこたろう,りま,,10:20,~,16:00,,10:00,~,15:00,ジェットコースター｡  とろっ こ｡  木で作る
-アトラクション,トイマニG,きたはらかえ,いしいまさと,,10:20,~,16:00,,10:00,~,15:00,トイストーリーのトロッコに乗ってマトにボールを当てるアトラクション｡
-物販・アトラクション,夢を叶えて！たいやきくん,いまいゆな,宇都宮,,10:20,~,16:00,,10:00,~,15:00,トロッコに乗る｡  釣りをしてたい焼きをゲットできる｡  およげ!たいやきくんになれる｡
-その他,神社,いとうすみ,しょうどくん,,10:20,~,16:00,,10:00,~,15:00,フォトスッポットと休憩スペースを作る｡
-展示,字森,かなざわつむぎ,いわしたさら,,10:20,~,16:00,,10:00,~,15:00,習字の展示と体験スペース｡
-展示,三組万博,わたなべたいち,ごとうみき,,10:20,~,16:00,,10:00,~,15:00,てんじ｡
-その他,ウマ息子～プリティダービー,おかのかんた,長沢,,10:20,~,16:00,,10:00,~,15:00,馬が死ぬ気でレース｡  言ってしまえば競馬｡
-アトラクション,ねっとりねっと,ういあまな,師岡,ビオトープ前の草木生い茂りのところへ｡  教室も使う｡,10:20,~,16:00,,10:00,~,15:00,木と木の間にネットを貼る｡
-アトラクション,お化け屋敷,たけだゆうすけ,ゆうだい,,10:20,~,16:00,,10:00,~,15:00,お化け屋敷
-その他,ウォーリーを探せ,,はらゆうこ,,10:20,~,16:00,,10:00,~,15:00,お客さんに七組ウォーリーを探してもらう｡`;
+        const dataStr = ``;
 
 
         const datas = dataStr.split("\n");
