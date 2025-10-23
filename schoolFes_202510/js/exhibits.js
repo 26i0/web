@@ -4640,7 +4640,7 @@ function cdnCompleted () {
             maps_buttons_right.appendChild(button_caseRain);
 
             const updateCaseRainText = (isCaseRain) => updateButtonText(
-                button_caseRain, (isCaseRain ? caseRainMsgs.normal : caseRainMsgs.rain) + "にする"
+                button_caseRain, (isCaseRain ? caseRainMsgs.normal : caseRainMsgs.rain) + "に"
             );
             updateCaseRainText(false);
 
