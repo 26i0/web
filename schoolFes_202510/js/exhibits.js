@@ -103,7 +103,6 @@ const exhibits = {
     F1_J1_1: {
         name: "暗闇迷路",
         tag: [
-            "byClass",
             "attractions",
             "J1",
         ],
@@ -114,7 +113,6 @@ const exhibits = {
     F1_J1_2: {
         name: "脱出の森",
         tag: [
-            "byClass",
             "attractions",
             "J1",
         ],
@@ -123,7 +121,6 @@ const exhibits = {
     F1_J1_3: {
         name: "4DX",
         tag: [
-            "byClass",
             "attractions",
             "J1",
         ],
@@ -132,7 +129,6 @@ const exhibits = {
     F2_J2_1: {
         name: "3番出口",
         tag: [
-            "byClass",
             "attractions",
             "J2",
         ],
@@ -141,7 +137,6 @@ const exhibits = {
     F2_J2_2: {
         name: "小岩井サービスエリア",
         tag: [
-            "byClass",
             "J2",
             "foods",
             "merchandise",
@@ -151,7 +146,6 @@ const exhibits = {
     F2_J2_3: {
         name: "サスケチック",
         tag: [
-            "byClass",
             "attractions",
             "J2",
         ],
@@ -160,7 +154,6 @@ const exhibits = {
     F3_J3_1: {
         name: "煌めきの宇宙探査",
         tag: [
-            "byClass",
             "attractions",
             "J3",
         ],
@@ -169,7 +162,6 @@ const exhibits = {
     F3_J3_2: {
         name: "沈むなタイタニック号",
         tag: [
-            "byClass",
             "attractions",
             "J3",
         ],
@@ -178,7 +170,6 @@ const exhibits = {
     F3_J3_3: {
         name: "指名手配犯ごっこ",
         tag: [
-            "byClass",
             "foods",
             "merchandise",
             "J3",
@@ -189,7 +180,6 @@ const exhibits = {
     F1_H1_1: {
         name: "じも天堂",
         tag: [
-            "byClass",
             "foods",
             "H1",
         ],
@@ -198,7 +188,6 @@ const exhibits = {
     F1_H1_2: {
         name: "MISSION IMPOSSIBLE FIRST MISSION",
         tag: [
-            "byClass",
             "attractions",
             "H1",
         ],
@@ -207,7 +196,6 @@ const exhibits = {
     F1_H1_3: {
         name: "喫煙所(禁煙)",
         tag: [
-            "byClass",
             "foods",
             "merchandise",
             "H1",
@@ -221,7 +209,6 @@ const exhibits = {
             d2: ["10:30", "14:00"],
         },
         tag: [
-            "byClass",
             "foods",
             "merchandise",
             "display",
@@ -232,7 +219,6 @@ const exhibits = {
     F1_H1_5: {
         name: "月の消えた町",
         tag: [
-            "byClass",
             "attractions",
             "H1",
         ],
@@ -241,7 +227,6 @@ const exhibits = {
     F1_H1_6: {
         name: "自森坂の上のポニョ",
         tag: [
-            "byClass",
             "attractions",
             "H1",
         ],
@@ -250,7 +235,6 @@ const exhibits = {
     F1_H1_7: {
         name: "自森横丁",
         tag: [
-            "byClass",
             "foods",
             "merchandise",
             "H1",
@@ -260,7 +244,6 @@ const exhibits = {
     F2_H2_1: {
         name: "平野整形外科",
         tag: [
-            "byClass",
             "foods",
             "attractions",
             "H2",
@@ -270,7 +253,6 @@ const exhibits = {
     F2_H2_2: {
         name: "出流原~因習村でお待ちしております~",
         tag: [
-            "byClass",
             "foods",
             "merchandise",
             "display",
@@ -282,7 +264,6 @@ const exhibits = {
         // name: "ベイカリーマックス",
         name: "ベイカリーマックス~Coffeeたしなんじゃお★~",
         tag: [
-            "byClass",
             "attractions",
             "H2",
         ],
@@ -291,7 +272,6 @@ const exhibits = {
     F2_H2_4: {
         name: "SHLooN",
         tag: [
-            "byClass",
             "attractions",
             "H2",
         ],
@@ -300,7 +280,6 @@ const exhibits = {
     F2_H2_5: {
         name: "スペースローラーコースター",
         tag: [
-            "byClass",
             "attractions",
             "H2",
         ],
@@ -309,7 +288,6 @@ const exhibits = {
     F2_H2_6: {
         name: "トイマニ6",
         tag: [
-            "byClass",
             "attractions",
             "H2",
         ],
@@ -318,7 +296,6 @@ const exhibits = {
     F2_H2_7: {
         name: "夢を叶えて!たいやきくん",
         tag: [
-            "byClass",
             "merchandise",
             "attractions",
             "H2",
@@ -328,7 +305,6 @@ const exhibits = {
     F3_H3_1: {
         name: "神社",
         tag: [
-            "byClass",
             "H3",
         ],
         image: "medias/pages/preparing.png",
@@ -336,7 +312,6 @@ const exhibits = {
     F3_H3_2: {
         name: "字森",
         tag: [
-            "byClass",
             "display",
             "H3",
         ],
@@ -345,7 +320,6 @@ const exhibits = {
     F3_H3_3: {
         name: "三組万博",
         tag: [
-            "byClass",
             "display",
             "H3",
         ],
@@ -355,7 +329,6 @@ const exhibits = {
         name: "ウマ息子~プリティダービー",
         location: `${maps_names.Multipurpose}`,
         tag: [
-            "byClass",
             "H3",
         ],
         image: "medias/pages/preparing.png",
@@ -363,7 +336,6 @@ const exhibits = {
     F3_H3_5: {
         name: "ねっとりねっと",
         tag: [
-            "byClass",
             "attractions",
             "H3",
         ],
@@ -372,7 +344,6 @@ const exhibits = {
     F3_H3_6: {
         name: "お化け屋敷",
         tag: [
-            "byClass",
             "attractions",
             "H3",
         ],
@@ -381,7 +352,6 @@ const exhibits = {
     F3_H3_7: {
         name: "ウォーリーを探せ",
         tag: [
-            "byClass",
             "H3",
         ],
         image: "medias/pages/preparing.png",
@@ -392,7 +362,6 @@ const exhibits = {
         name: "PROBUX",
         location: `${maps_names.Science_B}`,
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -405,7 +374,6 @@ const exhibits = {
             d2: ["11:00"],
         },
         tag: [
-            "byVolunteers",
             "display",
             "merchandise",
         ],
@@ -419,7 +387,6 @@ const exhibits = {
             d2: ["15:00", "16:00"],
         },
         tag: [
-            "byVolunteers",
             "announcement",
         ],
         image: "medias/pages/preparing.png",
@@ -431,7 +398,6 @@ const exhibits = {
             d1: ["13:30", "15:50"],
         },
         tag: [
-            "byVolunteers",
             "announcement",
             "day1",
         ],
@@ -445,7 +411,6 @@ const exhibits = {
             d2: ["10:20"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -458,7 +423,6 @@ const exhibits = {
             d2: ["10:20"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -470,7 +434,6 @@ const exhibits = {
             d2: [],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -479,7 +442,6 @@ const exhibits = {
         name: "はじめの手作りshop",
         location: `${getClassName("H", 2, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -488,7 +450,6 @@ const exhibits = {
         name: "鉄研 5インチ･プラレール展示",
         location: `${maps_names.Science_Laboratory}${maps_words.Conjs.Behind}`,
         tag: [
-            "byVolunteers",
             "display",
             "attractions",
         ],
@@ -502,7 +463,6 @@ const exhibits = {
             d2: [],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -514,7 +474,6 @@ const exhibits = {
             d1: ["11:00"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -523,7 +482,6 @@ const exhibits = {
         name: "コーヒーカルチャークラブ",
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Behind}`,
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -535,7 +493,6 @@ const exhibits = {
             d1: ["10:30", "10:35"],
         },
         tag: [
-            "byVolunteers",
             "announcement",
         ],
         image: "medias/pages/preparing.png",
@@ -547,7 +504,6 @@ const exhibits = {
             d1: ["11:00", "11:10"],
         },
         tag: [
-            "byVolunteers",
             "announcement",
         ],
         image: "medias/pages/preparing.png",
@@ -556,7 +512,6 @@ const exhibits = {
         name: "自森謎解き",
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}`,
         tag: [
-            "byVolunteers",
             "attractions",
         ],
         image: "medias/pages/preparing.png",
@@ -565,7 +520,6 @@ const exhibits = {
         name: "BLUE PEYOUNG",
         location: `${maps_names.Science_D}`,
         tag: [
-            "byVolunteers",
             "foods",
             "display",
         ],
@@ -579,7 +533,6 @@ const exhibits = {
             d2: [],
         },
         tag: [
-            "byVolunteers",
             "foods",
             "attractions",
         ],
@@ -592,7 +545,6 @@ const exhibits = {
             d1: ["10:40"],
         },
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -605,7 +557,6 @@ const exhibits = {
             d2: ["13:00"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -614,7 +565,6 @@ const exhibits = {
         name: "猫部のお店",
         location: `${maps_names.Multipurpose}${maps_words.Conjs.Near}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -623,7 +573,6 @@ const exhibits = {
         name: "ネパール孤児院募金",
         location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
         ],
         image: "medias/pages/preparing.png",
     },
@@ -631,7 +580,6 @@ const exhibits = {
         name: "ホストクラブ｢blue★spring｣",
         location: `${maps_names.Seminar}`,
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -644,7 +592,6 @@ const exhibits = {
             d2: ["10:20"],
         },
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -656,7 +603,6 @@ const exhibits = {
         },
         location: `${maps_names.Gym}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -669,7 +615,6 @@ const exhibits = {
             d2: ["10:30", "14:30"],
         },
         tag: [
-            "byVolunteers",
         ],
         image: "medias/pages/preparing.png",
     },
@@ -680,7 +625,6 @@ const exhibits = {
             d2: ["10:00", "13:00"],
         },
         tag: [
-            "byVolunteers",
             "announcement",
         ],
         image: "medias/pages/preparing.png",
@@ -689,7 +633,6 @@ const exhibits = {
         name: "私学助成",
         location: `${maps_names.FrontEntrance}`,
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -698,7 +641,6 @@ const exhibits = {
         name: "paparazzi",
         location: `${maps_names.Darkroom}`,
         tag: [
-            "byVolunteers",
         ],
         image: "medias/pages/preparing.png",
     },
@@ -706,7 +648,6 @@ const exhibits = {
         name: "you may hena",
         location: `${getClassName("J", 1, 1)}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -715,7 +656,6 @@ const exhibits = {
         name: "さわとなぎの雑貨やさん",
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Behind}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -724,7 +664,6 @@ const exhibits = {
         name: "もののけ",
         location: `${getClassName("H", 1, 1)}${maps_words.Conjs.Infront}の${maps_names.Stairs}`,
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -737,7 +676,6 @@ const exhibits = {
             d2: ["13:00"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -749,7 +687,6 @@ const exhibits = {
             d2: ["14:30", "15:00"],
         },
         tag: [
-            "byVolunteers",
             "announcement",
         ],
         image: "medias/pages/preparing.png",
@@ -762,7 +699,6 @@ const exhibits = {
             d2: [null, "14:00"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -775,7 +711,6 @@ const exhibits = {
             d2: [],
         },
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -784,7 +719,6 @@ const exhibits = {
         name: `星${maps_names.Dormitory}有志`,
         // location: `${maps_names.Science_A}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -793,7 +727,6 @@ const exhibits = {
         name: "サステナ委員会",
         location: `${maps_names.Entrance}`,
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -802,7 +735,6 @@ const exhibits = {
         name: "ガラス細工部",
         location: `${getClassName("H", 1, 7)}${maps_words.Conjs.Infront}`,
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -815,7 +747,6 @@ const exhibits = {
             d2: ["11:00"],
         },
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -824,7 +755,6 @@ const exhibits = {
         name: "自森のあるある展",
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}`,
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -833,7 +763,6 @@ const exhibits = {
         name: "Button",
         location: `${getClassName("H", 3, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "display",
         ],
         image: "medias/pages/preparing.png",
@@ -842,7 +771,6 @@ const exhibits = {
         name: "スマブラしようぜ!",
         location: `${maps_names.Art}`,
         tag: [
-            "byVolunteers",
         ],
         image: "medias/pages/preparing.png",
     },
@@ -854,7 +782,6 @@ const exhibits = {
             d2: ["10:30"],
         },
         tag: [
-            "byVolunteers",
         ],
         image: "medias/pages/preparing.png",
     },
@@ -862,7 +789,6 @@ const exhibits = {
         name: "盗",
         location: `${getClassName("H", 3, 4)}`,
         tag: [
-            "byVolunteers",
             "attractions",
         ],
         image: "medias/pages/preparing.png",
@@ -875,7 +801,6 @@ const exhibits = {
             d2: [null, "13:00"],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -887,7 +812,6 @@ const exhibits = {
             d1: ["11:00"],
         },
         tag: [
-            "byVolunteers",
             "merchandise",
         ],
         image: "medias/pages/preparing.png",
@@ -900,7 +824,6 @@ const exhibits = {
             d2: [null, "14:00"],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -909,7 +832,6 @@ const exhibits = {
         name: `${maps_words.Directions.E}${maps_names.Dormitory}有志`,
         location: `${maps_names.FrontEntrance}`,
         tag: [
-            "byVolunteers",
         ],
         image: "medias/pages/preparing.png",
     },
@@ -921,7 +843,6 @@ const exhibits = {
             d2: ["11:00"],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -930,7 +851,6 @@ const exhibits = {
         name: "Malasada",
         location: `${getClassName("J", 1, 1)}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "merchandise",
             "foods",
         ],
@@ -938,9 +858,8 @@ const exhibits = {
     },
     F1_Rukissa: {
         name: "るきっさ",
-        location: `${getClassName("H", 1, 6)}${maps_words.Conjs.Infront}`,
+        location: `${getClassName("H", 1, 3)}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -952,7 +871,6 @@ const exhibits = {
             d1: ["11:30"],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -964,7 +882,6 @@ const exhibits = {
             d2: [],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -973,7 +890,6 @@ const exhibits = {
         name: "Cocô Fofo",
         location: `${maps_names.Art}${maps_words.Conjs.NextTo}`,
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -985,7 +901,6 @@ const exhibits = {
             d2: ["11:00", "14:30"],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -997,7 +912,6 @@ const exhibits = {
             d1: [],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -1006,7 +920,6 @@ const exhibits = {
         name: "ケバ部",
         location: `${maps_names.Gym}${maps_words.Conjs.Infront}､${maps_names.Skateboard}`,
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -1019,7 +932,6 @@ const exhibits = {
             d2: ["11:00"],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -1031,7 +943,6 @@ const exhibits = {
             d2: [],
         },
         tag: [
-            "byVolunteers",
             "foods",
         ],
         image: "medias/pages/preparing.png",
@@ -1807,6 +1718,13 @@ function cdnCompleted () {
         const descriptionEl = d.createElement("div");
         const imagesEl = d.createElement("div");
 
+        // byClass自動生成
+        if (typeof getExhibits(tileIdx)[0] === "string") {
+            const byClassPattern = /^F\d+_[JH][0-9]_\d+$/;
+            const isByClass = byClassPattern.test(getExhibits(tileIdx)[0]);
+            getExhibits(tileIdx)[1].tag.push(isByClass ? "byClass" : "byVolunteers");
+        }
+
         function getTagsEl ({
             newTags: newTags
         } = {}) {
@@ -1865,7 +1783,6 @@ function cdnCompleted () {
                             let maxWidth = 0;
                             tiles[i].querySelectorAll(".location.button").forEach(locationEl => {
                                 const locationTextWidth = locationEl?.offsetWidth || 0;
-                                console.log(locationTextWidth);
                                 if (locationTextWidth > maxWidth) {
                                     maxWidth = locationTextWidth;
                                 }
@@ -2069,6 +1986,7 @@ function cdnCompleted () {
                 getExhibits(tileIdx)[1].tag.push(dayItem.replace("d", "day"));
             }
         });
+
         console.log(
             getExhibits(tileIdx)[1].name,
             getExhibits(tileIdx)[1].tag,
@@ -2448,12 +2366,30 @@ function cdnCompleted () {
         };
     }
 
+    function getVisibleTiles() {
+        const tiles = Object.values(exhibits).map(exhibitItem => exhibitItem?.tileEl);
+        const visibleTiles = tiles.filter(tile => {
+            const rect = tile.getBoundingClientRect();
+            const isVisible =
+                (rect.top - Math.max(window.innerHeight * .25, 200)) < window.innerHeight &&
+                rect.bottom > 0 &&
+                !tile.classList.contains("hidden");
+            return isVisible;
+        });
+        return visibleTiles;
+    }
+
+    let beforeVisibleTileEls;
     function updateSort ({
         searchWord = getSearchValue(),
     } = {}) {
         const conditions = getSortConditions();
-
         const allTiles = exhibitsArea.querySelectorAll(".tile");
+
+        (() => {
+            const visibleTileEls = getVisibleTiles();
+            if (visibleTileEls.length > 0) beforeVisibleTileEls = visibleTileEls;
+        })();
 
         function setTileVisible (element, isVisible) {
             if (isVisible) {
@@ -2580,6 +2516,21 @@ function cdnCompleted () {
 
             numOfHitsArea.innerHTML = `<span>${targetExhibits.length}</span> / <span>${Object.keys(exhibits).length}</span> <span class="subText">件の該当した企画を表示中</span>`;
         })();
+
+        const targetEl = beforeVisibleTileEls.find(elItem => !elItem.classList.contains("hidden"));
+        if (
+            beforeVisibleTileEls &&
+            (window.scrollY > window.innerHeight / 2) &&
+            targetEl
+        ) {
+            function scroll () {
+                targetEl?.scrollIntoView({
+                    block: "start",
+                    behavior: "auto",
+                });
+            }
+            scroll();
+        }
 
         return {
             elements: targetElements,
@@ -3157,6 +3108,11 @@ function cdnCompleted () {
             searchAreaEl.classList.toggle("opened");
             searchInput();
             searchInputsEl.scrollLeft = 0;
+            if (searchAreaEl.classList.contains("opened")) {
+                setAllTilesTransition(false);
+            } else {
+                setAllTilesTransition(true);
+            }
         });
         searchInputsEl.appendChild(newSearchBarEl);
         searchInputsEl.appendChild(newSearchBarDisplayEl);
