@@ -962,7 +962,7 @@ const tagGroups = {
     genre: {
         isMultSel: true
     },
-    activityDay: {
+    activity: {
         isMultSel: true
     },
     grade: {
@@ -1010,15 +1010,20 @@ const tagOrder = {
         themeColor: "lightseagreen",
         group: tagGroups.genre
     },
+    // active: {
+    //     displayName: "活動中",
+    //     themeColor: "gray",
+    //     group: tagGroups.activity
+    // },
     day1: {
         displayName: "1日目",
         themeColor: "gray",
-        group: tagGroups.activityDay
+        group: tagGroups.activity
     },
     day2: {
         displayName: "2日目",
         themeColor: "slategray",
-        group: tagGroups.activityDay
+        group: tagGroups.activity
     },
     // J1: {
     //     displayName: `${maps_words.Grades.J}1年`,
@@ -1366,10 +1371,17 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
     function openOrClose () {
         targetTile.style.setProperty("--tileOpenHeight", (() => {
             let height = 0;
-            Array.from(targetTile.children).forEach(child => {
-                height += (
-                    child.scrollHeight
-                );
+            [
+                ".names",
+                ".activity",
+                ".description",
+                ".images",
+                ".tags",
+                65,
+            ].forEach(item => {
+                height += typeof item === "number" ? item : (
+                    targetTile?.querySelector(item)?.scrollHeight
+                ) || 0;
             });
             return height;
         })() + "px");
@@ -1711,7 +1723,7 @@ function cdnCompleted () {
     }
 
     const tilesFragment = d.createDocumentFragment();
-    for (let tileIdx = 0; tileIdx < Object.keys(exhibits).length; tileIdx += 1) {
+    for (let tileIdx = 0; tileIdx < Object.keys(exhibits).length; tileIdx += 1) { // exhibits loop
         const tileEl = d.createElement("div");
         const namesEl = d.createElement("div");
         const activitysEl = d.createElement("div");
@@ -1987,11 +1999,6 @@ function cdnCompleted () {
             }
         });
 
-        console.log(
-            getExhibits(tileIdx)[1].name,
-            getExhibits(tileIdx)[1].tag,
-        );
-
         const tagsEl = getTagsEl({
             newTags: (() => {
                 let displayTagNames = [];
@@ -2064,8 +2071,7 @@ function cdnCompleted () {
         descriptionEl.innerHTML = `<span>${getExhibits(tileIdx)[1]?.description || ""}</span>`;
         descriptionEl.classList.add("description");
         
-        (() => {
-            // 仮想DOM（DocumentFragment）を作成
+        (() => { // 仮想DOM（DocumentFragment）を作成
             const fragment = d.createDocumentFragment();
 
             [
@@ -2077,7 +2083,6 @@ function cdnCompleted () {
                 tagsEl,
             ].forEach(appendEl => {
                 fragment.appendChild(appendEl);
-                // htmlStr += appendEl.outerHTML;
             });
 
             tileEl.appendChild(fragment);
@@ -2161,7 +2166,10 @@ function cdnCompleted () {
         ).join("")
     );
     function updateExhibitsActive () {
-        const now = new Date();
+        let now = new Date();
+        if (isDevMode) {
+            now = new Date("2025-10-25 11:00");
+        }
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
@@ -2210,9 +2218,12 @@ function cdnCompleted () {
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中
                     text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}`
+                    exhibitItem.tag.push("active");
+
                     activeTextEl.classList.add("exhibitActive");
                     activeTextEl.classList.add("beforeTheDay");
                 } else {
+                    exhibitItem.tag = exhibitItem.tag.filter(tagItem => tagItem !== "active");
                     if ((nowDateMin < toMin) && differenceFromTheDay === 0) {
                         // まもなく開始
                         text = `あと${getFmtedTime(Math.abs(elapsedTime))}で開始`;
@@ -4151,7 +4162,7 @@ function cdnCompleted () {
                     }
                 );
             };
-            setTimeout(loadScModel, 1475);
+            if (!isScModelLoadStarted) setTimeout(loadScModel, 1475);
 
             const labelAnimUpdateThresholdMs = 15;
 
