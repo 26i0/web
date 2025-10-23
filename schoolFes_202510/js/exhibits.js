@@ -107,7 +107,9 @@ const exhibits = {
             "attractions",
             "J1",
         ],
-        image: "medias/pages/preparing.png",
+        image: {
+            src: "medias/pages/preparing.png",
+        },
     },
     F1_J1_2: {
         name: "脱出の森",
@@ -1344,6 +1346,7 @@ const maps_locations = {
 function exhibitsDataCompletion ({
     isOriginalValue = true,
     isLocation = true,
+    isImage = true,
 } = {}) {
     // 場所自動補完
     Object.values(maps_locations).forEach((locationItem, i) => {
@@ -1373,6 +1376,20 @@ function exhibitsDataCompletion ({
                     name: locationItem?.location
                 };
             }
+
+            if (isImage && locationItem?.image) {
+                if (typeof locationItem.image === "string") {
+                    locationItem.image = {
+                        src: locationItem.image,
+                        clop: {
+                            sw: 1,
+                            sh: 1,
+                            sx: 0,
+                            sy: 0,
+                        },
+                    };
+                }
+            }
         }
 
         maps_locations[Object.keys(maps_locations)[i]] = {
@@ -1384,50 +1401,58 @@ exhibitsDataCompletion();
 
 const getExhibits = (n) => ([ Object.keys(exhibits)[n], Object.values(exhibits)[n] ])
 
+const loadedImages = {};
 async function clopImage({
     src,
     cutIdx,
     clop
 } = {}) {
+    function drawCloppedImage(img, cutIdx, clop) {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        let sw = img.width  * (clop?.sw || 1);
+        let sh = img.height * (clop?.sh || 1);
+        let sx = img.width  * (clop?.sx || 0);
+        let sy = img.height * (clop?.sy || 0);
+
+        if (typeof cutIdx === "number") {
+            const numOfX = 2;
+            const numOfY = 4;
+            sw = img.width  / numOfX;
+            sh = img.height / numOfY;
+            sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
+            sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
+        }
+
+        canvas.width  = sw;
+        canvas.height = sh;
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+
+        return canvas;
+    }
+
     return new Promise((resolve, reject) => {
+        // すでに読み込まれている場合は即座に処理
+        if (loadedImages[src]) {
+            return resolve(drawCloppedImage(loadedImages[src], cutIdx, clop));
+        }
+
+        // 未読み込みなら新規ロード
         const img = new Image();
-        img.src = src;
         img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-
-            let sw = img.width  * (clop?.sw || 0); // 幅
-            let sh = img.height * (clop?.sh || 0); // 高さ
-            let sx = img.width  * (clop?.sx || 0); // X座標
-            let sy = img.height * (clop?.sy || 0); // Y座標
-
-            if (typeof cutIdx === "number") {
-                const numOfX = 2;
-                const numOfY = 4;
-
-                sw = img.width  / numOfX;
-                sh = img.height / numOfY;
-                sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
-                sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
-            }
-
-            // 出力先のキャンバスサイズを合わせる
-            canvas.width  = sw;
-            canvas.height = sh;
-
-            // 描画（切り抜き → 出力）
-            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
-
-            resolve(canvas); // 読み込み完了後にcanvasを返す
+            loadedImages[src] = img;
+            resolve(drawCloppedImage(img, cutIdx, clop));
         };
         img.onerror = (err) => reject(err);
+        img.src = src;
     });
 }
 
 function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened")) {
     const allTiles = exhibitsArea.querySelectorAll(".tile");
 
-    function open () {
+    function openOrClose () {
         targetTile.style.setProperty("--tileOpenHeight", (() => {
             let height = 0;
             Array.from(targetTile.children).forEach(child => {
@@ -1461,7 +1486,7 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
             }
         };
     }
-    if (!getImageDatas()?.appended) {
+    if (!getImageDatas()?.appended && isToOpen) {
         (async() => {
             const canvasEl = await clopImage({
                 src: getImageDatas().src,
@@ -1471,11 +1496,11 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
             if (!getImageDatas()?.appended) {
                 targetTile.querySelector(".images").appendChild(canvasEl);
                 getImageDatas().appended = true;
-                open();
+                openOrClose();
             }
         })();
     } else {
-        open();
+        openOrClose();
     }
 }
 
@@ -1911,14 +1936,6 @@ function cdnCompleted () {
                     }
                 };
             }
-            (async() => {
-                const canvasEl = await clopImage({
-                    src: getImageDatas().src,
-                    cutIdx: typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined,
-                    clop: getImageDatas()?.clop,
-                });
-                imagesEl.appendChild(canvasEl);
-            })();
         }
         
         const locationsEl = d.createElement("div");
@@ -1969,7 +1986,7 @@ function cdnCompleted () {
                     }
                 }
                 
-                // if (!Object.keys(maps_locations).includes(getExhibits(i)[0])) pushLabel("F1_Entrance_Arch");
+                if (!Object.keys(maps_locations).includes(getExhibits(tileIdx)[0])) pushLabel("F1_Entrance_Arch");
             });
             // targetEl.appendChild(locationEl);
             return locationEl;
@@ -2762,25 +2779,38 @@ function cdnCompleted () {
         const labelFontSize = maps_labels[targetMeshName]?.object.userData.fontSize;
         labelEl.style.setProperty("--labelFontSize", labelFontSize + "px");
 
-        function getNewElItem (text, className, pushed) {
-            console.log("text", text);
+        async function getNewElItem({
+            showData,
+            className,
+            pushed,
+        } = {}) {
             const isDetailPusheable = location.tag || location.onClick;
-            if (text) {
+            if (showData) {
                 const el = d.createElement("div");
-                if (getIsImageUrl(text)) {
-                    const imgEl = d.createElement("img");
-                    imgEl.src = text;
-                    el.appendChild(imgEl);
-                } else {
-                    el.innerHTML = text;
-                }
                 el.className = className;
-
+                
                 if (pushed && isDetailPusheable) {
                     el.style.cursor = "pointer";
                     el.addEventListener("click", () => {
                         pushed();
                     });
+                }
+
+                if (showData?.src && getIsImageUrl(showData.src)) {
+                    // 非同期処理をawaitで待つ
+                    const canvasEl = await clopImage({
+                        src: showData.src,
+                        cutIdx: typeof showData?.cutIdx === "number" ? showData.cutIdx : undefined,
+                        clop: showData.clop || {
+                            sw: 1,
+                            sh: 1,
+                            sx: 0,
+                            sy: 0,
+                        },
+                    });
+                    el.appendChild(canvasEl);
+                } else if (typeof showData === "string") {
+                    el.innerHTML = showData;
                 }
                 return el;
             } else {
@@ -2821,49 +2851,58 @@ function cdnCompleted () {
             return text;
         })();
 
-        const generateEls = [
-            (location.location?.name || floor.length > 0) ? getNewElItem(
-                `${locationText} ${isLabelPusheable ? arrowHTMLStr : ""}` || null, "location"
-            ) : null,
-            location.description ? getNewElItem(location.description.replaceAll("\n", "<br>"), "detail") : null,
-            getNewElItem((
-                typeof location?.image === "string" ? location?.image : location?.image?.src
-            ), "image"),
-        ];
-        if (location.description) location.description = location.description.replaceAll("\n", "");
-        generateEls.forEach(el => {
-            if (el) informations?.appendChild(el);
-        });
-        if (isLabelPusheable) {
-            informations.addEventListener("click", pushedLabel);
-        } else {
-            informations.style.cursor = "default";
-        }
-        labelEl.appendChild(informations);
-        
-        const vector = new THREE.Vector3();
-        if (baseObject.geometry) {
-            baseObject.geometry.computeBoundingBox();
-            baseObject.geometry.boundingBox.getCenter(vector);
-
-            const offset = maps_locations[baseObject.name]?.offset;
-            vector.x += offset?.x || 0;
-            vector.y += offset?.y || 0;
-            vector.z += offset?.z || 0;
-
-            if (baseObject.userData?.originalTransform?.position) {
-                // モデル回転を考慮
-                const rotationMatrix = new THREE.Matrix4().makeRotationY(maps_model.rotation.y * -1);
-                vector.applyMatrix4(rotationMatrix);   
-                baseObject.localToWorld(vector);
+        (async() => {
+            const generateEls = [
+                (location.location?.name || floor.length > 0) ? await getNewElItem({
+                    showData: `${locationText} ${isLabelPusheable ? arrowHTMLStr : ""}` || null,
+                    className: "location",
+                }) : null,
+                location.description ? await getNewElItem({
+                    showData: location.description.replaceAll("\n", "<br>"),
+                    className: "detail",
+                }) : null,
+                await getNewElItem({
+                    // typeof location?.image === "string" ? location?.image : location?.image?.src
+                    showData: {
+                        src: location?.image?.src,
+                        cutIdx: location?.image?.cutIdx
+                    },
+                    className: "image",
+                }),
+            ];
+            if (location.description) location.description = location.description.replaceAll("\n", "");
+            generateEls.forEach(el => {
+                if (el) informations?.appendChild(el);
+            });
+            if (isLabelPusheable) {
+                informations.addEventListener("click", pushedLabel);
+            } else {
+                informations.style.cursor = "default";
             }
-        }
-        labelObject.position.copy(vector);
-        baseObject.add(labelObject);
+            labelEl.appendChild(informations);
+            
+            const vector = new THREE.Vector3();
+            if (baseObject.geometry) {
+                baseObject.geometry.computeBoundingBox();
+                baseObject.geometry.boundingBox.getCenter(vector);
 
-        labelEl.style.setProperty("--numOfEl", generateEls.length);
+                const offset = maps_locations[baseObject.name]?.offset;
+                vector.x += offset?.x || 0;
+                vector.y += offset?.y || 0;
+                vector.z += offset?.z || 0;
 
-        (() => {
+                if (baseObject.userData?.originalTransform?.position) {
+                    // モデル回転を考慮
+                    const rotationMatrix = new THREE.Matrix4().makeRotationY(maps_model.rotation.y * -1);
+                    vector.applyMatrix4(rotationMatrix);   
+                    baseObject.localToWorld(vector);
+                }
+            }
+            labelObject.position.copy(vector);
+            baseObject.add(labelObject);
+
+            labelEl.style.setProperty("--numOfEl", generateEls.length);
+
             let isImgLoadStarted = false;
             const img = generateEls.filter(item => item?.className.includes("image"))[0]?.querySelector("img");
             function onload () {
@@ -3573,7 +3612,7 @@ function cdnCompleted () {
                             Object.keys(maps_modelParts).forEach((meshName) => {
                                 const part = maps_modelParts[meshName];
 
-                                if (!maps_locations[meshName] && exhibits[meshName]) { // もし該当するlocationがないならexhibitsの値を用いる
+                                if (!maps_locations[meshName] && exhibits[meshName]) { // もし該当するlocationがないならexhibitsの値を用いる 自動
                                     maps_locations[meshName] = {
                                         ...exhibits[meshName],
                                         originalValue: meshName,
@@ -3820,6 +3859,7 @@ function cdnCompleted () {
                                     });
                                 }
                             });
+                            exhibitsDataCompletion();
                         }
 
                         addAllLabels();
