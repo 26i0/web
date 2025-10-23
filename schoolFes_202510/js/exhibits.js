@@ -1010,11 +1010,6 @@ const tagOrder = {
         themeColor: "lightseagreen",
         group: tagGroups.genre
     },
-    // active: {
-    //     displayName: "活動中",
-    //     themeColor: "gray",
-    //     group: tagGroups.activity
-    // },
     day1: {
         displayName: "1日目",
         themeColor: "gray",
@@ -2218,12 +2213,12 @@ function cdnCompleted () {
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中
                     text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}`
-                    exhibitItem.tag.push("active");
+                    // exhibitItem.tag.push("active");
 
                     activeTextEl.classList.add("exhibitActive");
                     activeTextEl.classList.add("beforeTheDay");
                 } else {
-                    exhibitItem.tag = exhibitItem.tag.filter(tagItem => tagItem !== "active");
+                    // exhibitItem.tag = exhibitItem.tag.filter(tagItem => tagItem !== "active");
                     if ((nowDateMin < toMin) && differenceFromTheDay === 0) {
                         // まもなく開始
                         text = `あと${getFmtedTime(Math.abs(elapsedTime))}で開始`;
