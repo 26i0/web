@@ -1610,7 +1610,6 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
             const newLoadIcon = getLoadIconEl();
             newLoadIcon.classList.add("imageLoadIcon");
             imagesEl.appendChild(newLoadIcon);
-            console.log(newLoadIcon);
             const canvasEl = await clopImage({
                 src: getImageDatas()?.src,
                 cutIdx: (typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined),
