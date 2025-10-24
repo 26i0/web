@@ -45,6 +45,7 @@ Object.values(lyricsData).forEach(lyricsItem => {
     );
     lyricsEl.className = "lyric";
     lyricsEl.href = lyricsItem.link;
+    lyricsEl.rel = "noreferrer";
 
     songSetEl.appendChild(subTextEl);
     songSetEl.appendChild(titleEl);
