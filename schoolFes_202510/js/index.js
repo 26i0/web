@@ -132,7 +132,7 @@
                                 pushedExhibitIdx === 79
                             )
                         )) {
-                            window.location = `./exhibits${isDevMode ? ".html" : ""}?cutIdx=${pushedExhibitIdx}`;
+                            window.location = `./exhibits?cutIdx=${pushedExhibitIdx}`;
                         }
                     }
                 })();
