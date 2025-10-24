@@ -449,7 +449,7 @@
             }
 
             if (currentIndex >= 11) {
-                pageNote.textContent = "画像をタップすると詳細が表示されます";
+                // pageNote.textContent = "画像をタップすると詳細が表示されます";
             }
 
             isPageShowNow = (
