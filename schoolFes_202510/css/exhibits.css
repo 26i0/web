@@ -156,7 +156,7 @@
     padding-top: 0 !important;
     /* bottom: calc(var(--tagsAreaHeight) - 5px); */
     top: 0;
-    z-index: 8;
+    z-index: 7;
 }
 .content.main .exhibits .tile .locationArea::before,
 .content.main .exhibits .tile .locationArea::after {
@@ -256,7 +256,7 @@
 .content.main .exhibits .tile .images {
     position: absolute;
     margin: 5px;
-    z-index: 9;
+    z-index: 8;
     margin-top: calc(
         3em + 25px
     );
