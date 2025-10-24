@@ -358,7 +358,7 @@ const exhibits = {
         location: `${maps_names.FrontEntrance}${maps_words.Conjs.Infront}`,
         // focusMeshName: "F1_Entrance_Arch",
         activitys: {
-            d2: ["15:00", "16:00"],
+            d2: ["13:30", "14:30"],
         },
         tag: [
             "announcement",

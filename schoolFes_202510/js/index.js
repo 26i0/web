@@ -73,6 +73,13 @@
             newNobleText.textContent = i === 0 ? "" : `P${i}`;
             newNoble.appendChild(newNobleText);
 
+            newPageSet.addEventListener("click", e => {
+                console.log(
+                    e?.clientX,
+                    e?.clientY,
+                );
+            });
+
             pageEls.push(newPageSet);
         });
 
