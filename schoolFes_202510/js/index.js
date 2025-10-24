@@ -73,11 +73,45 @@
             newNobleText.textContent = i === 0 ? "" : `P${i}`;
             newNoble.appendChild(newNobleText);
 
-            newPageSet.addEventListener("click", e => {
-                console.log(
-                    e?.clientX,
-                    e?.clientY,
+            newPage.querySelector("img").addEventListener("click", e => {
+                // 要素の位置情報を取得
+                const rect = newPage.getBoundingClientRect();
+
+                // 要素内でのクリック位置（左上を原点とした相対座標）
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const xRatio = x / rect.width;
+                const yRatio = y / rect.height;
+
+                const itemX = 2;
+                const itemY = 5;
+
+                const jumpPages = [
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    10,
+                    18,
+                    34,
+                    36,
+                    38,
+                ];
+
+                const top = getScrollYFromRatio(
+                    jumpPages[
+                        ((Math.floor((yRatio - .05) * 1.6 * itemY) - 2) * 2) +
+                        Math.floor(xRatio * itemX)
+                    ] / pageContents.length
                 );
+                if (top) {
+                    window.scrollTo({
+                        top: top,
+                        behavior: "smooth"
+                    });
+                }
             });
 
             pageEls.push(newPageSet);
@@ -487,6 +521,7 @@
             setTimeout(() => {
                 const img = d.createElement("img");
                 img.src = filePath;
+                img.draggable = false;
                 pageContents.push(img);
                 next();
             });
