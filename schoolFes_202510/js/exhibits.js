@@ -1506,7 +1506,7 @@ async function clopImage({
             sw = img.width  / numOfX;
             sh = img.height / numOfY;
             sx = (img.width  * 1.00) * ((Math.floor(cutIdx / numOfY)) / numOfX);
-            sy = (img.height * 0.95) * ((cutIdx % numOfY) / numOfY);
+            sy = (img.height * 1.00) * ((cutIdx % numOfY) / numOfY);
         }
 
         // まずクロップした画像を中間キャンバスに描画
@@ -1907,6 +1907,10 @@ function cdnCompleted () {
     let isScModelLoadStarted = false;
     let isScModelLoaded = false;
 
+    const pageCutX = 2;
+    const pageCutY = 2;
+    const pageCutStartIdx = 11;
+
     function pushLabel (targetName) {
         function push () {
             const vaildFloors = maps_getFloors();
@@ -2051,9 +2055,9 @@ function cdnCompleted () {
         })()}`;
         namesEl.appendChild(nameTextEl);
         namesEl.classList.add("names");
-        
+
         (() => {
-            const perPage = 4;
+            const perPage = pageCutX * pageCutY;
             const exhibitIndex = tileIdx >= 30 ? tileIdx + 2 : tileIdx;
             const cutIdx = (exhibitIndex + 2) % perPage;
 
@@ -2066,18 +2070,17 @@ function cdnCompleted () {
             ) getExhibits(tileIdx)[1].image = {};
 
             if (!getImageDatas()?.src) {
+                const pageIdx = typeof getImageDatas()?.page === "number" ? (
+                    getImageDatas().page
+                ) : (
+                    pageCutStartIdx + (Math.floor(exhibitIndex / perPage) || 0)
+                );
                 getExhibits(tileIdx)[1].image.src = (
                     isNoImage ? "medias/pages/noImage.webp" : (
-                        `medias/pages/page_${
-                            typeof getImageDatas()?.page === "number" ? (
-                                getImageDatas().page
-                            ) : 
-                            (
-                                11 + (Math.floor(exhibitIndex / perPage) || 0)
-                            )
-                        }.webp`
+                        `medias/pages/page_${pageIdx}.webp`
                     )
                 );
+                getExhibits(tileIdx)[1].image.page = pageIdx;
             }
             if (getImageDatas()?.cutIdx === undefined && !isNoImage) {
                 getExhibits(tileIdx)[1].image.cutIdx = cutIdx;
@@ -2331,6 +2334,34 @@ function cdnCompleted () {
             tilesFragment.appendChild(tileEl);
         })();        
     }
+
+    (() => {
+        let getedCutIdx = queryParameter({
+            type: "get",
+            key: "cutIdx"
+        });
+
+        const url = new URL(window.location.href);
+        url.searchParams.delete("cutIdx");
+
+        history.replaceState({}, "", url);
+
+        if (getedCutIdx[0] !== undefined) getedCutIdx = getedCutIdx[0] * 1;
+
+        if (typeof getedCutIdx === "number") {
+            Object.values(exhibits).forEach(exhibitItem => {
+                const itemPage = (exhibitItem?.image?.page - pageCutStartIdx);
+                const itemCutIdx = exhibitItem?.image?.cutIdx;
+                if (exhibitItem?.image && [itemPage, itemCutIdx].every(item => item !== undefined)) {
+                    if (getedCutIdx === ((itemPage * pageCutX * pageCutY) + (
+                        (itemCutIdx + 2) % (pageCutX * pageCutY)
+                    ))) {
+                        scrollToTile(exhibitItem.tileEl);
+                    }
+                }
+            });
+        }
+    })();
 
     exhibitsArea.appendChild(tilesFragment);
     exhibitsDataCompletion({

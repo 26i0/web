@@ -54,10 +54,10 @@
     function loadComp () {
         mainContent.style.setProperty("--numOfPageContents", pageContents.length);
         const pageEls = [];
-        pageContents.forEach((newContentEl, i) => {
+        pageContents.forEach((newContentEl, pageIdx) => {
             const newPageSet = d.createElement("div");
             newPageSet.className = "pageSet";
-            newPageSet.style.setProperty("--contentsIndex", i);
+            newPageSet.style.setProperty("--contentsIndex", pageIdx);
             pagesArea.appendChild(newPageSet);
 
             const newPage = d.createElement("div");
@@ -70,7 +70,7 @@
             newPageSet.appendChild(newNoble);
 
             const newNobleText = d.createElement("span");
-            newNobleText.textContent = i === 0 ? "" : `P${i}`;
+            newNobleText.textContent = pageIdx === 0 ? "" : `P${pageIdx}`;
             newNoble.appendChild(newNobleText);
 
             newPage.querySelector("img").addEventListener("click", e => {
@@ -84,34 +84,58 @@
                 const xRatio = x / rect.width;
                 const yRatio = y / rect.height;
 
-                const itemX = 2;
-                const itemY = 5;
+                if (pageIdx === 1) {
+                    const itemX = 2;
+                    const itemY = 5;
 
-                const jumpPages = [
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    10,
-                    18,
-                    34,
-                    36,
-                    38,
-                ];
+                    const jumpPages = [
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        10,
+                        18,
+                        34,
+                        36,
+                        38,
+                    ];
 
-                const top = getScrollYFromRatio(
-                    jumpPages[
-                        ((Math.floor((yRatio - .05) * 1.6 * itemY) - 2) * 2) +
-                        Math.floor(xRatio * itemX)
-                    ] / pageContents.length
-                );
-                if (top) {
-                    window.scrollTo({
-                        top: top,
-                        behavior: "smooth"
-                    });
+                    const top = getScrollYFromRatio(
+                        jumpPages[
+                            ((Math.floor((yRatio - .05) * 1.6 * itemY) - 2) * 2) +
+                            Math.floor(xRatio * itemX)
+                        ] / pageContents.length
+                    );
+                    if (top) {
+                        window.scrollTo({
+                            top: top,
+                            behavior: "smooth"
+                        });
+                    }
                 }
+
+                (() => {
+                    const cutStart = 10;
+                    const cutEnd = 31;
+                    if (pageIdx >= cutStart && pageIdx <= cutEnd) {
+                        const itemX = 2;
+                        const itemY = 2;
+                        const pushedCutIdx = (
+                            Math.floor(yRatio * itemY) + (Math.floor((1 - xRatio) * itemX) * itemX)
+                        );
+                        const pushedExhibitIdx = pushedCutIdx + ((pageIdx - cutStart) * itemX * itemY);
+                        if (!(
+                            (
+                                pushedExhibitIdx >= 30 && pushedExhibitIdx <= 31
+                            ) || (
+                                pushedExhibitIdx === 79
+                            )
+                        )) {
+                            window.location = `./exhibits${isDevMode ? ".html" : ""}?cutIdx=${pushedExhibitIdx}`;
+                        }
+                    }
+                })();
             });
 
             pageEls.push(newPageSet);
