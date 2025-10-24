@@ -252,6 +252,7 @@
         const getScrollYFromRatio = (ratio) => (ratio * (pagesArea.scrollWidth - getPageWidth()) / pageSlideRatio) + getPageSlideThreshold();
 
         const pageButtons = pagesArea.querySelectorAll(".buttons .button");
+        const pageNote = pagesArea.querySelectorAll(".buttons .note");
 
         function pageSlide (isToNext = true) {
             // 現在ページを基準に移動
@@ -445,6 +446,10 @@
             }
             if (currentIndex <= 0) {
                 pageButtons[0].classList.add("invalid");
+            }
+
+            if (currentIndex >= 11) {
+                pageNote.textContent = "画像をタップすると詳細が表示されます";
             }
 
             isPageShowNow = (

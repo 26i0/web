@@ -1353,7 +1353,7 @@ const maps_locations = {
     F1_Science_D: {
         originalValue: "F1_BLUEPEYOUNG",
     },
-    F3_Music_3: {
+    F3_Music_2: {
         originalValue: "F1_Tekken_1",
         description: "プラレール展示",
     },
@@ -1376,6 +1376,12 @@ const maps_locations = {
         isEdgeShow: true,
     },
 
+    F3_Music_3: {
+        originalValue: "F1_Shooting",
+        location: {
+            isCaseRain: true,
+        },
+    },
     F1_Kebab_caseRain: {
         location: `${maps_names.Science_A}${maps_words.Conjs.Near}`,
     },
@@ -1442,9 +1448,8 @@ function exhibitsDataCompletion ({
             const locationName = maps_names[keyItem.replace(/F\d+_/g, "")];
             if (locationItem) {
                 if (!locationItem?.location?.name && locationName) {
-                    locationItem.location = {
-                        name: `${locationName}`
-                    };
+                    if (typeof locationItem.location !== "object") locationItem.location = {};
+                    locationItem.location.name = locationName;
                 }
                 if (typeof locationItem.location === "string") locationItem.location = {
                     name: locationItem?.location
@@ -2174,7 +2179,7 @@ function cdnCompleted () {
             ).map(([key, value]) => ({ key, value })).forEach(({ key, value }) => {
                 const isCaseRain = value?.location?.isCaseRain;
                 if (isCaseRain) {
-                    value.location.name = `${maps_words.CaseRain} : ${value.location.name}`;
+                    value.location.name = `${maps_words.CaseRain} ${value.location.name}`;
                 }
 
                 const newEl = getNewLocationButton({
@@ -3508,6 +3513,8 @@ function cdnCompleted () {
             .filter(btn => !btn.classList.contains("invalid"))
             .map(btn => btn.getAttribute("floor").replaceAll("f", "") * 1);
 
+        const caseRainStr = "_caseRain";
+
         (() => { // mapsView
             bottomBar_contents.appendChild(mapsView);
             const compassBar = d.createElement("div");
@@ -3620,23 +3627,45 @@ function cdnCompleted () {
             ) : null;
 
             function setCaseRainVisible (isToVisible) {
-                const caseRainStr = "_caseRain";
                 Object.entries(maps_labels).forEach(([keyItem, {
                     object: labelObj,
                     part: mesh,
                 }]) => {
-                    const notRainCaseMesh = Object.values(maps_labels).find(meshItem =>
-                        getFmtedObjName(meshItem.part.name) + caseRainStr === getFmtedObjName(mesh.name || "")
-                    )?.object;
-                    // const targetMeshIsActiveF = maps_getFloors().some(floorItem => maps_getFloors(mesh.part.name).includes(floorItem));
-
-                    if (mesh?.name.includes(caseRainStr)) {
-
+                    if (maps_locations[mesh?.name]?.location?.isCaseRain) { // caseRainのオブジェクトの場合
                         if (labelObj.visible) {
                             labelObj.userData.isCaseRainVisible = isToVisible;
                         }
-                        if (notRainCaseMesh) {
-                            notRainCaseMesh.userData.isCaseRainVisible = !isToVisible;
+
+                        const notRainCaseLabels = getFmtedObjName(mesh.name || "").includes(caseRainStr) ? (
+                            Object.values(maps_labels).filter(meshItem =>
+                                getFmtedObjName(meshItem.part.name) + caseRainStr === getFmtedObjName(mesh.name || "")
+                            ).map(item => item.object)
+                        ) : (() => {
+                            // const returnObjs = [];
+                            // Object.values(maps_labels).forEach(({
+                            //     part: labelMesh,
+                            //     object: labelObj,
+                            // }) => {
+                            //     if ((maps_locations[labelMesh.name]?.originalValue === maps_locations[mesh?.name]?.originalValue) && (
+                            //         !maps_locations[labelMesh.name].location.isCaseRain
+                            //     )) return returnObjs.push(labelMesh);
+                            // });
+                            // console.log(returnObjs);
+                            // return returnObjs;
+
+                            const returnObjs = [];
+                            Object.entries(maps_locations).forEach(([keyItem, locationItem]) => {
+                                // 同じ 対応exhibitをもち､caseRainではない
+                                if ((locationItem?.originalValue === maps_locations[mesh?.name]?.originalValue) && !locationItem?.location?.isCaseRain)
+                                    returnObjs.push(maps_labels[keyItem].object);
+                            });
+                            return returnObjs;
+                        })();
+                        
+                        if (notRainCaseLabels.length) {
+                            notRainCaseLabels.forEach(labelItem => {
+                                labelItem.userData.isCaseRainVisible = !isToVisible;
+                            });
                         }
                     }
                 });
@@ -3813,6 +3842,10 @@ function cdnCompleted () {
                             item.parent.add(item.merged);
                             item.parent.remove(item.original);
                             maps_modelParts[item.original.name] = item.merged;
+
+                            if (item.original.name?.includes(caseRainStr)) {
+                                maps_locations[item.original.name].location.isCaseRain = true;
+                            }
                         });
 
                         console.log("maps_modelParts : \n", maps_modelParts);
@@ -4674,7 +4707,7 @@ function cdnCompleted () {
             maps_buttons_right.appendChild(button_caseRain);
 
             const updateCaseRainText = (isCaseRain) => updateButtonText(
-                button_caseRain, (isCaseRain ? caseRainMsgs.normal : caseRainMsgs.rain) + "に"
+                button_caseRain, (isCaseRain ? caseRainMsgs.normal : caseRainMsgs.rain)
             );
             updateCaseRainText(false);
 
