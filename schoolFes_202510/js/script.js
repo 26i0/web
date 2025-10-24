@@ -16,6 +16,72 @@ async function getHashSHA256(message) {
   return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+function updateButtonText (targetEl, existingOptions = {}) {
+    // Insert transition check at the very start
+    if (!targetEl) return;
+    if (targetEl.dataset.isTransitioning === "true") {
+        targetEl.querySelectorAll("span").forEach(span => span.remove());
+        targetEl.dataset.isTransitioning = "false";
+    }
+    targetEl.dataset.isTransitioning = "true";
+
+    let options = existingOptions;
+    if (typeof existingOptions === "string") {
+        options = {
+            text: existingOptions,
+        };
+    }
+    const newText = options.text;
+    const newTextArea = d.createElement("span");
+    const existingSpan = targetEl.querySelector("span");
+    if (
+        existingSpan?.textContent !== newText ||
+        existingSpan?.innerHTML !== newText
+    ) {
+        const animDuration = 300;
+        targetEl.querySelectorAll("span").forEach(span => {
+            span.style.animation = "none";
+            span.offsetHeight;
+            span.style.animation = `showText ${animDuration}ms ease-in-out both reverse`;
+            setTimeout(() => {
+                span.remove();
+            }, animDuration * 2);
+        });
+        newTextArea.innerHTML = newText.replaceAll("\n", "<br>");
+        newTextArea.style.animation = `showText ${animDuration}ms ease-in-out both`;
+        newTextArea.style.animationDelay = `${animDuration}ms`;
+        newTextArea.style.position = "absolute";
+        newTextArea.style.whiteSpace = "nowrap";
+        targetEl.appendChild(newTextArea);
+        targetEl.style.transition = `width ${animDuration * 2}ms ease-in-out, height ${animDuration * 2}ms ease-in-out,`;
+        targetEl.style.position = "relative";
+        targetEl.style.display = "flex";
+        targetEl.style.justifyContent = "center";
+        targetEl.style.alignItems = "center";
+        if (
+            options?.isScaleChange === true ||
+            options?.isScaleChange === undefined
+        ) requestAnimationFrame(() => {
+            const width  = newTextArea.offsetWidth + (
+                typeof options?.addition?.width === "number" ?
+                (options?.addition?.width || 0) : 10
+            );
+            const height = newTextArea.offsetHeight;
+            targetEl.style.setProperty("--openedWidth",  width  + "px");
+            targetEl.style.setProperty("--openedHeight", height + "px");
+            targetEl.style.width  = width + "px";
+            targetEl.style.height = height + "px";
+        });
+        // Reset the flag after the animation completes
+        setTimeout(() => {
+            targetEl.dataset.isTransitioning = "false";
+        }, animDuration * 2);
+    } else {
+        // No update, reset flag immediately
+        targetEl.dataset.isTransitioning = "false";
+    }
+}
+
 const getArrowHTMLStr = () => `<svg xmlns="http://www.w3.org/2000/svg"><g><path d="M228.451,230.092L228.451,850.906L849.265,850.906"></path></g></svg>`;
 
 function queryParameter ({

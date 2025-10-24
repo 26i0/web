@@ -109,12 +109,30 @@ body {
 }
 .content.main .pages .buttons .note {
     position: absolute;
-    bottom: 20px;
-    width: 100vw;
+    width: 100%;
+    height: 100%;
     display: flex;
+    align-items: center;
     justify-content: center;
 }
-.content.main .pages .buttons .button {
+.content.main .pages .buttons .note .button.visible {
+    opacity: 1;
+}
+.content.main .pages .buttons .note .button {
+    --duration: .5s;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    opacity: 0;
+    transition:
+    width   var(--duration) ease-in-out,
+    height  var(--duration) ease-in-out,
+    opacity var(--duration) ease-in-out;
+}
+.content.main .pages .buttons .note .button span {
+    transition:
+    opecity var(--duration) ease-in-out;
+}
+.content.main .pages .buttons .button.arrow {
     width: min-content;
     margin: 20px;   
     user-select: none;
@@ -123,19 +141,19 @@ body {
     height: var(--buttonScale);
     transition: opacity .5s ease-in-out;
 }
-.content.main .pages .buttons .button.invalid {
+.content.main .pages .buttons .button.arrow.invalid {
     opacity: .5;
     pointer-events: none;
 }
-.content.main .pages .buttons .button svg {
+.content.main .pages .buttons .button.arrow svg {
     width: 100%;
     height: 100%;
     transform: translateX(15%) rotate(45deg);
 }
-.content.main .pages .buttons .button svg path {
+.content.main .pages .buttons .button.arrow svg path {
     stroke-width: 100;
 }
-.content.main .pages .buttons .button:last-child {
+.content.main .pages .buttons .button.arrow:last-child {
     transform: scale(-1);
 }
 
@@ -231,9 +249,10 @@ body {
 }
 .content.main .pages .pageSet .noble {
     position: absolute;
-    bottom: 0;
+    bottom: 40px;
     display: flex;
     justify-content: center;
     width: 100%;
     padding-right: var(--pageSetWidth);
+    display: none;
 }

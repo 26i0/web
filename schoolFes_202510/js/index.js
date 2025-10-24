@@ -84,7 +84,7 @@
                 const xRatio = x / rect.width;
                 const yRatio = y / rect.height;
 
-                if (pageIdx === 1) {
+                if (pageIdx === 1 && false) { // 無効化済み
                     const itemX = 2;
                     const itemY = 5;
 
@@ -251,8 +251,8 @@
         const getPageWidth = () => (pagesArea.querySelector(".pageSet").clientWidth || window.innerWidth - 20);
         const getScrollYFromRatio = (ratio) => (ratio * (pagesArea.scrollWidth - getPageWidth()) / pageSlideRatio) + getPageSlideThreshold();
 
-        const pageButtons = pagesArea.querySelectorAll(".buttons .button");
-        const pageNote = pagesArea.querySelectorAll(".buttons .note");
+        const pageButtons = pagesArea.querySelectorAll(".buttons > .button");
+        const pageNote = pagesArea.querySelector(".buttons .note .button");
 
         function pageSlide (isToNext = true) {
             // 現在ページを基準に移動
@@ -406,6 +406,8 @@
             );
         }
 
+        let lastNoteButtonText = "";
+
         function windowScroll () {
             const scrollY = window.scrollY;
             scrollLeftPx = getScrollLeftPx(scrollY);
@@ -448,8 +450,36 @@
                 pageButtons[0].classList.add("invalid");
             }
 
-            if (currentIndex >= 11) {
-                // pageNote.textContent = "画像をタップすると詳細が表示されます";
+            let buttonText = "タイトル";
+            if (currentIndex >= 1) {
+                buttonText = "目次";
+            }
+            if (currentIndex >= 2) {
+                buttonText = "校長の言葉";
+            }
+            if (currentIndex >= 3) {
+                buttonText = "実行委員長の言葉";
+            }
+            if (currentIndex >= 4) {
+                buttonText = "タイムスケジュール";
+            }
+            if (currentIndex >= 5) {
+                buttonText = "正面発表";
+            }
+            if (currentIndex >= 6) {
+                buttonText = "注意事項";
+            }
+            if (currentIndex >= 10) {
+                buttonText = "企画をタップできます";
+            }
+            if (currentIndex >= 32) {
+                pageNote.classList.remove("visible");
+            } else {
+                pageNote.classList.add("visible");
+            }
+            if (lastNoteButtonText !== buttonText) {
+                updateButtonText(pageNote, buttonText);
+                lastNoteButtonText = buttonText;
             }
 
             isPageShowNow = (

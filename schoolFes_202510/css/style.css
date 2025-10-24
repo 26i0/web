@@ -129,6 +129,14 @@ svg.anim path, svg.anim rect {
     right: 20px;
     bottom: 0;
 }
+@keyframes showText {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 .button {
     background-color: rgba(231, 231, 231, .9);
     box-shadow: 0 0 10px gray;
