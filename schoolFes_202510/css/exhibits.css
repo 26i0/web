@@ -108,6 +108,7 @@
 .content.main .exhibits .tile.hidden {
     opacity: var(--baseOpacity);
     pointer-events: none;
+    display: none;
     height: 0;
     margin-top: 0;
     margin-bottom: 0;
@@ -246,15 +247,8 @@
     background-color: white;
     transition: height .5s ease-in-out;
 }
-.content.main .exhibits .tile > .locationArea .location.caseRain {
-    --caseRainYPadding: calc(
-        var(--locationBasePadding) * 1.5
-    );
-    padding-top: var(--caseRainYPadding);
-    padding-bottom: var(--caseRainYPadding);
-}
 .content.main .exhibits .tile > .locationArea .location.caseRain .locationText {
-    font-size: .5em;
+    color: black;
 }
 .content.main .exhibits .tile > .locationArea .location:not(:first-child) {
     margin-top: 0;
@@ -269,6 +263,14 @@
     /* height: 40vh; */
     padding: 5px;
     height: auto;
+}
+.content.main .exhibits .tile .images .imageLoadIcon {
+    position: absolute;
+    pointer-events: none;
+    bottom: 30px;
+    --loadIconScale: 30px;
+    height: var(--loadIconScale) !important;
+    width: var(--loadIconScale) !important;
 }
 .content.main .exhibits .tile.opened .images img,
 .content.main .exhibits .tile.opened .images canvas {
@@ -1685,8 +1687,8 @@
     border-radius : var(--maxBorderRadius);
     padding-left : 5px;
     padding-right: 5px;
-    /* top: 32px; */
     top: 0;
+    /* top: 32px; */
 }
 
 .content.main .exhibits .tile .content .buttons .button.invalid {

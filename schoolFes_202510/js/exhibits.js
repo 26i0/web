@@ -1605,7 +1605,11 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
         };
     }
     if (!getImageDatas()?.appended && isToOpen) {
+        const imagesEl = targetTile.querySelector(".images");
         (async() => {
+            const newLoadIcon = getLoadIconEl();
+            newLoadIcon.classList.add("imageLoadIcon");
+            imagesEl.appendChild(newLoadIcon);
             const canvasEl = await clopImage({
                 src: getImageDatas()?.src,
                 cutIdx: (typeof getImageDatas()?.cutIdx === "number" ? getImageDatas().cutIdx : undefined),
@@ -1613,7 +1617,8 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
                 rotate: getImageDatas()?.rotate || 0,
             });
             if (!getImageDatas()?.appended) {
-                targetTile.querySelector(".images").appendChild(canvasEl);
+                newLoadIcon.remove();
+                imagesEl.appendChild(canvasEl);
                 getImageDatas().appended = true;
                 openOrClose();
             }
