@@ -1577,14 +1577,15 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
             let height = 0;
             [
                 ".names",
+                ".locationArea .location",
                 ".activity",
                 ".description",
                 ".images",
                 ".tags",
-                65,
+                55,
             ].forEach(item => {
                 height += typeof item === "number" ? item : (
-                    targetTile?.querySelector(item)?.scrollHeight
+                    [...targetTile.querySelectorAll(item)].reduce((sum, el) => sum + (el?.scrollHeight || 0), 0)
                 ) || 0;
             });
             return height;
