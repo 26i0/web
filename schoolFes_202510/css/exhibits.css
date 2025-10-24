@@ -1616,14 +1616,6 @@
     height: min-content;
     top: 0;
 }
-@keyframes showText {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 .content.main .exhibits .tile .content .buttons.top .button {
     position: relative;
     display: flex;

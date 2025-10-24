@@ -1358,9 +1358,13 @@ const maps_locations = {
         description: "プラレール展示",
     },
 
-    F3_Seminar: "F3_Hostclub",
+    F3_Seminar: {
+        originalValue: "F3_Hostclub"
+    },
 
-    F2_Music_Small: "F3_Tokusatsu",
+    F2_Music_Small: {
+        originalValue: "F3_Tokusatsu"
+    },
 
     BusStation_Base: {
         name: `${maps_names.Bus}停`,
@@ -1625,11 +1629,11 @@ function openTile (targetTile, isToOpen = !targetTile.classList.contains("opened
                 newLoadIcon.remove();
                 imagesEl.appendChild(canvasEl);
                 getImageDatas().appended = true;
-                openOrClose();
+                openOrClose(isToOpen);
             }
         })();
     } else {
-        openOrClose();
+        openOrClose(isToOpen);
     }
 }
 
@@ -2138,12 +2142,14 @@ function cdnCompleted () {
                 if (!isScModelLoaded) return;
                 e.stopPropagation();
                 barTabClick(1);
+                let isPushed = false;
                 for (const [locationKey, locationItem] of Object.entries(maps_locations)) {
                     if (
                         pushToFocusMeshName || ((typeof getExhibits(tileIdx)[1].focusMeshName) === "string" && 
                         Object.keys(maps_modelParts)?.includes(getExhibits(tileIdx)[1]?.focusMeshName))
                     ) {
                         pushLabel(pushToFocusMeshName || getExhibits(tileIdx)[1].focusMeshName);
+                        isPushed = true;
                         break;
                     } else if (
                         // ["name", "tag"].every(keyItem => 
@@ -2153,11 +2159,14 @@ function cdnCompleted () {
                         locationItem?.location?.name === locationTextContents
                     ) {
                         pushLabel(locationKey);
+                        isPushed = true;
                         break;
                     }
                 }
                 
-                if (!Object.keys(maps_locations).includes(getExhibits(tileIdx)[0])) pushLabel("F1_Entrance_Arch");
+                if (
+                    !Object.keys(maps_locations).map(locationItem => locationItem?.originalValue).includes(getExhibits(tileIdx)[0]) && !isPushed
+                ) pushLabel("F1_Entrance_Arch");
             });
             // targetEl.appendChild(locationEl);
             return locationEl;
@@ -2371,58 +2380,6 @@ function cdnCompleted () {
     exhibitsDataCompletion({
         isLocation: false,
     });
-
-    function updateButtonText (targetEl, existingOptions = {}) {
-        if (!targetEl) return;
-        let options = existingOptions;
-        if (typeof existingOptions === "string") {
-            options = {
-                text: existingOptions,
-            };
-        }
-        const newText = options.text;
-        const newTextArea = d.createElement("span");
-        const existingSpan = targetEl.querySelector("span");
-        if (
-            existingSpan?.textContent !== newText ||
-            existingSpan?.innerHTML !== newText
-        ) {
-            const animDuration = 300;
-            targetEl.querySelectorAll("span").forEach(span => {
-                span.style.animation = "none";
-                span.offsetHeight;
-                span.style.animation = `showText ${animDuration}ms ease-in-out both reverse`;
-                setTimeout(() => {
-                    span.remove();
-                }, animDuration * 2);
-            });
-            newTextArea.innerHTML = newText.replaceAll("\n", "<br>");
-            newTextArea.style.animation = `showText ${animDuration}ms ease-in-out both`;
-            newTextArea.style.animationDelay = `${animDuration}ms`;
-            newTextArea.style.position = "absolute";
-            newTextArea.style.whiteSpace = "nowrap";
-            targetEl.appendChild(newTextArea);
-            targetEl.style.transition = `width ${animDuration * 2}ms ease-in-out, height ${animDuration * 2}ms ease-in-out,`;
-            targetEl.style.position = "relative";
-            targetEl.style.display = "flex";
-            targetEl.style.justifyContent = "center";
-            targetEl.style.alignItems = "center";
-            if (
-                options?.isScaleChange === true ||
-                options?.isScaleChange === undefined
-            ) requestAnimationFrame(() => {
-                const width  = newTextArea.offsetWidth + (
-                    typeof options?.addition?.width === "number" ?
-                    (options?.addition?.width || 0) : 10
-                );
-                const height = newTextArea.offsetHeight;
-                targetEl.style.setProperty("--openedWidth",  width  + "px");
-                targetEl.style.setProperty("--openedHeight", height + "px");
-                targetEl.style.width  = width + "px";
-                targetEl.style.height = height + "px";
-            });
-        }
-    }
 
     // 現在､企画が活動中かどうか
     const getTimeFromMin = (minutes) => ({
@@ -2956,7 +2913,7 @@ function cdnCompleted () {
 
             requestAnimationFrame(() => {
                 scrollToAndThen(targetY);
-                if (!targetTile.classList.contains("hidden") && targetTile) openTile(targetTile, true);
+                if (!targetTile.classList.contains("hidden") && targetTile && !targetTile.classList.contains("opened")) openTile(targetTile, true);
             });
         });
 
@@ -5268,7 +5225,7 @@ function cdnCompleted () {
     // }, 100);
     /* 
 const timeoutMs = 3000;
-d.querySelectorAll("body > div.main.content > div.exhibits > div.list > div.tile > div.location.button").forEach((el, i) => {
+d.querySelectorAll("body > div.main.content > div.exhibits > div.list > div.tile div.location.button").forEach((el, i) => {
     setTimeout(() => {
         el.click();
         setTimeout(() => {
