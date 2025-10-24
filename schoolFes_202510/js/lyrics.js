@@ -32,7 +32,7 @@ Object.values(lyricsData).forEach(lyricsItem => {
     const subTextEl = d.createElement("div");
     const lyricsEl = d.createElement("div");
 
-    titleEl.innerHTML = `${lyricsItem.artist ? lyricsItem.artist + " / " : ""}${lyricsItem.title || ""}<div class="underLine"></div>`;
+    titleEl.innerHTML = `${lyricsItem.artist ? lyricsItem.artist + " / " : ""}${lyricsItem.title || ""}${getArrowHTMLStr()}<div class="underLine"></div>`;
     titleEl.className = "title";
     titleEl.href = lyricsItem.link;
 

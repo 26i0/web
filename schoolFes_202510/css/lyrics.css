@@ -2,6 +2,16 @@
     padding-left: min(2%, 30px);
     padding-right: min(2%, 30px);
 }
+.main.content .lyricsArea .title svg {
+    margin-left: 5px;
+    --svgScale: .5em;
+    width: var(--svgScale);
+    height: var(--svgScale);
+    transform: rotate(225deg);
+}
+.main.content .lyricsArea .title svg path {
+    stroke-width: 100;
+}
 .main.content .lyricsArea p {
     margin-bottom: 100px;
 }
@@ -23,10 +33,12 @@
     margin-bottom: 20px;
 }
 .main.content .lyricsArea .songSet .title {
+    display: block;
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 2em;
     font-weight: bold;
+    width: max-content;
 }
 .main.content .lyricsArea .songSet .subText {
     font-size: 1.25em;

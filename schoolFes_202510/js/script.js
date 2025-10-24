@@ -16,6 +16,8 @@ async function getHashSHA256(message) {
   return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+const getArrowHTMLStr = () => `<svg xmlns="http://www.w3.org/2000/svg"><g><path d="M228.451,230.092L228.451,850.906L849.265,850.906"></path></g></svg>`;
+
 function queryParameter ({
     type: type = "set",
     key: key,
@@ -152,6 +154,68 @@ let isDevMode = false;
     console.log("favicon");
 })();
 
+function getLoadIconEl ({
+    loaderSetStyle = {},
+    loaderStyle = {},
+} = {}) {
+    // 既定スタイル
+    const borderWidth = 5;
+    const defaultLoaderSetStyle = {
+        width: `${50 + borderWidth}px`,
+        height: `${50 + borderWidth}px`,
+    };
+    const defaultLoaderStyle = {
+        width: "100%",
+        height: "100%",
+        border: `${borderWidth}px solid lightgray`,
+        borderTop: "5px solid gray",
+        borderRadius: "50%",
+        animation: "loadIcon_spin 1s linear infinite, loadIcon_show 1s ease-in-out both",
+    };
+
+    // ユーザー指定があれば上書き
+    const mergedLoaderSetStyle = { ...defaultLoaderSetStyle, ...loaderSetStyle };
+    const mergedLoaderStyle = { ...defaultLoaderStyle, ...loaderStyle };
+
+    const styleSheet = d.createElement("style");
+    styleSheet.textContent = `
+        @keyframes loadIcon_spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes loadIcon_show {
+            from {
+                width: 0;
+                height: 0;
+                opacity: 0;
+            }
+            50% {
+                width: calc(105% - ${borderWidth}px * 2);
+                height: calc(105% - ${borderWidth}px * 2);
+                opacity: .75;
+            }
+            to {
+                width: calc(100% - ${borderWidth}px * 2);
+                height: calc(100% - ${borderWidth}px * 2);
+                opacity: 1;
+            }
+        }
+    `;
+    d.head.appendChild(styleSheet);
+
+    const loaderSet = d.createElement("div");
+    loaderSet.className = "loaderSet";
+
+    const loaderIcon = d.createElement("div");
+    loaderSet.appendChild(loaderIcon);
+
+    // スタイル適用
+    Object.entries(mergedLoaderSetStyle).forEach(([k, v]) => loaderSet.style[k] = v);
+    Object.entries(mergedLoaderStyle).forEach(([k, v]) => loaderIcon.style[k] = v);
+
+    return loaderSet;
+}
+
 (() => { // style + loading screen
     const link_style = d.createElement("link");
     const link_customStyle = d.createElement("link");
@@ -180,44 +244,9 @@ let isDevMode = false;
     loadingScreen.style.opacity = 1;
     loadingScreen.style.transition = "opacity .1s ease-in-out"
 
-    // ロード中アイコン
-    const loader = d.createElement("div");
-    loader.style.width = "50px";
-    loader.style.height = "50px";
-    loader.style.border = "5px solid lightgray";
-    loader.style.borderTop = "5px solid gray";
-    loader.style.borderRadius = "50%";
-    loader.style.animation = "spin 1s linear infinite, show 1s ease-in-out both";
-    loader.style.animationDelay = ".2s";
-
-    // CSSアニメーションを追加
-    const styleSheet = d.createElement("style");
-    styleSheet.textContent = `
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes show {
-            from {
-                width: 0;
-                height: 0;
-                opacity: 0;
-            }
-            50% {
-                width: 55px;
-                height: 55px;
-                opacity: .75;
-            }
-            to {
-                width: 50px;
-                height: 50px;
-                opacity: 1;
-            }
-        }
-    `;
-    d.head.appendChild(styleSheet);
-
-    loadingScreen.appendChild(loader);
+    loadingScreen.appendChild(
+        getLoadIconEl()
+    );
     d.body.appendChild(loadingScreen);
     d.body.style.opacity = 1;
 

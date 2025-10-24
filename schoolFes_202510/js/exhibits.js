@@ -62,8 +62,6 @@ const getClassName = (school, input_grade, input_class, isShort) => (
     `${(school === "H" || school === "h") ? "高校" : "中学"} ${input_grade}年${input_class}組`
 );
 
-const arrowHTMLStr = `<svg xmlns="http://www.w3.org/2000/svg"><g><path d="M228.451,230.092L228.451,850.906L849.265,850.906"></path></g></svg>`;
-
 const maps_names = {
     Bus: "バス",
     Entrance: "玄関",
@@ -2120,7 +2118,7 @@ function cdnCompleted () {
                 text.className = "text";
                 text.textContent = "地図へ";
 
-                locationEl.innerHTML += arrowHTMLStr;
+                locationEl.innerHTML += getArrowHTMLStr();
                 locationEl.appendChild(text);
             })();
             locationEl.addEventListener("click", e => {
@@ -3064,7 +3062,7 @@ function cdnCompleted () {
         (async() => {
             const generateEls = [
                 (location.location?.name || floor.length > 0) ? await getNewElItem({
-                    showData: `${locationText} ${isLabelPusheable ? arrowHTMLStr : ""}` || null,
+                    showData: `${locationText} ${isLabelPusheable ? getArrowHTMLStr() : ""}` || null,
                     className: "location",
                 }) : null,
                 location.description ? await getNewElItem({
