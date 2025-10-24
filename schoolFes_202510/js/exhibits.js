@@ -4668,12 +4668,18 @@ function cdnCompleted () {
             );
             updateCaseRainText(false);
 
+            const getNewTopButtonText = () => `階､${
+                button_caseRain.classList.contains("pushed") ? maps_words.CaseRain : maps_words.CaseNormal
+            }を表示中`;
+            const updateTopButtonText = () => updateButtonText(top_button, getActiveFloors().length === 1 ? `${getActiveFloors()[0]}${getNewTopButtonText()}` : `すべての${getNewTopButtonText()}`);
+
             button_caseRain.addEventListener("click", () => {
                 button_caseRain.classList.toggle("pushed");
                 const isPushed = button_caseRain.classList.contains("pushed");
 
                 updateCaseRainText(isPushed);
                 setCaseRainVisible(isPushed);
+                updateTopButtonText();
             });
 
             const button_currentPos = d.createElement("div");
@@ -4697,10 +4703,6 @@ function cdnCompleted () {
                 button.innerHTML = `${floor.name}<span>階</span>`;
                 button.setAttribute("floor", Object.keys(floors)[Object.keys(floors).length - index - 1]);
                 button.className = "button";
-
-                const bottomStereotypedText = `階､${
-                    button_caseRain.classList.contains("pushed") ? maps_words.CaseRain : maps_words.CaseNormal
-                }を表示中`;
 
                 button.addEventListener("click", () => {
                     removeAllLabel();
@@ -4739,9 +4741,9 @@ function cdnCompleted () {
                     });
 
                     // updateBottomText(activeFloors.length === 1 ? activeFloors[0] : null);
-                    updateButtonText(top_button, getActiveFloors().length === 1 ? `${getActiveFloors()[0]}${bottomStereotypedText}` : `すべての${bottomStereotypedText}`);
+                    updateTopButtonText();
                 });
-                updateButtonText(top_button, `すべての${bottomStereotypedText}`);
+                updateButtonText(top_button, `すべての${getNewTopButtonText()}`);
 
                 maps_buttons_left.appendChild(button);
             });
