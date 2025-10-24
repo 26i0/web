@@ -28,18 +28,20 @@ Object.values(lyricsData).forEach(lyricsItem => {
     const songSetEl = d.createElement("div");
     songSetEl.className = "songSet button";
 
-    const titleEl = d.createElement("div");
+    const titleEl = d.createElement("a");
     const subTextEl = d.createElement("div");
     const lyricsEl = d.createElement("div");
 
-    titleEl.textContent = `${lyricsItem.artist ? lyricsItem.artist + " / " : ""}${lyricsItem.title || ""}`;
+    titleEl.innerHTML = `${lyricsItem.artist ? lyricsItem.artist + " / " : ""}${lyricsItem.title || ""}<div class="underLine"></div>`;
     titleEl.className = "title";
+    titleEl.href = lyricsItem.link;
 
     subTextEl.textContent = lyricsItem.subText || "";
     subTextEl.className = "subText";
 
     lyricsEl.innerHTML = lyricsItem.lyric.replaceAll(/\n/g, "<br>") || (
-        `<a src="${lyricsItem.link}"></a>`
+        // `<a src="${lyricsItem.link}">歌詞を見る<div class="underLine"></div></a>`
+        null
     );
     lyricsEl.className = "lyric";
 
