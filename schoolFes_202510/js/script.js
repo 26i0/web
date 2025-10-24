@@ -492,7 +492,7 @@ function addFooterContent (item) {
 
     if (typeof newItem[0] === "string") {
         footer_contents.innerHTML = newItem[0];
-    } else {
+    } else if (newItem[0]) {
         footer_contents.appendChild(newItem[0]);
     }
     
@@ -523,11 +523,11 @@ function updateFooterContents () {
         footer_partition(),
         [pageList],
         [
-            // "<span class='name'>開発 : 中学2年1組 小暮千秋</span>", "title"
+            // "<span class='name'></span>", "title"
         ],
     ];
     contentsArray.forEach(item => {
-        addFooterContent(item);
+        if (item) addFooterContent(item);
     });
 };
 
