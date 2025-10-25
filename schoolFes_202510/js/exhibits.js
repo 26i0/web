@@ -1450,7 +1450,7 @@ const maps_locations = {
         originalValue: "F1_cocoFofo",
     },
     F3_Malasada_caseRain: {
-        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
+        location: `${getClassName("H", 3, 3)}${maps_words.Conjs.Infront}`,
         originalValue: "F1_Malasada",
     },
     F3_Botanya_caseRain: {
