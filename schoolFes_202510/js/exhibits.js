@@ -2470,10 +2470,6 @@ function cdnCompleted () {
                         (1 - (toMin - fromMin - elapsedTime) / (toMin - fromMin)) * 1
                     ));
                 }
-                console.log(
-                    exhibitItem.name,
-                    differenceFromTheDay,
-                );
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中
                     text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}`
