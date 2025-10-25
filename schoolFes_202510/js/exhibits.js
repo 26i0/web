@@ -2448,8 +2448,9 @@ function cdnCompleted () {
                 const activeTextEl = timeItemEl.querySelector(".activeText");
                 const progressEl = activeTextEl.querySelector(".progress");
                 const nowDateMin = nowDates.hours * 60 + nowDates.minutes;
+                const itemDayNum = timeItemEl.getAttribute("day") * 1;
                 const isExhibitActive = (
-                    getDay(nowDates.day) === (timeItemEl.getAttribute("day") * 1) && (
+                    getDay(nowDates.day) === itemDayNum && (
                         (
                             nowDateMin >= (timeFromArr[0] * 60 + timeFromArr[1])
                         ) && (
@@ -2463,12 +2464,16 @@ function cdnCompleted () {
                 const elapsedTime = nowDateMin - fromMin;
 
                 let text = `${dayIdx + 1}日目 終了`;
-                const differenceFromTheDay = nowDates.day - getDay(dayIdx + 1);
+                const differenceFromTheDay = nowDates.day - getDay(itemDayNum);
                 if (differenceFromTheDay === 0) {
                     progressEl.style.setProperty("--progress", (
                         (1 - (toMin - fromMin - elapsedTime) / (toMin - fromMin)) * 1
                     ));
                 }
+                console.log(
+                    exhibitItem.name,
+                    differenceFromTheDay,
+                );
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中
                     text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}`
@@ -2477,7 +2482,6 @@ function cdnCompleted () {
                     activeTextEl.classList.add("exhibitActive");
                     activeTextEl.classList.add("beforeTheDay");
                 } else {
-                    // exhibitItem.tag = exhibitItem.tag.filter(tagItem => tagItem !== "active");
                     if ((nowDateMin < toMin) && differenceFromTheDay === 0) {
                         // まもなく開始
                         text = `あと${getFmtedTime(Math.abs(elapsedTime))}で開始`;
@@ -2518,7 +2522,7 @@ function cdnCompleted () {
     }
 
     // 企画のアクティブを司る
-    // updateExhibitsActive();
+    updateExhibitsActive();
     // setInterval(updateExhibitsActive, 1000);
 
     const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
