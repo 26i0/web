@@ -2423,7 +2423,7 @@ function cdnCompleted () {
     );
     function updateExhibitsActive () {
         let now = new Date();
-        // if (isDevMode) now = new Date("2025-10-25 11:00");
+        // if (isDevMode) now = new Date("2025-10-25 15:40");
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
@@ -2466,9 +2466,12 @@ function cdnCompleted () {
                 let text = `${dayIdx + 1}日目 終了`;
                 const differenceFromTheDay = nowDates.day - getDay(itemDayNum);
                 if (differenceFromTheDay === 0) {
-                    progressEl.style.setProperty("--progress", (
-                        (1 - (toMin - fromMin - elapsedTime) / (toMin - fromMin)) * 1
-                    ));
+                    const progress = (
+                        (
+                            elapsedTime / (toMin - fromMin)
+                        ) * 1
+                    );
+                    progressEl.style.setProperty("--progress", progress);
                 }
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中

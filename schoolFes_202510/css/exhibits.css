@@ -564,7 +564,7 @@
     position: absolute;
     --progress: 0;
     width: calc(
-        var(--progress) * var(--tileWidth)
+        var(--progress) * 100%
     );
     height: 100%;
     left: 0;

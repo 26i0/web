@@ -337,7 +337,13 @@ function getLoadIconEl ({
     const script_customJS = d.createElement("script");
     
     script_customJS.type = "module";
-    script_customJS.src = `./js/${HTMLFileName}.js?v=${202510251140}`;
+    script_customJS.src = `./js/${HTMLFileName}.js?v=${[
+        2025,
+        10,
+        25,
+        18,
+        51
+    ].join("")}`;
 
     d.head.appendChild(script_customJS);
     console.log("js");
