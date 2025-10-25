@@ -337,7 +337,7 @@ function getLoadIconEl ({
     const script_customJS = d.createElement("script");
     
     script_customJS.type = "module";
-    script_customJS.src = `./js/${HTMLFileName}.js?v=202510`;
+    script_customJS.src = `./js/${HTMLFileName}.js?v=${202510251140}`;
 
     d.head.appendChild(script_customJS);
     console.log("js");

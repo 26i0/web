@@ -472,7 +472,7 @@
             if (currentIndex >= 10) {
                 buttonText = "企画をタップできます";
             }
-            if (currentIndex >= 32) {
+            if (currentIndex >= 33) {
                 pageNote.classList.remove("visible");
             } else {
                 pageNote.classList.add("visible");
