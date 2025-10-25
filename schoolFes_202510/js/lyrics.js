@@ -6,19 +6,21 @@ const lyricsData = {
         artist: "SMAP",
         subText: "昼夜祭で歌う曲",
         lyric: ``,
-        link: "https://www.uta-net.com/song/15894/",
+        // link: "https://www.uta-net.com/song/15894/",
     },
     Aozora: {
         title: "青空",
+        artist: "THE BLUE HEARTS",
         subText: "後夜祭で歌う曲",
         lyric: ``,
-        link: "https://www.uta-net.com/song/179/",
+        // link: "https://www.uta-net.com/song/179/",
     },
     Fiesta: {
         title: "フィエスタ",
+        artist: "Original Love",
         subText: "後夜祭で歌う曲",
         lyric: ``,
-        link: "https://www.uta-net.com/song/43012/",
+        // link: "https://www.uta-net.com/song/43012/",
     },
 };
 
@@ -44,7 +46,9 @@ Object.values(lyricsData).forEach(lyricsItem => {
         `歌詞を見る${getArrowHTMLStr()}<div class="underLine"></div>`
     );
     lyricsEl.className = "lyric";
-    lyricsEl.href = lyricsItem.link;
+    lyricsEl.href = (lyricsItem.link || (
+        `https://www.google.com/search?q=${lyricsItem?.artist ?? ""}%20${lyricsItem.title}%20歌詞`
+    ));
     lyricsEl.rel = "noreferrer";
 
     songSetEl.appendChild(subTextEl);

@@ -1401,8 +1401,17 @@ const maps_locations = {
         location: `${getClassName("H", 2, 6)}${maps_words.Conjs.Infront}`,
         originalValue: "F1_SnapNow",
     },
-    F1_GanGanHao_caseRain: {
-        location: `${maps_names.Science_Lab}${maps_words.Conjs.Near}`,
+    F2_GanGanHao_caseRain: {
+        location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
+        originalValue: "F1_GanGanHao",
+    },
+    F2_ChaiWari_caseRain: {
+        location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
+        originalValue: "F1_ChaiWari",
+    },
+    F2_Coffee_caseRain: {
+        location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
+        originalValue: "F1_Coffee",
     },
     F2_Omoshiro_caseRain: {
         location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
@@ -1412,8 +1421,20 @@ const maps_locations = {
         location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
         originalValue: "F1_cocoFofo",
     },
+    F3_Malasada_caseRain: {
+        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
+        originalValue: "F1_Malasada",
+    },
+    F3_Botanya_caseRain: {
+        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
+        originalValue: "F1_Botanya",
+    },
+    F1_BloomSweets_caseRain: {
+        location: `${maps_names.Science_A}${maps_words.Conjs.Near}`,
+        originalValue: "F1_BloomSweets",
+    },
     F3_YouMayHena_caseRain: {
-        location: `${maps_names.Music_Lab}${maps_words.Conjs.Infront}`,
+        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.NextTo}`,
         originalValue: "F1_YouMayHena",
     },
     F3_Sawatonagi_caseRain: {
@@ -2498,7 +2519,7 @@ function cdnCompleted () {
 
     // 企画のアクティブを司る
     // updateExhibitsActive();
-     // setInterval(updateExhibitsActive, 1000);
+    // setInterval(updateExhibitsActive, 1000);
 
     const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
 
@@ -3801,7 +3822,7 @@ function cdnCompleted () {
                             item.parent.remove(item.original);
                             maps_modelParts[item.original.name] = item.merged;
 
-                            if (item.original.name?.includes(caseRainStr)) {
+                            if (item.original.name?.includes(caseRainStr) && maps_locations[item.original.name]?.location) {
                                 maps_locations[item.original.name].location.isCaseRain = true;
                             }
                         });
