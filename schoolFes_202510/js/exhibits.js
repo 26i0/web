@@ -1156,6 +1156,11 @@ const tagOrder = {
         themeColor: "slategray",
         group: tagGroups.activity
     },
+    active: { // 1:15 | なくてもエラーなし
+        displayName: "活動中",
+        themeColor: "slategray",
+        group: tagGroups.activity
+    },
     f1: {
         displayName: "1階",
         themeColor: "darkgray",
@@ -1449,7 +1454,7 @@ const maps_locations = {
         originalValue: "F1_Malasada",
     },
     F3_Botanya_caseRain: {
-        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.Infront}`,
+        location: `${getClassName("H", 3, 3)}${maps_words.Conjs.Infront}`,
         originalValue: "F1_Botanya",
     },
     F1_BloomSweets_caseRain: {
@@ -1457,7 +1462,7 @@ const maps_locations = {
         originalValue: "F1_BloomSweets",
     },
     F3_YouMayHena_caseRain: {
-        location: `${getClassName("H", 3, 6)}${maps_words.Conjs.NextTo}`,
+        location: `${getClassName("H", 3, 3)}${maps_words.Conjs.NextTo}`,
         originalValue: "F1_YouMayHena",
     },
     F3_Sawatonagi_caseRain: {
@@ -2148,6 +2153,10 @@ function cdnCompleted () {
                         tiles[i].style.setProperty("--nameTextWidthPx", (tiles[i].querySelector(".names")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activityWidthPx", (tiles[i].querySelector(".activity")?.offsetWidth || 0) + "px");
                         tiles[i].style.setProperty("--activitySpanWidthPx", (tiles[i].querySelector(".activity .activeText > span")?.offsetWidth || 0) + "px");
+
+                        setTimeout(() => {
+                            tiles[i].style.animation = "none";
+                        }, 500);
                     }
                 }
             },
@@ -2472,6 +2481,11 @@ function cdnCompleted () {
     exhibitsDataCompletion({
         isLocation: false,
     });
+    
+    const searchAreaEl = d.querySelector(".main.content .searchArea");
+    const getSearchValue = () => searchAreaEl.classList.contains("opened") ? (newSearchBarEl?.value || "") : "";
+    let beforeVisibleTileEls;
+    const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
 
     // 現在､企画が活動中かどうか
     const getTimeFromMin = (minutes) => ({
@@ -2491,9 +2505,13 @@ function cdnCompleted () {
             )
         ).join("")
     );
+    let devI = 60 * 9;
     function updateExhibitsActive () {
         let now = new Date();
-        // if (isDevMode) now = new Date("2025-10-25 15:40");
+        // if (isDevMode) {
+        //     now = new Date(`2025-10-26 ${Math.floor(devI / 60)}:${devI % 60}`);
+        //     devI += 20;
+        // }
         const nowDates = {
             year: now.getFullYear(),
             month: now.getMonth() + 1,
@@ -2543,10 +2561,14 @@ function cdnCompleted () {
                     );
                     progressEl.style.setProperty("--progress", progress);
                 }
+
+                const existingTag = exhibitItem.tag;
+
+                exhibitItem.tag = exhibitItem.tag.filter(tagItem => tagItem !== "active");
                 if (isExhibitActive && differenceFromTheDay === 0) {
                     // 活動中
                     text = `活動中 あと${getFmtedTime(toMin - fromMin - elapsedTime)}`
-                    // exhibitItem.tag.push("active");
+                    exhibitItem.tag.push("active");
 
                     activeTextEl.classList.add("exhibitActive");
                     activeTextEl.classList.add("beforeTheDay");
@@ -2590,6 +2612,18 @@ function cdnCompleted () {
                     }
                 });
 
+                updateTagsEl({
+                    exhibit: exhibitItem,
+                    tileEl: exhibitItem.tileEl,
+                    tags: exhibitItem.tag,
+                });
+                
+                if (existingTag.some((tagItem, i) => tagItem !== exhibitItem.tag[i])) {   
+                    updateSort({
+                        isScroll: false
+                    });
+                }
+
                 // const existingTagsEl = exhibitItem?.tileEl?.querySelector(".tags");
                 // if (existingTagsEl) existingTagsEl.replaceWith(
                 //     getNewTagsEl({
@@ -2613,8 +2647,6 @@ function cdnCompleted () {
     // 企画のアクティブを司る
     updateExhibitsActive();
     setInterval(updateExhibitsActive, 1000);
-
-    const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
 
     function getSortConditions () {
         let conditions = [];
@@ -2696,9 +2728,8 @@ function cdnCompleted () {
         };
     }
 
-    const searchAreaEl = d.querySelector(".main.content .searchArea")
-    const searchBarsEl = d.querySelector(".main.content .searchBars")
-    const searchInputsEl = d.querySelector(".main.content .searchInputs")
+    const searchBarsEl = d.querySelector(".main.content .searchBars");
+    const searchInputsEl = d.querySelector(".main.content .searchInputs");
     const newSearchBarEl = d.createElement("input");
 
     function getIsSortConforming (exhibit, conditions = getSortConditions(), searchWord = getSearchValue()) {
@@ -2738,9 +2769,9 @@ function cdnCompleted () {
         return visibleTiles;
     }
 
-    let beforeVisibleTileEls;
     function updateSort ({
         searchWord = getSearchValue(),
+        isScroll = true,
     } = {}) {
         const conditions = getSortConditions();
         const allTiles = exhibitsArea.querySelectorAll(".tile");
@@ -2770,9 +2801,9 @@ function cdnCompleted () {
             elementItem.classList.remove("topTileStyle");
             elementItem.classList.remove("lowestTileStyle");
 
-            updateTagsEl({
-                tileEl: elementItem,
-            });
+            // updateTagsEl({
+            //     tileEl: elementItem,
+            // });
         });
 
         const activeAllTiles = [];
@@ -2882,6 +2913,7 @@ function cdnCompleted () {
 
         const targetEl = beforeVisibleTileEls?.find(elItem => !elItem.classList.contains("hidden"));
         if (
+            isScroll &&
             beforeVisibleTileEls &&
             (window.scrollY > window.innerHeight / 2) &&
             targetEl
@@ -3050,7 +3082,6 @@ function cdnCompleted () {
             text.length > length ? text.slice(left ? length : 0, left ? 0 : length) + str : text
         ) : ""
     );
-    const getSearchValue = () => searchAreaEl.classList.contains("opened") ? newSearchBarEl.value : "";
 
     let maps_model; // モデルを外で保持
     let isShow2DMap = false;
@@ -3605,7 +3636,9 @@ function cdnCompleted () {
 
             const top_noteTextEl = d.createElement("div");
             top_noteTextEl.className = "note";
-            [``].forEach(newNoteTextStr => {
+            [
+                // `地図の表示に異常がある場合､再読み込みを試行してください`
+            ].forEach(newNoteTextStr => {
                 const newTextEl = d.createElement("span");
                 newTextEl.textContent = newNoteTextStr;
                 top_noteTextEl.appendChild(newTextEl);

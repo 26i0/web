@@ -340,9 +340,9 @@ function getLoadIconEl ({
     script_customJS.src = `./js/${HTMLFileName}.js?v=${[
         2025,
         10,
-        25,
-        18,
-        51
+        26,
+        1,
+        14
     ].join("")}`;
 
     d.head.appendChild(script_customJS);

@@ -536,10 +536,10 @@
 }
 .content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topContents .tabs .tab:not(.selected) {
     box-shadow: 0 0 2px gray;
-}
+} */
 .content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .content {
     opacity: 0;
-} */
+}
 .content.main .exhibits .tile.sortList.opened .topBar svg g.close path {
     stroke-dashoffset: 0;
     opacity: 1 !important;
@@ -1696,7 +1696,7 @@
     width: 100%;
     pointer-events: none;
     height: min-content;
-    top: 0;
+    /* top: 0; */
 }
 .content.main .exhibits .tile .content .buttons.top .button {
     position: relative;
@@ -1707,6 +1707,7 @@
     bottom: 0;
     flex-shrink: 0;
     margin: 0;
+    /* margin-top: 32px; */
 }
 .content.main .exhibits .tile .content .buttons .button {
     padding: 5px;
