@@ -481,8 +481,15 @@
 .content.main .exhibits .tile .tags::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
 }
+.content.main .exhibits .tag .checkBox {
+    margin-left: 2px;
+    left: 0;
+}
 .content.main .exhibits .tag span {
     bottom: 0;
+    right: 0;
+    margin-left: 2px;
+    margin-right: 2px;
     display: flex;
     justify-content: center;
     align-items: center;

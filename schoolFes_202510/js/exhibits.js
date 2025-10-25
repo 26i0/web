@@ -3502,7 +3502,6 @@ function cdnCompleted () {
             // newTag.className = "tag checkedBox";
             // newTag.style.backgroundColor = tagOrder[tag].themeColor;
             newTag.style.setProperty("--themeColor", tagOrder[tag].themeColor);
-            newTag.textContent = tagOrder[tag].displayName;
             newTag.setAttribute("tag", tag);
             if (tagOrder[tag].group) {
                 const groupKey = Object.keys(tagGroups).find(key => tagGroups[key] === tagOrder[tag].group);
@@ -3518,13 +3517,14 @@ function cdnCompleted () {
                 newTag.appendChild(checkBox);
                 setPathViewBox();
             }
-            listView.appendChild(newTag);
 
             if (tagOrder[tag].isButton) {
                 newTag.classList.add("checkedBox");
             } else {
                 generateCheckBox();
             }
+            newTag.innerHTML += `<span>${tagOrder[tag].displayName}</span>`;
+            listView.appendChild(newTag);
 
             const get_isButton = () => tagOrder[tag].isButton;
 
