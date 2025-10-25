@@ -2497,8 +2497,8 @@ function cdnCompleted () {
     }
 
     // 企画のアクティブを司る
-    updateExhibitsActive();
-    setInterval(updateExhibitsActive, 1000);
+    // updateExhibitsActive();
+     // setInterval(updateExhibitsActive, 1000);
 
     const getEscapeReg = (string) => string[0] ? string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : null;
 
