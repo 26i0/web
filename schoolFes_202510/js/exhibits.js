@@ -1401,10 +1401,6 @@ const maps_locations = {
         location: `${getClassName("H", 2, 6)}${maps_words.Conjs.Infront}`,
         originalValue: "F1_SnapNow",
     },
-    F2_Consultation: {
-        location: `${maps_names.Science_Lab}${maps_words.Conjs.Near}`,
-        originalValue: "F1_GanGanHao",
-    },
     F2_Omoshiro_caseRain: {
         location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
         originalValue: "F1_Omoshiro",
