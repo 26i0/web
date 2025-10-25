@@ -2505,7 +2505,7 @@ function cdnCompleted () {
             )
         ).join("")
     );
-    let devI = 60 * 9;
+    let devI = 60 * 8;
     function updateExhibitsActive () {
         let now = new Date();
         // if (isDevMode) {
