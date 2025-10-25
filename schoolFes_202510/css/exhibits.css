@@ -1157,7 +1157,7 @@
     position: relative;
     --fontSize: calc(
         min(
-            var(--camZoom) * var(--labelFontSize) * .03,
+            var(--camZoom) * var(--labelFontSize) * .03
         )
     );
     font-size: var(--fontSize);
