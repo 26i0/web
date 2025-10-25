@@ -3747,6 +3747,33 @@ function cdnCompleted () {
                 });
             }
 
+            function button_caseRain_click () {
+                button_caseRain.classList.toggle("pushed");
+                const isPushed = button_caseRain.classList.contains("pushed");
+
+                updateCaseRainText(isPushed);
+                setCaseRainVisible(isPushed);
+                updateTopButtonText();
+
+                if (isPushed) {
+                    if (!queryParameter({
+                        type: "get",
+                        key: queryParamKey,
+                    }).length) {
+                        queryParameter({
+                            type: "append",
+                            key: queryParamKey,
+                            value: isPushed,
+                        });
+                    }
+                } else {
+                    queryParameter({
+                        type: "delete",
+                        key: queryParamKey,
+                    });
+                }
+            }
+
             loadScModel = (loaded) => {
                 if (!loader || isScModelLoadStarted) return;
                 isScModelLoadStarted = true;
@@ -4557,6 +4584,13 @@ function cdnCompleted () {
                             }
                             lastCamZoom = maps_camera.zoom;
                         });
+                        if (
+                            queryParameter({
+                                type: "get",
+                                key: queryParamKey,
+                            }).length
+                        ) button_caseRain_click();
+
                         setTimeout(updateSort, 100);
                         if (loaded) loaded();
                     },
@@ -4763,16 +4797,12 @@ function cdnCompleted () {
             button_dimension.className = "dimension button";
 
             const button_caseRain = d.createElement("div");
-            const caseRainMsgs = {
-                normal: maps_words.CaseNormal,
-                rain: maps_words.CaseRain,
-            };
 
             button_caseRain.className = "button";
             maps_buttons_right.appendChild(button_caseRain);
 
             const updateCaseRainText = (isCaseRain) => updateButtonText(
-                button_caseRain, (isCaseRain ? caseRainMsgs.normal : caseRainMsgs.rain)
+                button_caseRain, (isCaseRain ? maps_words.CaseNormal : maps_words.CaseRain)
             );
             updateCaseRainText(false);
 
@@ -4781,14 +4811,9 @@ function cdnCompleted () {
             }を表示中`;
             const updateTopButtonText = () => updateButtonText(top_button, getActiveFloors().length === 1 ? `${getActiveFloors()[0]}${getNewTopButtonText()}` : `すべての${getNewTopButtonText()}`);
 
-            button_caseRain.addEventListener("click", () => {
-                button_caseRain.classList.toggle("pushed");
-                const isPushed = button_caseRain.classList.contains("pushed");
+            const queryParamKey = "iscaserain";
 
-                updateCaseRainText(isPushed);
-                setCaseRainVisible(isPushed);
-                updateTopButtonText();
-            });
+            button_caseRain.addEventListener("click", button_caseRain_click);
 
             const button_currentPos = d.createElement("div");
             button_currentPos.className = "button";
