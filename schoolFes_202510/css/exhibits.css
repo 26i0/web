@@ -393,14 +393,30 @@
     background-color: transparent;
     transition: height .4s ease-in-out;
 }
-/* .content.main .exhibits .tile.sortList:not(.opened) .tabs {
+.content.main .exhibits .tile.sortList .topBar .topBarIcon {
+    position: relative;
+    border-radius: var(--topBarsHeight);
+    --minBorderRadius: 10px;
+    width: 100%;
+    margin-top: 5px;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition:
+    width .4s ease-in-out,
+    box-shadow .4s ease-in-out,
+    border-radius .4s ease-in-out,
+    background-color .4s ease-in-out;
+}
+/* .content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .tabs {
     transform: translateY(
         calc(
             var(--topBarsHeight) * -1
         )
     );
 }
-.content.main .exhibits .tile.sortList:not(.opened) .topBar svg {
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topBar svg {
     opacity: 0;
     pointer-events: none;
 } */
@@ -410,6 +426,7 @@
     height: 1.75em;
     width: 1.75em;
     pointer-events: none;
+    overflow: visible;
     transform-origin: 50% 50%;
     position: relative;
     display: flex;
@@ -417,6 +434,7 @@
     transition:
     opacity .4s ease-in-out,
     transform .4s ease-in-out;
+    padding-left: 4.5px;
 }
 .content.main .exhibits .tile.sortList .tabs {
     height: var(--tabsHeight);
@@ -430,7 +448,7 @@
 .content.main .exhibits .tile.sortList .tabs .tab {
     width: 100%;
     padding: 5px;
-    opacity: .5;
+    opacity: 1;
     background-color: rgba(211, 211, 211, .5);
     box-shadow: 0 0 10px gray;
     margin: 5px;
@@ -442,6 +460,7 @@
     --webkit-backdrop-filter: blur(10px);
     transition:
     opacity .5s ease-in-out,
+    background-color .5s ease-in-out,
     box-shadow .5s ease-in-out;
     box-shadow: none;
 }
@@ -457,6 +476,7 @@
 .content.main .exhibits .tile.sortList .topBar svg g {
     transform-origin: 50% 50%;
     transform: translateY(15%);
+    position: absolute;
 }
 .content.main .exhibits .tile.sortList .topBar svg g path {
     /* transform-origin: 51.3% 54.4%; */
@@ -470,7 +490,8 @@
     stroke-dashoffset .5s ease-in-out;
 }
 .content.main .exhibits .tile.sortList .topBar svg g.close {
-    transform: translateY(-15%) rotate(180deg) !important;
+    /* transform: translateY(-15%) rotate(180deg) !important; */
+    transform: scaleY(-1) translateY(10%);
 }
 .content.main .exhibits .tile.sortList .topBar svg g.close path {
     stroke-dashoffset: var(--pathLength);
@@ -480,10 +501,44 @@
     transition: opacity .5s ease-in-out;
     overflow: hidden;
 }
-/* .content.main .exhibits .tile.sortList:not(.opened) {
+/* .content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) {
     height: calc(
         var(--bottomBarHeight) - var(--topBarsHeight)
     );
+} */
+/* .content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld),
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topContents {
+    box-shadow: none;
+    background-color: transparent;
+    backdrop-filter: blur(0px);
+    --webkit-backdrop-filter: blur(0px);
+}
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topContents {
+    background: transparent;
+}
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topContents .topBar .topBarIcon {
+    background-color: white;
+    --borderWidth: 2px;
+    width: 3em;
+    border-radius: calc(
+        var(--topBarsHeight) * .5
+    );
+    border-bottom-left-radius: var(--minBorderRadius);
+    border-bottom-right-radius: var(--minBorderRadius);
+    backdrop-filter: blur(10px);
+    --webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 5px gray;
+}
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topContents .tabs .tab {
+    backdrop-filter: blur(10px);
+    --webkit-backdrop-filter: blur(10px);
+    background-color: rgb(245, 245, 245);
+}
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .topContents .tabs .tab:not(.selected) {
+    box-shadow: 0 0 2px gray;
+}
+.content.main .exhibits .tile.sortList:not(.opened):not(.nowBeingHeld) .content {
+    opacity: 0;
 } */
 .content.main .exhibits .tile.sortList.opened .topBar svg g.close path {
     stroke-dashoffset: 0;

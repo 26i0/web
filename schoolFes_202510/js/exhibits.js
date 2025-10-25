@@ -2908,14 +2908,16 @@ function cdnCompleted () {
     (() => {
         bottomBar_contents.className = "content";
         sortList_topBar.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path d="M228.451,230.092L228.451,850.906L849.265,850.906"/>
-                        </g>
-                        <g class="close">
-                            <path d="M228.451,230.092L228.451,850.906L849.265,850.906"/>
-                        </g>
-                    </svg>`;
+            <div class="topBarIcon">
+                <svg xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path d="M228.451,230.092L228.451,850.906L849.265,850.906"/>
+                    </g>
+                    <g class="close">
+                        <path d="M228.451,230.092L228.451,850.906L849.265,850.906"/>
+                    </g>
+                </svg>
+            </div>`;
         sortList_topBar.className = "topBar";
 
         sortList_tabs.className = "tabs";
@@ -5238,8 +5240,8 @@ function cdnCompleted () {
         let isHolded = false;
 
         exhibitsBottomBar.addEventListener("touchstart", (e) => {
-            exhibitsBottomBar.classList.add("nowBeingHeld");
             exhibitsBottomBar.style.transition = "none";
+            exhibitsBottomBar.classList.add("nowBeingHeld");
             difference = [0, 0];
             const touch = e.touches[0];
             touchStartPos = [touch.clientX, touch.clientY];
@@ -5269,7 +5271,13 @@ function cdnCompleted () {
         let lastTouchendTime = Date.now();
 
         function barTransitionUpdate () {
-            exhibitsBottomBar.style.transition = `${sortListTransition === "" || sortListTransition === "none" ? "" : `${sortListTransition}, `}height .4s ease-out, width .4s ease-out, padding .5s ease-in-out`;
+            exhibitsBottomBar.style.transition = `${sortListTransition === "" || sortListTransition === "none" ? "" : `${sortListTransition}, `}height .4s ease-out,
+            width .4s ease-out,
+            padding .4s ease-in-out,
+            backdrop-filter .4s ease-in-out,
+            box-shadow .4s ease-in-out,
+            --webkit-backdrop-filter .4s ease-in-out,
+            background-color .4s ease-in-out`;
         }
         barTransitionUpdate();
 
