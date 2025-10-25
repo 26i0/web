@@ -850,9 +850,9 @@ const exhibits = {
             cutIdx: 1,
         },
     },
-    Smash: {
+    F3_Smash: {
         name: "スマブラしようぜ!",
-        location: `${maps_names.Art}`,
+        location: `${maps_names.FrontEntrance}${maps_words.Conjs.Near}の${maps_names.Stairs}`,
         tag: [],
         image: {
             page: 28,
@@ -1329,9 +1329,9 @@ const maps_locations = {
         location: `${maps_words.Grades.J}${maps_words.Ridge}${maps_words.Conjs.Infront}､${maps_names.Biotope}${maps_words.Conjs.Near}`,
     },
 
-    F2_Art: {
-        originalValue: "Smash",
-    },
+    // F2_Art: {
+    //     originalValue: "F3_Smash",
+    // },
     F1_Multipurpose: {
         originalValue: "F1_H3_4",
     },
