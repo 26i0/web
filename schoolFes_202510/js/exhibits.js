@@ -1403,6 +1403,7 @@ const maps_locations = {
     },
     F2_Space001: {
         location: `${maps_names.Science_Lab}${maps_words.Conjs.Near}`,
+        originalValue: "F1_GanGanHao",
     },
     F2_Omoshiro_caseRain: {
         location: `${maps_names.Music_Small}${maps_words.Conjs.Near}`,
