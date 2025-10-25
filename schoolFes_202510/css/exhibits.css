@@ -391,7 +391,20 @@
     display: flex;
     justify-content: center;
     background-color: transparent;
+    transition: height .4s ease-in-out;
 }
+/* .content.main .exhibits .tile.sortList:not(.opened) .tabs {
+    transform: translateY(
+        calc(
+            var(--topBarsHeight) * -1
+        )
+    );
+}
+.content.main .exhibits .tile.sortList:not(.opened) .topBar svg {
+    opacity: 0;
+    pointer-events: none;
+} */
+
 .content.main .exhibits .tile.sortList .topBar svg {
     margin-top: 5px;
     height: 1.75em;
@@ -402,15 +415,17 @@
     display: flex;
     justify-content: center;
     transition:
-    opacity .5s ease-in-out,
-    transform .5s ease-in-out;
+    opacity .4s ease-in-out,
+    transform .4s ease-in-out;
 }
 .content.main .exhibits .tile.sortList .tabs {
     height: var(--tabsHeight);
     width: 100%;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform .5s ease-in-out;
 }
 .content.main .exhibits .tile.sortList .tabs .tab {
     width: 100%;
@@ -465,9 +480,11 @@
     transition: opacity .5s ease-in-out;
     overflow: hidden;
 }
-.content.main .exhibits .tile.sortList:not(.opened) .content {
-    opacity: 0;
-}
+/* .content.main .exhibits .tile.sortList:not(.opened) {
+    height: calc(
+        var(--bottomBarHeight) - var(--topBarsHeight)
+    );
+} */
 .content.main .exhibits .tile.sortList.opened .topBar svg g.close path {
     stroke-dashoffset: 0;
     opacity: 1 !important;
