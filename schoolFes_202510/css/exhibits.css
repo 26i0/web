@@ -1149,7 +1149,9 @@
 .content.main .exhibits .tile .content .mapsView .labelsArea .mapsLabel {
     position: relative;
     --fontSize: calc(
-        var(--camZoom) * var(--labelFontSize) * .03
+        min(
+            var(--camZoom) * var(--labelFontSize) * .03,
+        )
     );
     font-size: var(--fontSize);
     height: calc(
@@ -1707,6 +1709,14 @@
 }
 .content.main .exhibits .tile.nowBeingHeld .tags.listView .tag {
     transition: none;
+}
+@keyframes tagElUpdate {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 /* .content.main .exhibits .tag:not(:last-child) {
     margin-right: 0;

@@ -1085,16 +1085,24 @@ const exhibits = {
 
 const tagGroups = {
     project: {
-        isMultSel: false
+        isMultSel: false,
+        themeColor: "gray",
     },
     genre: {
-        isMultSel: true
+        isMultSel: true,
+        themeColor: "gray",
     },
     activity: {
-        isMultSel: true
+        isMultSel: true,
+        themeColor: "gray",
     },
     grade: {
-        isMultSel: false
+        isMultSel: false,
+        themeColor: "gray",
+    },
+    floors: {
+        isMultSel: false,
+        themeColor: "darkgray",
     },
 };
 const tagOrder = {
@@ -1147,6 +1155,21 @@ const tagOrder = {
         displayName: "2日目",
         themeColor: "slategray",
         group: tagGroups.activity
+    },
+    f1: {
+        displayName: "1階",
+        themeColor: "darkgray",
+        group: tagGroups.floors,
+    },
+    f2: {
+        displayName: "2階",
+        themeColor: "darkgray",
+        group: tagGroups.floors,
+    },
+    f3: {
+        displayName: "3階",
+        themeColor: "darkgray",
+        group: tagGroups.floors,
     },
     // J1: {
     //     displayName: `${maps_words.Grades.J}1年`,
@@ -1958,6 +1981,131 @@ function cdnCompleted () {
         }
     }
 
+    function getTileBarEl ({
+        newTags: newTags
+    } = {}) {
+        const tagsEl = d.createElement("div");
+        const tagsContentEl = d.createElement("div");
+
+        tagsEl.className = "tags";
+        tagsContentEl.className = "tagsContent";
+
+        if (newTags?.length > 0) newTags.forEach(tagInfo => {
+            const tagEl = d.createElement("div");
+            if (tagInfo.className) tagEl.className = tagInfo.className;
+            if (tagInfo.textContent) tagEl.textContent = tagInfo.textContent;
+            if (tagInfo.property) {
+                Object.keys(tagInfo.property).forEach(propKey => {
+                    tagEl.style.setProperty(propKey, tagInfo.property[propKey]);
+                });
+            }
+            if (tagInfo.attribute) {
+                Object.keys(tagInfo.attribute).forEach(attrKey => {
+                    tagEl.setAttribute(attrKey, tagInfo.attribute[attrKey]);
+                });
+            }
+            tagsContentEl.appendChild(tagEl);
+        });
+
+        tagsEl.appendChild(tagsContentEl);
+
+        function tagsContentScroll() {
+            const maxScroll = tagsContentEl.scrollWidth - tagsContentEl.clientWidth;
+            const scrollRatio = maxScroll === 0 ? 0 : tagsContentEl.scrollLeft / maxScroll;
+            tagsEl.style.setProperty("--scrollPx", maxScroll - tagsContentEl.scrollLeft + "px");
+            tagsEl.style.setProperty("--scrollRatio", scrollRatio);
+        }
+        tagsContentScroll();
+        tagsContentEl.addEventListener("scroll", tagsContentScroll);
+
+        return tagsEl;
+    }
+
+    /**
+     * タグIDを渡すと、そのタグの<div>要素を返す
+     * @param {string} tagId
+     * @returns {HTMLElement}
+     */
+    function getNewTagEl(tagId) {
+        // tagOrder から displayNameやthemeColorを取得
+        const tagDatas = tagOrder[tagId];
+        if (!tagDatas) return null;
+        const tagEl = d.createElement("div");
+        tagEl.className = "tag";
+        tagEl.textContent = tagDatas.displayName;
+        tagEl.setAttribute("tag", tagId);
+        tagEl.style.setProperty("--themeColor", tagDatas.themeColor ?? tagDatas.group?.themeColor ?? "");
+        return tagEl;
+    }
+
+    function updateTagsEl ({
+        exhibit,
+        tileEl = exhibit.tileEl,
+        tagsEl = tileEl.querySelector(".tags"),
+        tag = exhibit?.tag ?? exhibits[tileEl.getAttribute("exhibits")]?.tag,
+    }) {
+        if (!Array.isArray(tag)) return tagsEl;
+        if (!tagsEl) return null;
+
+        // 既存のtagsContentを探すか、新規作成
+        let tagsContentEl = tagsEl.querySelector(".tagsContent");
+        if (!tagsContentEl) {
+            tagsContentEl = document.createElement("div");
+            tagsContentEl.className = "tagsContent";
+            tagsEl.appendChild(tagsContentEl);
+        }
+
+        // 既存タグ一覧を取得
+        const existingTags = Array.from(tagsContentEl.querySelectorAll(".tag"));
+        const existingTagIds = existingTags.map(el => el.getAttribute("tag"));
+
+        // tagOrderに従ってループ
+        Object.keys(tagOrder).forEach(tagId => {
+            const shouldExist = tag.includes(tagId);
+            const alreadyExist = existingTagIds.includes(tagId);
+
+            if (shouldExist && !alreadyExist) {
+                // 新規追加すべきタグ
+                const newTagEl = getNewTagEl(tagId);
+                newTagEl.style.animation = "tagElUpdate .5s ease-in-out";
+
+                // tagOrder順に挿入
+                let inserted = false;
+                for (const existingEl of tagsContentEl.children) {
+                    const existingId = existingEl.getAttribute("tag");
+                    const existingIdx = Object.keys(tagOrder).indexOf(existingId);
+                    const newIdx = Object.keys(tagOrder).indexOf(tagId);
+                    if (newIdx < existingIdx) {
+                        tagsContentEl.insertBefore(newTagEl, existingEl);
+                        inserted = true;
+                        break;
+                    }
+                }
+                if (!inserted) tagsContentEl.appendChild(newTagEl);
+            } else if (!shouldExist && alreadyExist) {
+                // 不要になったタグを削除
+                const oldEl = tagsContentEl.querySelector(`[tag="${tagId}"]`);
+                oldEl.style.animation = "tagElUpdate .5s ease-in-out reverse";
+                if (oldEl) oldEl.remove();
+            }
+        });
+
+        // スクロール処理更新
+        function tagsContentScroll() {
+            const maxScroll = tagsContentEl.scrollWidth - tagsContentEl.clientWidth;
+            const scrollRatio = maxScroll === 0 ? 0 : tagsContentEl.scrollLeft / maxScroll;
+            tagsEl.style.setProperty("--scrollPx", maxScroll - tagsContentEl.scrollLeft + "px");
+            tagsEl.style.setProperty("--scrollRatio", scrollRatio);
+        }
+        tagsContentScroll();
+        tagsContentEl.removeEventListener("scroll", tagsContentScroll);
+        tagsContentEl.addEventListener("scroll", tagsContentScroll);
+
+        if (!tileEl.contains(tagsEl)) tileEl.appendChild(tagsEl);
+
+        return tagsEl;
+    }
+
     const tilesFragment = d.createDocumentFragment();
     for (let tileIdx = 0; tileIdx < Object.keys(exhibits).length; tileIdx += 1) { // exhibits loop
         const tileEl = d.createElement("div");
@@ -1971,46 +2119,6 @@ function cdnCompleted () {
             const byClassPattern = /^F\d+_[JH][0-9]_\d+$/;
             const isByClass = byClassPattern.test(getExhibits(tileIdx)[0]);
             getExhibits(tileIdx)[1].tag.push(isByClass ? "byClass" : "byVolunteers");
-        }
-
-        function getTagsEl ({
-            newTags: newTags
-        } = {}) {
-            const tagsEl = d.createElement("div");
-            const tagsContentEl = d.createElement("div");
-
-            tagsEl.className = "tags";
-            tagsContentEl.className = "tagsContent";
-
-            if (newTags?.length > 0) newTags.forEach(tagInfo => {
-                const tagEl = d.createElement("div");
-                if (tagInfo.className) tagEl.className = tagInfo.className;
-                if (tagInfo.textContent) tagEl.textContent = tagInfo.textContent;
-                if (tagInfo.property) {
-                    Object.keys(tagInfo.property).forEach(propKey => {
-                        tagEl.style.setProperty(propKey, tagInfo.property[propKey]);
-                    });
-                }
-                if (tagInfo.attribute) {
-                    Object.keys(tagInfo.attribute).forEach(attrKey => {
-                        tagEl.setAttribute(attrKey, tagInfo.attribute[attrKey]);
-                    });
-                }
-                tagsContentEl.appendChild(tagEl);
-            });
-
-            tagsEl.appendChild(tagsContentEl);
-
-            function tagsContentScroll() {
-                const maxScroll = tagsContentEl.scrollWidth - tagsContentEl.clientWidth;
-                const scrollRatio = maxScroll === 0 ? 0 : tagsContentEl.scrollLeft / maxScroll;
-                tagsEl.style.setProperty("--scrollPx", maxScroll - tagsContentEl.scrollLeft + "px");
-                tagsEl.style.setProperty("--scrollRatio", scrollRatio);
-            }
-            tagsContentScroll();
-            tagsContentEl.addEventListener("scroll", tagsContentScroll);
-
-            return tagsEl;
         }
 
         // getExhibits(tileIdx)[1].originalValue = getExhibits(tileIdx)[0];
@@ -2250,9 +2358,6 @@ function cdnCompleted () {
         //     デフォルト(活動可能最大時間)を使用
         // activitysあり､2日分はなし :
         //     存在する日のデータのみ､それ以外は活動なし
-
-
-
         
         const getActivitysJson = () => getExhibits(tileIdx)[1]?.activitys;
         const defaultFrom = {
@@ -2275,55 +2380,20 @@ function cdnCompleted () {
         // 日数tag自動生成
         ["d1", "d2"].forEach(dayItem => {
             if (getExhibits(tileIdx)[1]?.activitys?.[dayItem]) {
-                getExhibits(tileIdx)[1].tag.push(dayItem.replace("d", "day"));
+                const tagName = dayItem.replace("d", "day");
+                if (getExhibits(tileIdx)[1].tag.includes(tagName) === false) {
+                    getExhibits(tileIdx)[1].tag.push(tagName);
+                }
             }
         });
 
-        const tagsEl = getTagsEl({
-            newTags: (() => {
-                let displayTagNames = [];
-                const usedTags = new Set();
+        const tagsEl = d.createElement("div");
+        tagsEl.className = "tags";
 
-                const returnValue = [];
-
-                returnValue.push({
-                    tags: {
-                        textContent: "",
-                        className: "",
-                        property: {
-                            "--themeColor": "",
-                        },
-                        attribute: {
-                            tag: "",
-                        },
-                    },
-                });
-
-                Object.keys(tagOrder).forEach((tag) => {
-                    if (!getExhibits(tileIdx)[1].tag?.includes(tag) || usedTags.has(tag)) return;
-                    usedTags.add(tag);
-                    displayTagNames.push([tag, tagOrder[tag].displayName, tagOrder[tag].themeColor]);
-                });
-                displayTagNames.forEach(item => {
-                    returnValue.push({
-                        textContent: item[1],
-                        className: "tag",
-                        property: {
-                            "--themeColor": item[2],
-                        },
-                        attribute: {
-                            tag: item,
-                        },
-                    });
-                });
-                const tagAttributes = [];
-                displayTagNames.map(subArr => subArr[0]).forEach(item => {
-                    tagAttributes.push(item);
-                });
-                tileEl.setAttribute("tag", tagAttributes.join(","));
-
-                return returnValue;
-            })(),
+        updateTagsEl({
+            exhibit: getExhibits(tileIdx)[1],
+            tagsEl: tagsEl,
+            // tag: getExhibits(tileIdx)[1]?.tag,
         });
 
         Object.values(getActivitysJson()).forEach((dayItem, jsonIndex) => {
@@ -2331,8 +2401,8 @@ function cdnCompleted () {
             if (!dayItem[0]) dayItem[0] = defaultFrom[dayKeyName];
             if (!dayItem[1]) dayItem[1] = defaultTo[dayKeyName];
 
-            const dayTagName = dayKeyName.replace("d", "day");
-            if (tagOrder[dayTagName]) getExhibits(tileIdx)[1]?.tag.push(dayTagName);
+            // const dayTagName = dayKeyName.replace("d", "day");
+            // if (tagOrder[dayTagName]) getExhibits(tileIdx)[1]?.tag.push(dayTagName);
 
             const getDaySpans = (timeItem) => timeItem.split(":").map(numSet => `<span class="numSet">${numSet.split("").map(num => `<span class="num">${num}</span>`).join("")}</span>`).join(":");
 
@@ -2507,6 +2577,26 @@ function cdnCompleted () {
                     }
                 );
 
+                Object.entries(maps_locations).forEach(([keyItem, locationItem]) => {
+                    if (maps_modelParts[keyItem]?.name) {
+                        const targetItemFloors = maps_getFloors(maps_modelParts[keyItem].name);
+                        targetItemFloors.forEach(floorItem => {
+                            const targetExhibitItem = exhibits[locationItem.originalValue];
+                            const tagName = `f${floorItem}`;
+                            if (targetExhibitItem?.tag?.includes(tagName) === false) {
+                                targetExhibitItem?.tag?.push(tagName);
+                            }
+                        });
+                    }
+                });
+
+                // const existingTagsEl = exhibitItem?.tileEl?.querySelector(".tags");
+                // if (existingTagsEl) existingTagsEl.replaceWith(
+                //     getNewTagsEl({
+                //         exhibit: exhibitItem,
+                //     })
+                // );
+
                 // const removeAnimation = "showText .5s ease-in-out reverse forwards";
                 // if (activeTextEl && activeTextEl.style.animation !== removeAnimation) {
                 //     activeTextEl.style.animation = "none";
@@ -2671,14 +2761,18 @@ function cdnCompleted () {
             }
         }
 
-        allTiles.forEach(element => {
+        allTiles.forEach(elementItem => {
             if (conditions[0] || searchWord) {
-                setTileVisible(element, false);
+                setTileVisible(elementItem, false);
             } else {
-                setTileVisible(element, true);
+                setTileVisible(elementItem, true);
             }
-            element.classList.remove("topTileStyle");
-            element.classList.remove("lowestTileStyle");
+            elementItem.classList.remove("topTileStyle");
+            elementItem.classList.remove("lowestTileStyle");
+
+            updateTagsEl({
+                tileEl: elementItem,
+            });
         });
 
         const activeAllTiles = [];
@@ -3927,7 +4021,12 @@ function cdnCompleted () {
 
                                 const canvas = d.createElement("canvas");
                                 const ctx = canvas.getContext("2d");
-                                const scaleFactor = Math.max(Math.min(window.innerWidth / 1250, 2), .5);
+                                const scaleFactor = Math.max(
+                                    Math.min(
+                                        window.innerWidth / 1250,
+                                        2
+                                    ), .5
+                                );
 
                                 const labelTextFontSize = scaleFactor * 220;
 
@@ -4151,10 +4250,17 @@ function cdnCompleted () {
                             });
                             exhibitsDataCompletion();
                         }
-
+                        
                         addAllLabels();
-
                         setCaseRainVisible(false);
+
+                        setTimeout(() => {
+                            Object.values(exhibits).forEach(exhibitItem => {
+                                updateTagsEl({
+                                    tileEl: exhibitItem.tileEl,
+                                });
+                            });
+                        }, 100);
 
                         maps_renderer.domElement.addEventListener("webglcontextrestored", () => {
                             Object.keys(maps_labels).forEach(key => {
@@ -4165,31 +4271,6 @@ function cdnCompleted () {
                                 delete maps_labels[key];
                             });
                             addAllLabels();
-
-                            // Object.keys(maps_labels).forEach((partName) => {
-                            //     const { object, part } = maps_labels[partName];
-                            //     const location = maps_locations[partName];
-
-                            //     // CanvasTextureを使うテキストラベルのみ再描画
-                            //     if (object.material.map instanceof THREE.CanvasTexture && !getIsImageUrl(location?.name)) {
-                            //         const canvas = object.material.map.image;
-                            //         if (canvas && canvas.getContext) {
-                            //             const ctx = canvas.getContext("2d");
-                            //             if (ctx && typeof drawLabelText === "function") {
-                            //                 drawLabelText.call({ ctx, canvas, partName }); // 再描画
-                            //                 object.material.map.needsUpdate = true;
-                            //             }
-                            //         }
-                            //     }
-                            // });
-                            // maps_renderer.compile(scene, maps_camera);
-
-                            // Object.values(maps_labels).forEach(({ object }) => {
-                            //     if (object.material.map instanceof THREE.CanvasTexture) {
-                            //         object.material.map.needsUpdate = true;
-                            //     }
-                            // });
-                            // maps_renderer.compile(scene, maps_camera);
                         });
 
 
@@ -4476,6 +4557,7 @@ function cdnCompleted () {
                             }
                             lastCamZoom = maps_camera.zoom;
                         });
+                        setTimeout(updateSort, 100);
                         if (loaded) loaded();
                     },
                     (xhr) => {
@@ -4488,7 +4570,8 @@ function cdnCompleted () {
                 );
             };
             if (!isScModelLoadStarted) {
-                setTimeout(loadScModel, 1475);
+                // setTimeout(loadScModel, 1475);
+                loadScModel();
             }
 
             const labelAnimUpdateThresholdMs = 30;
