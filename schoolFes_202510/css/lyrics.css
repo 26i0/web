@@ -45,6 +45,7 @@
     font-size: 2em;
     font-weight: bold;
     width: max-content;
+    max-width: 100%;
 }
 .main.content .lyricsArea .songSet .subText {
     font-size: 1.25em;
